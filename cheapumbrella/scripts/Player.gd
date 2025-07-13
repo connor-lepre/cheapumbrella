@@ -23,10 +23,10 @@ var _record_points: Array[Vector2] = []
 @onready var _path_visualizer: Node2D = get_parent().get_node_or_null("CopiesRoot/PathVisualizer")
 
 func _ready() -> void:
-        if _umbrella:
-                _umbrella.visible = false
-        else:
-                push_warning("UmbrellaSprite node missing")
+	if _umbrella:
+		_umbrella.visible = false
+	else:
+		push_warning("UmbrellaSprite node missing")
 	add_to_group("Player")
 
 	if _spawn_point == null:
