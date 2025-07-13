@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://cbjks0vwm64iw"]
+
+[node name="GoalPoint" type="Node2D"]

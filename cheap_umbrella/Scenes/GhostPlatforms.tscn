@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdq3kbildgmlr"]
+
+[ext_resource type="Script" uid="uid://dduq7cm0ewm30" path="res://scripts/ghost_platform.gd" id="1_usged"]
+[ext_resource type="Texture2D" uid="uid://s34udr1ovwf5" path="res://icon.svg" id="2_nsqmo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_foxyx"]
+size = Vector2(128, 128)
+
+[node name="GhostPlatforms" type="CharacterBody2D"]
+position = Vector2(0, -64)
+collision_mask = 2
+script = ExtResource("1_usged")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_foxyx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.407843)
+texture = ExtResource("2_nsqmo")

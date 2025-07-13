@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://drk1vvovwjcq4"]
+
+[ext_resource type="Texture2D" uid="uid://5vdxtsu10owk" path="res://Assets/Textures/grass.png" id="1_klj2b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y2i1t"]
+size = Vector2(559, 34)
+
+[node name="StaticPlatform_tscn" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(6.5, -1)
+shape = SubResource("RectangleShape2D_y2i1t")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+offset_left = -256.0
+offset_top = -16.0
+offset_right = 280.0
+offset_bottom = 16.0
+texture = ExtResource("1_klj2b")
+axis_stretch_horizontal = 1

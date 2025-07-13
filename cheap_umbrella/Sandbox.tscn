@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://1i67iv3g6apn"]
+
+[ext_resource type="Script" uid="uid://bubxavdqdvncd" path="res://scripts/sandbox.gd" id="1_jgjqi"]
+[ext_resource type="PackedScene" uid="uid://drk1vvovwjcq4" path="res://Scenes/StaticPlatform.tscn" id="2_vrv26"]
+[ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="3_ti018"]
+
+[node name="Sandbox_tscn" type="Node2D"]
+script = ExtResource("1_jgjqi")
+
+[node name="StaticPlatform_tscn" parent="." instance=ExtResource("2_vrv26")]
+position = Vector2(-87, 44)
+
+[node name="StaticPlatform_tscn2" parent="." instance=ExtResource("2_vrv26")]
+position = Vector2(452, 46)
+
+[node name="GhostPlatforms" type="Node2D" parent="."]
+
+[node name="SpawnPoint" parent="." instance=ExtResource("3_ti018")]
+position = Vector2(-232, -304)
