@@ -1,0 +1,84 @@
+[gd_scene load_steps=10 format=3 uid="uid://7qdqbbs424li"]
+
+[ext_resource type="Script" uid="uid://b0w6paev1qc28" path="res://scripts/GameManager.gd" id="1_0bbpv"]
+[ext_resource type="Script" uid="uid://dchhd81q1k6rf" path="res://scripts/Player.gd" id="2_rarhs"]
+[ext_resource type="PackedScene" uid="uid://b3v8kt2omktvr" path="res://scenes/PlayerCopy.tscn" id="3_vcsgt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
+size = Vector2(1280, 40)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_jyhfs"]
+size = Vector2(1280, 40)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_sugp2"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jyhfs"]
+size = Vector2(64, 64)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tbgi4"]
+size = Vector2(80, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tipki"]
+radius = 64.0
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_0bbpv")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(960, 960)
+
+[node name="FloorCollider" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor"]
+texture = SubResource("PlaceholderTexture2D_jyhfs")
+region_enabled = true
+region_rect = Rect2(0, 0, 1280, 40)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(416, 907)
+script = ExtResource("2_rarhs")
+
+[node name="PlayerSprite" type="Sprite2D" parent="Player"]
+texture = SubResource("PlaceholderTexture2D_sugp2")
+
+[node name="PlayerCollider" type="CollisionShape2D" parent="Player"]
+shape = SubResource("RectangleShape2D_jyhfs")
+
+[node name="UmbrellaSprite" type="Sprite2D" parent="Player"]
+position = Vector2(0, -48)
+texture = SubResource("PlaceholderTexture2D_tbgi4")
+
+[node name="CopiesRoot" type="Node2D" parent="."]
+
+[node name="PlayerCopy" parent="CopiesRoot" instance=ExtResource("3_vcsgt")]
+
+[node name="Goal" type="Area2D" parent="."]
+position = Vector2(1536, 900)
+
+[node name="GoalCollider" type="CollisionShape2D" parent="Goal"]
+shape = SubResource("CircleShape2D_tipki")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
+
+[node name="UICanvas" type="CanvasLayer" parent="UI"]
+follow_viewport_enabled = true
+
+[node name="CopyTime" type="Label" parent="UI/UICanvas"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Copy time remaining:"
+metadata/_edit_use_anchors_ = true
+
+[node name="CopiesActive" type="Label" parent="UI/UICanvas"]
+offset_top = 32.0
+offset_right = 166.0
+offset_bottom = 55.0
+text = "Copies active:"
+metadata/_edit_use_anchors_ = true
