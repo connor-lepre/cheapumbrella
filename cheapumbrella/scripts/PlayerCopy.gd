@@ -32,16 +32,25 @@ func init_copy(base_position: Vector2, rel_points: Array) -> void:
 	_sprite.modulate.a = 0.6
 
 func _physics_process(delta: float) -> void:
-	if _length <= 0 or _path == null or _follow == null:
-		return
-	_progress += speed * delta * _direction
-	if _progress > _length:
-		_progress = _length
-		_direction = -1
-	elif _progress < 0:
-		_progress = 0
-		_direction = 1
-	_follow.progress = _progress
-	var target := _base_position + _follow.position
-	velocity = (target - global_position) / delta
-	move_and_slide()
+       if _length <= 0 or _path == null or _follow == null:
+               return
+       var step := speed * delta * _direction
+       var next_progress := _progress + step
+       if next_progress > _length:
+               next_progress = _length
+               _direction = -1
+       elif next_progress < 0:
+               next_progress = 0
+               _direction = 1
+       var next_local := _path.curve.sample_baked(next_progress)
+       var target := _base_position + next_local
+       var motion := target - global_position
+       if not test_move(global_transform, motion):
+               _progress = next_progress
+               _follow.progress = _progress
+               global_position = target
+               velocity = motion / delta
+       else:
+               _follow.progress = _progress
+               global_position = _base_position + _path.curve.sample_baked(_progress)
+               velocity = Vector2.ZERO
