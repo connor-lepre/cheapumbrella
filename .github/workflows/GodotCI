@@ -1,0 +1,36 @@
+name: Godot CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Godot version
+        id: godot-version
+        run: |
+          if [ -f .godot-version ]; then
+            echo "GODOT_VERSION=$(cat .godot-version)" >> $GITHUB_ENV
+          else
+            echo "GODOT_VERSION=4.4.1-stable" >> $GITHUB_ENV
+          fi
+      - name: Download Godot 4.4.1-stable Linux Editor
+        run: |
+          wget https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip
+          unzip Godot_v4.4.1-stable_linux.x86_64.zip
+          mv Godot_v4.4.1-stable_linux.x86_64 Godot
+          chmod +x Godot
+      - name: Print Godot version (for log)
+        run: ./Godot --version
+
+      - name: Verify project builds (parse scripts/scenes)
+        run: |
+          ./Godot --headless --quit --editor --path . --build-solutions
