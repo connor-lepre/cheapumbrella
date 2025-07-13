@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3v8kt2omktvr"]
+[gd_scene load_steps=6 format=3 uid="uid://b3v8kt2omktvr"]
 
 [ext_resource type="Script" uid="uid://dml28724rqeix" path="res://scripts/PlayerCopy.gd" id="1_c7m67"]
 
@@ -9,6 +9,9 @@ size = Vector2(64, 64)
 size = Vector2(64, 64)
 
 [sub_resource type="Curve2D" id="Curve2D_libvq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_above"]
+size = Vector2(64, 4)
 
 [node name="PlayerCopy" type="CharacterBody2D"]
 script = ExtResource("1_c7m67")
@@ -23,3 +26,9 @@ shape = SubResource("RectangleShape2D_jyjwv")
 curve = SubResource("Curve2D_libvq")
 
 [node name="CopyPathFollow" type="PathFollow2D" parent="CopyPath"]
+
+[node name="AboveChecker" type="Area2D" parent="."]
+position = Vector2(0, -32)
+
+[node name="AboveShape" type="CollisionShape2D" parent="AboveChecker"]
+shape = SubResource("RectangleShape2D_above")
