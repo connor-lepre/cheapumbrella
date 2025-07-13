@@ -85,11 +85,11 @@ func _handle_copy_recording(delta: float) -> void:
 	if Input.is_action_just_pressed("copy_action"):
 		if _recording:
 			if _record_timer >= MIN_COPY_TIME:
-			_stop_recording()
+				_stop_recording()
 			else:
-			print("Copy recording too short to stop")
+				print("Copy recording too short to stop")
 		else:
-		_start_recording()
+			_start_recording()
 
 	if _recording:
 		_record_timer += delta
