@@ -20,6 +20,7 @@ var _record_points: Array[Vector2] = []
 @onready var _umbrella: Sprite2D = $UmbrellaSprite
 @onready var _spawn_point: Node2D = get_parent().get_node_or_null("PlayerSpawn")
 @onready var _game_manager: Node = get_parent()
+@onready var _path_visualizer: Node2D = get_parent().get_node_or_null("CopiesRoot/PathVisualizer")
 
 func _ready() -> void:
 	if _umbrella:
@@ -32,6 +33,11 @@ func _ready() -> void:
 
 	if _game_manager == null:
 		push_warning("GameManager node not found")
+
+	if _path_visualizer == null:
+		push_warning("PathVisualizer node not found")
+	else:
+		_path_visualizer.hide()
 
 func _physics_process(delta: float) -> void:
 	_handle_movement(delta)
@@ -79,17 +85,19 @@ func _handle_copy_recording(delta: float) -> void:
 	if Input.is_action_just_pressed("copy_action"):
 		if _recording:
 			if _record_timer >= MIN_COPY_TIME:
-				_stop_recording()
+			_stop_recording()
 			else:
-				print("Copy recording too short to stop")
+			print("Copy recording too short to stop")
 		else:
-			_start_recording()
+		_start_recording()
 
 	if _recording:
 		_record_timer += delta
 		if _record_timer >= _next_point:
 			_record_points.append(global_position)
 			_next_point += POINT_INTERVAL
+			if _path_visualizer and _path_visualizer.has_method("set_points"):
+				_path_visualizer.set_points(_record_points)
 		if _record_timer >= MAX_COPY_TIME:
 			_stop_recording()
 
@@ -99,10 +107,15 @@ func _start_recording() -> void:
 	_next_point = 0.0
 	_record_points.clear()
 	_record_points.append(global_position)
+	if _path_visualizer and _path_visualizer.has_method("set_points"):
+		_path_visualizer.show()
+		_path_visualizer.set_points(_record_points)
 	print("Copy recording started")
 
 func _stop_recording() -> void:
 	_recording = false
+	if _path_visualizer:
+		_path_visualizer.hide()
 	if _record_points.size() < 2:
 		print("Not enough points to create copy")
 		return
