@@ -87,7 +87,7 @@ func _handle_copy_spawn() -> void:
 		_copy_ready = false
 
 func _get_quantized_direction() -> Vector2:
-	var aim := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var aim := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
 	if aim.length() == 0.0:
 		var viewport := get_viewport()
 		if viewport:
@@ -141,4 +141,3 @@ func _check_crush() -> void:
 				env_below = true
 	if (copy_above and env_below) or (copy_below and env_above):
 		respawn()
-

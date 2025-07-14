@@ -37,23 +37,26 @@ func _input(event):
 		get_tree().reload_current_scene()
 
 func spawn_player_copy(spawn_position: Vector2, direction: Vector2) -> void:
+	print("Spawning a copy")
 	if player_copy_scn == null:
 		push_error("Player copy scene not loaded")
 		return
 	if copies_root == null:
 		push_error("CopiesRoot node missing")
 		return
-		var copy = player_copy_scn.instantiate()
-		if copy == null:
+
+	var copy = player_copy_scn.instantiate()
+	if copy == null:
 		push_error("Failed to instance PlayerCopy")
 		return
-		copies_root.add_child(copy)
-		if copy.has_method("init_copy"):
+
+	copies_root.add_child(copy)
+	if copy.has_method("init_copy"):
 		copy.init_copy(spawn_position, direction)
-		else:
+	else:
 		push_warning("PlayerCopy missing init_copy method")
-		active_copies += 1
-		print("Copy spawned at %s" % spawn_position)
+	active_copies += 1
+	print("Copy spawned at %s" % spawn_position)
 
 func _on_goal_body_entered(body: Node) -> void:
 	if body and body.name == "Player":
