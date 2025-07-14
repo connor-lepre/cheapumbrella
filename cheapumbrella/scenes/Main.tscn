@@ -55,9 +55,37 @@ position = Vector2(0, -48)
 texture = SubResource("PlaceholderTexture2D_tbgi4")
 
 [node name="Camera" type="Camera2D" parent="Player"]
-zoom = Vector2(0.8, 0.8)
+process_callback = 0
 limit_smoothed = true
 position_smoothing_enabled = true
+position_smoothing_speed = 4.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
+
+[node name="CopyTime" type="Control" parent="Player"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 36.0
+offset_top = 32.0
+offset_right = 100.0
+offset_bottom = 36.0
+rotation = -1.5708
+
+[node name="CopyTimeBar" type="ColorRect" parent="Player/CopyTime"]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 4.0
+color = Color(0.384749, 0.261902, 0.554618, 1)
+
+[node name="RemainingTimeBar" type="ColorRect" parent="Player/CopyTime"]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 4.0
+color = Color(1, 0, 1, 1)
 
 [node name="CopiesRoot" type="Node2D" parent="."]
 
@@ -75,9 +103,11 @@ shape = SubResource("CircleShape2D_tipki")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="UICanvas" type="CanvasLayer" parent="UI"]

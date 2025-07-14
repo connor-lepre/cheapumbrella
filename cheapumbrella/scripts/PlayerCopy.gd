@@ -14,15 +14,15 @@ var _initialized: bool = false
 
 
 func _ready() -> void:
-        if _path == null:
-                push_error("CopyPath node missing")
-        if _follow == null:
-                push_error("CopyPathFollow node missing")
-        if _sprite == null:
-                push_error("CopySprite node missing")
-        add_to_group("Copy")
-        collision_layer = 2
-        collision_mask = 1
+	if _path == null:
+		push_error("CopyPath node missing")
+	if _follow == null:
+		push_error("CopyPathFollow node missing")
+	if _sprite == null:
+		push_error("CopySprite node missing")
+	add_to_group("Copy")
+	collision_layer = 2
+	collision_mask = 1
 
 
 
@@ -48,9 +48,13 @@ func init_copy(base_position: Vector2, rel_points: Array) -> void:
 	if _path == null or _follow == null or _sprite == null:
 		push_error("Copy nodes missing; cannot initialize")
 		return
-	_path.curve.clear_points()
+
+	# create a NEW Curve2D for this copy ----
+	var curve = Curve2D.new()
 	for p in rel_points:
-		_path.curve.add_point(p)
+		curve.add_point(p)
+	_path.curve = curve  # This instance now has its own curve!
+
 	_length = _path.curve.get_baked_length()
 	if _length <= 0:
 		push_warning("Invalid copy path length")
@@ -58,8 +62,9 @@ func init_copy(base_position: Vector2, rel_points: Array) -> void:
 		return
 	_follow.progress = 0.0
 	_progress = 0.0
-        _sprite.modulate.a = 0.6
-        _initialized = true
+	_sprite.modulate.a = 0.6
+	_initialized = true
+
 
 
 func _physics_process(delta: float) -> void:
@@ -71,14 +76,14 @@ func _physics_process(delta: float) -> void:
 	var hit_end := unclamped < 0.0 or unclamped > _length
 	var next_progress = clamp(unclamped, 0.0, _length)
 
-        var next_local := _path.curve.sample_baked(next_progress)
-        var target := _base_position + next_local
-        var motion := target - global_position
+	var next_local := _path.curve.sample_baked(next_progress)
+	var target := _base_position + next_local
+	var motion := target - global_position
 
 	_progress = next_progress
 	_follow.progress = _progress
 	global_position = target
 	velocity = motion / delta
 
-        if hit_end:
-                _direction *= -1
+	if hit_end:
+		_direction *= -1
