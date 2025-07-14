@@ -7,9 +7,6 @@ const GLIDE_FACTOR := 0.6
 const BOOST_POWER := 1200.0
 const BOOST_DURATION := 0.15
 
-var max_copy_time: float
-var current_copy_time: float
-var copy_duration: float
 var is_gliding := false
 var player_velocity: Vector2
 var has_boosted := false
@@ -18,11 +15,8 @@ var boost_timer: float = 0.0
 
 var _facing := 1
 
-var _recording := false
-var _record_points: Array[Vector2] = []
-
-@onready var _copy_time_bar: ColorRect = $CopyTime/CopyTimeBar
-@onready var _copy_time_remaining: ColorRect = $CopyTime/RemainingTimeBar
+var _aiming := false
+var _aim_direction: Vector2 = Vector2.RIGHT
 
 @onready var _umbrella: Sprite2D = $UmbrellaSprite
 @onready var _spawn_point: Node2D = get_parent().get_node_or_null("PlayerSpawn")
@@ -31,10 +25,6 @@ var _record_points: Array[Vector2] = []
 
 
 func _ready() -> void:
-
-	max_copy_time = 3.0
-	current_copy_time = max_copy_time
-	copy_duration = 0.0
 	
 	if _umbrella:
 		_umbrella.visible = false
@@ -50,16 +40,15 @@ func _ready() -> void:
 	if _game_manager == null:
 		push_warning("GameManager node not found")
 
-	if _path_visualizer == null:
-		push_warning("PathVisualizer node not found")
-	else:
-		_path_visualizer.hide()
+        if _path_visualizer == null:
+                push_warning("PathVisualizer node not found")
+        else:
+                _path_visualizer.hide()
 
 
 func _physics_process(delta: float) -> void:
-	_handle_movement(delta)
-	_handle_copy_recording(delta)
-	_update_copy_time_bar()
+        _handle_movement(delta)
+        _handle_copy_actions(delta)
 	
 	# Handle boost timer
 	if boost_timer > 0.0:
@@ -130,82 +119,55 @@ func _start_glide() -> void:
 
 
 func _end_glide() -> void:
-	if is_gliding:
-		is_gliding = false
-		if _umbrella:
-			_umbrella.visible = false
-		else:
-			push_warning("Missing umbrella sprite when ending glide")
+        if is_gliding:
+                is_gliding = false
+                if _umbrella:
+                        _umbrella.visible = false
+                else:
+                        push_warning("Missing umbrella sprite when ending glide")
 
 
-func _handle_copy_recording(delta: float) -> void:
-	if Input.is_action_just_pressed("copy_start") and not _recording:
-		if current_copy_time <= 0.0:
-			print("No time left to copy")
-		else:
-			_start_recording()
-	if Input.is_action_just_pressed("copy_stop") and _recording:
-		_stop_recording()
-		
-	if _recording:
-		copy_duration += delta
-		if _record_points.is_empty() or _record_points[-1] != global_position:
-			_record_points.append(global_position)
-			if _path_visualizer and _path_visualizer.has_method("set_points"):
-				_path_visualizer.set_points(_record_points)
-		if copy_duration >= current_copy_time or Input.is_action_just_released("copy_stop"):
-			_stop_recording()
+func _handle_copy_actions(delta: float) -> void:
+        if Input.is_action_just_pressed("copy_start") and not _aiming:
+                _aiming = true
+                _aim_direction = Vector2(_facing, 0)
+                if _path_visualizer:
+                        _path_visualizer.show()
+                _update_aim_visual()
+
+        if _aiming:
+                var dir = Vector2(
+                        Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
+                        Input.get_action_strength("aim_down") - Input.get_action_strength("aim_up")
+                )
+                if dir.length() > 0.1:
+                        _aim_direction = _quantize_direction(dir)
+                _update_aim_visual()
+
+        if Input.is_action_just_pressed("copy_stop") and _aiming:
+                if _game_manager and _game_manager.has_method("spawn_player_copy"):
+                        var spawn_pos = global_position + Vector2(0, -32)
+                        _game_manager.spawn_player_copy(spawn_pos, _aim_direction)
+                else:
+                        push_warning("Cannot spawn player copy - manager missing or invalid")
+                _aiming = false
+                if _path_visualizer:
+                        _path_visualizer.hide()
+
+func _quantize_direction(dir: Vector2) -> Vector2:
+        var angle = dir.angle()
+        var step = PI / 4.0
+        var idx = round(angle / step)
+        var new_angle = idx * step
+        return Vector2.RIGHT.rotated(new_angle).normalized()
+
+func _update_aim_visual() -> void:
+        if _path_visualizer and _aiming:
+                var start = global_position
+                var end = start + _aim_direction.normalized() * 64.0
+                _path_visualizer.set_points([start, end])
 
 
-func _start_recording() -> void:
-	_recording = true
-	copy_duration = 0.0
-	_record_points.clear()
-	_record_points.append(global_position)
-	if _path_visualizer and _path_visualizer.has_method("set_points"):
-		_path_visualizer.show()
-		_path_visualizer.set_points(_record_points)
-	print("Copy recording started")
-
-
-func _stop_recording() -> void:
-	_recording = false
-	if _path_visualizer:
-		_path_visualizer.hide()
-	if _record_points.size() < 2:
-		print("Not enough points to create copy")
-		return
-
-	current_copy_time -= copy_duration
-	if current_copy_time < 0.0:
-		current_copy_time = 0.0
-
-	var base := _record_points[0]
-	var rel_points: Array = []
-	for p in _record_points:
-		rel_points.append(p - base)
-
-	if _game_manager and _game_manager.has_method("spawn_player_copy"):
-		_game_manager.spawn_player_copy(base, rel_points)
-	else:
-		push_warning("Cannot spawn player copy - manager missing or invalid")
-
-	if _spawn_point:
-		global_position = _spawn_point.global_position
-		velocity = Vector2.ZERO
-	_end_glide()
-	print("Copy recording stopped, time remaining: %f" % current_copy_time)
-
-func _update_copy_time_bar() -> void:
-	if _copy_time_bar and _copy_time_remaining:
-		var max_width = _copy_time_bar.size.x
-		var time_left = current_copy_time
-		if _recording:
-			time_left -= copy_duration
-		var pct = 1.0
-		if max_copy_time > 0.0:
-			pct = clamp(time_left / max_copy_time, 0.0, 1.0)
-		_copy_time_remaining.size.x = max_width * pct
 
 func respawn() -> void:
 	if _spawn_point:

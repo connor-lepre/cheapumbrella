@@ -36,27 +36,25 @@ func _input(event):
 	if event.is_action_pressed("reset"):
 		get_tree().reload_current_scene()
 
-func spawn_player_copy(base_position: Vector2, rel_points: Array) -> void:
-	if player_copy_scn == null:
-		push_error("Player copy scene not loaded")
-		return
-	if copies_root == null:
-		push_error("CopiesRoot node missing")
-		return
-	var copy = player_copy_scn.instantiate()
-	if copy == null:
-		push_error("Failed to instance PlayerCopy")
-		return
-	copies_root.add_child(copy)
-	if copy.has_method("init_copy"):
-		if rel_points.size() < 2:
-			push_warning("Copy spawned with invalid path")
-			return
-		copy.init_copy(base_position, rel_points.duplicate(true))
-	else:
-		push_warning("PlayerCopy missing init_copy method")
-	active_copies += 1
-	print("Copy spawned at %s" % base_position)
+func spawn_player_copy(position: Vector2, direction: Vector2) -> void:
+        if player_copy_scn == null:
+                push_error("Player copy scene not loaded")
+                return
+        if copies_root == null:
+                push_error("CopiesRoot node missing")
+                return
+        var copy = player_copy_scn.instantiate()
+        if copy == null:
+                push_error("Failed to instance PlayerCopy")
+                return
+        copies_root.add_child(copy)
+        if copy.has_method("init_throw"):
+                copy.global_position = position
+                copy.init_throw(direction)
+        else:
+                push_warning("PlayerCopy missing init_throw method")
+        active_copies += 1
+        print("Copy spawned at %s" % position)
 
 func _on_goal_body_entered(body: Node) -> void:
 	if body and body.name == "Player":
