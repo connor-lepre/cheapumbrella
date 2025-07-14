@@ -1,3 +1,4 @@
+## Throwable copy used by the player before placement.
 extends CharacterBody2D
 
 const GRAVITY := 2400.0
@@ -22,6 +23,7 @@ func _ready() -> void:
 	if above_checker:
 		above_checker.body_entered.connect(_on_above_checker_body_entered)
 
+## Gives the copy an initial velocity as it is thrown by the player.
 func init_throw(direction: Vector2) -> void:
 	velocity = direction.normalized() * THROW_SPEED
 	print("THROW: direction =", direction, " velocity =", velocity)

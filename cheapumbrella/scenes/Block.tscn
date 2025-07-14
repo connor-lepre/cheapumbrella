@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bp4nudmv5i8lk"]
 
-[ext_resource type="Script" uid="uid://cqs4l4jfuftte" path="res://scripts/CopyInstanceBehaviors/Block.gd" id="1_01uos"]
+[ext_resource type="Script" path="res://scripts/CopyInstance.gd" id="1_01uos"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_aadlf"]
 size = Vector2(32, 32)
@@ -29,4 +29,3 @@ collision_layer = 2
 [node name="AboveShape" type="CollisionShape2D" parent="AboveChecker"]
 shape = SubResource("RectangleShape2D_aadlf")
 
-[connection signal="body_entered" from="AboveChecker" to="." method="_on_above_checker_body_entered"]

@@ -1,3 +1,4 @@
+## Central node responsible for spawning copies and tracking energy usage.
 extends Node
 
 const COPY_SCENES = {
@@ -66,6 +67,8 @@ func spawn_player_copy(position: Vector2, direction: Vector2) -> void:
 	active_copies += 1
 	print("Copy spawned at %s" % position)
 
+## Instantiates a copy of the requested type at the given position.
+## Returns the created node so the player can connect signals.
 func spawn_copy(type_name: String, position: Vector2) -> Node:
 	var scene = COPY_SCENES.get(type_name)
 	if scene == null:
