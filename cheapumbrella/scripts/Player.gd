@@ -5,7 +5,7 @@ const JUMP_VELOCITY := -1600.0
 const GRAVITY := 4800.0
 const GLIDE_FACTOR := 0.6
 const BOOST_POWER := 1200.0
-const BOOST_DURATION := 0.15
+const BOOST_DURATION := 0.25
 
 var is_gliding := false
 var player_velocity: Vector2
@@ -40,30 +40,30 @@ func _ready() -> void:
 	if _game_manager == null:
 		push_warning("GameManager node not found")
 
-        if _path_visualizer == null:
-                push_warning("PathVisualizer node not found")
-        else:
-                _path_visualizer.hide()
+	if _path_visualizer == null:
+		push_warning("PathVisualizer node not found")
+	else:
+		_path_visualizer.hide()
 
 
 func _physics_process(delta: float) -> void:
-        _handle_movement(delta)
-        _handle_copy_actions(delta)
+	_handle_movement(delta)
+	_handle_copy_actions(delta)
 	
 	# Handle boost timer
 	if boost_timer > 0.0:
 		player_velocity.x = _facing * BOOST_POWER
 		boost_timer -= delta
 	else:
-		# Boost finished, allow normal movement code to set velocity.x
+			# Boost finished, allow normal movement code to set velocity.x
 		pass
 
-	# Handle boost input
+		# Handle boost input
 	if Input.is_action_just_pressed("boost"):
 		if not has_boosted:
 			_boost()
 
-	# Reset boost when landing
+		# Reset boost when landing
 	if is_on_floor():
 		has_boosted = false
 
@@ -119,55 +119,54 @@ func _start_glide() -> void:
 
 
 func _end_glide() -> void:
-        if is_gliding:
-                is_gliding = false
-                if _umbrella:
-                        _umbrella.visible = false
-                else:
-                        push_warning("Missing umbrella sprite when ending glide")
+	if is_gliding:
+		is_gliding = false
+		if _umbrella:
+			_umbrella.visible = false
+		else:
+			push_warning("Missing umbrella sprite when ending glide")
 
 
 func _handle_copy_actions(delta: float) -> void:
-        if Input.is_action_just_pressed("copy_start") and not _aiming:
-                _aiming = true
-                _aim_direction = Vector2(_facing, 0)
-                if _path_visualizer:
-                        _path_visualizer.show()
-                _update_aim_visual()
+	if Input.is_action_just_pressed("copy_start") and not _aiming:
+		_aiming = true
+		_aim_direction = Vector2(_facing, 0)
+		if _path_visualizer:
+			_path_visualizer.show()
+		_update_aim_visual()
 
-        if _aiming:
-                var dir = Vector2(
-                        Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
-                        Input.get_action_strength("aim_down") - Input.get_action_strength("aim_up")
-                )
-                if dir.length() > 0.1:
-                        _aim_direction = _quantize_direction(dir)
-                _update_aim_visual()
+	if _aiming:
+		var dir = Vector2(
+			Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
+			Input.get_action_strength("aim_down") - Input.get_action_strength("aim_up")
+		)
+		if dir.length() > 0.1:
+			_aim_direction = _quantize_direction(dir)
+		_update_aim_visual()
 
-        if Input.is_action_just_pressed("copy_stop") and _aiming:
-                if _game_manager and _game_manager.has_method("spawn_player_copy"):
-                        var spawn_pos = global_position + Vector2(0, -32)
-                        _game_manager.spawn_player_copy(spawn_pos, _aim_direction)
-                else:
-                        push_warning("Cannot spawn player copy - manager missing or invalid")
-                _aiming = false
-                if _path_visualizer:
-                        _path_visualizer.hide()
+	if Input.is_action_just_pressed("copy_stop") and _aiming:
+		if _game_manager and _game_manager.has_method("spawn_player_copy"):
+			var spawn_pos = global_position + Vector2(0, -32)
+			_game_manager.spawn_player_copy(spawn_pos, _aim_direction)
+		else:
+			push_warning("Cannot spawn player copy - manager missing or invalid")
+		_aiming = false
+		if _path_visualizer:
+			_path_visualizer.hide()
 
 func _quantize_direction(dir: Vector2) -> Vector2:
-        var angle = dir.angle()
-        var step = PI / 4.0
-        var idx = round(angle / step)
-        var new_angle = idx * step
-        return Vector2.RIGHT.rotated(new_angle).normalized()
+	var angle = dir.angle()
+	var step = PI / 4.0
+	var idx = round(angle / step)
+	var new_angle = idx * step
+	return Vector2.RIGHT.rotated(new_angle).normalized()
 
 func _update_aim_visual() -> void:
-        if _path_visualizer and _aiming:
-                var start = global_position
-                var end = start + _aim_direction.normalized() * 64.0
-                _path_visualizer.set_points([start, end])
-
-
+	if _path_visualizer and _aiming:
+		var start = global_position
+		var end = start + _aim_direction.normalized() * 64.0
+		var points: Array[Vector2] = [start, end]
+		_path_visualizer.set_points(points)
 
 func respawn() -> void:
 	if _spawn_point:
