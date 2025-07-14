@@ -13,13 +13,15 @@ size = Vector2(64, 64)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_above"]
 size = Vector2(64, 4)
 
-[node name="PlayerCopy" type="CharacterBody2D"]
+[node name="PlayerCopy" type="CharacterBody2D" groups=["Copy"]]
 script = ExtResource("1_c7m67")
+collision_layer = 2
+collision_mask = 1
 
 [node name="CopySprite" type="Sprite2D" parent="."]
 texture = SubResource("PlaceholderTexture2D_c7m67")
 
-[node name="CopyCollider" type="CollisionShape2D" parent="." groups=["Copy"]]
+[node name="CopyCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jyjwv")
 
 [node name="CopyPath" type="Path2D" parent="."]
