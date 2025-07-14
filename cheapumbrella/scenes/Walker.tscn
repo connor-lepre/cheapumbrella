@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://copq0dcgwiyk3"]
+
+[ext_resource type="Script" uid="uid://du81mfqvmmi8n" path="res://scripts/CopyInstanceBehaviors/Walker.gd" id="1_gpsqf"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_u0paq"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpsqf"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u0paq"]
+size = Vector2(32, 8)
+
+[node name="Walker" type="CharacterBody2D" groups=["Copy"]]
+collision_layer = 2
+collision_mask = 6
+script = ExtResource("1_gpsqf")
+
+[node name="CopySprite" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_u0paq")
+
+[node name="CopyCollider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gpsqf")
+
+[node name="AboveChecker" type="Area2D" parent="."]
+position = Vector2(0, -21)
+collision_layer = 2
+
+[node name="AboveShape" type="CollisionShape2D" parent="AboveChecker"]
+shape = SubResource("RectangleShape2D_u0paq")

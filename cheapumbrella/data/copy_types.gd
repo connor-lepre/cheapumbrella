@@ -1,4 +1,6 @@
-var copy_types = {
+# res://data/copy_types.gd
+
+const copy_types = {
 	"Block": {
 		"dimensions": Vector2(64, 64),
 		#"sprite": "res://path/to/block_sprite.png",

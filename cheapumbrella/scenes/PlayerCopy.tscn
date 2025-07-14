@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3v8kt2omktvr"]
+[gd_scene load_steps=5 format=3 uid="uid://b3v8kt2omktvr"]
 
-[ext_resource type="Script" uid="uid://dml28724rqeix" path="res://scripts/CopyInstance.gd" id="1_c7m67"]
+[ext_resource type="Script" uid="uid://dml28724rqeix" path="res://scripts/PlayerCopy.gd" id="1_c7m67"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_c7m67"]
 size = Vector2(32, 32)
@@ -8,13 +8,12 @@ size = Vector2(32, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jyjwv"]
 size = Vector2(32, 32)
 
-[sub_resource type="Curve2D" id="Curve2D_libvq"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_above"]
 size = Vector2(32, 8)
 
 [node name="PlayerCopy" type="CharacterBody2D" groups=["Copy"]]
 collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_c7m67")
 
 [node name="CopySprite" type="Sprite2D" parent="."]
@@ -23,13 +22,9 @@ texture = SubResource("PlaceholderTexture2D_c7m67")
 [node name="CopyCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jyjwv")
 
-[node name="CopyPath" type="Path2D" parent="."]
-curve = SubResource("Curve2D_libvq")
-
-[node name="CopyPathFollow" type="PathFollow2D" parent="CopyPath"]
-
 [node name="AboveChecker" type="Area2D" parent="."]
 position = Vector2(0, -20)
+collision_layer = 2
 
 [node name="AboveShape" type="CollisionShape2D" parent="AboveChecker"]
 shape = SubResource("RectangleShape2D_above")

@@ -11,11 +11,11 @@ var is_gliding := false
 var player_velocity: Vector2
 var has_boosted := false
 var boost_timer: float = 0.0
-var max_copy_energy: int = 3
-var remaining_copy_energy: int
+
+var game_mgr = GameManager
 
 var copy_types: Dictionary = preload("res://data/copy_types.gd").copy_types
-var _copy_keys: Array[String] = []
+var _copy_keys: Array
 var _selected_copy_idx: int = 0
 
 var _ghost: Node2D
@@ -37,34 +37,34 @@ var _aiming := false # unused placeholder
 
 func _ready() -> void:
 	
-        if _umbrella:
-                _umbrella.visible = false
-        else:
-                push_warning("UmbrellaSprite node missing")
-        remaining_copy_energy = max_copy_energy
-        _copy_keys = copy_types.keys()
+	if _umbrella:
+		_umbrella.visible = false
+	else:
+		push_warning("UmbrellaSprite node missing")
+	game_mgr.remaining_copy_energy = game_mgr.max_copy_energy
+	_copy_keys = copy_types.keys()
 
-        if has_node("CopyBar"):
-                _copy_bar = $CopyBar
-        if has_node("CopyTypeLabel"):
-                _copy_type_label = $CopyTypeLabel
-        add_to_group("Player")
-        collision_layer = 1
-        collision_mask = 6
+	if has_node("CopyBar"):
+		_copy_bar = $CopyBar
+	if has_node("CopyTypeLabel"):
+		_copy_type_label = $CopyTypeLabel
+	add_to_group("Player")
+	collision_layer = 1
+	collision_mask = 6
 
 	if _spawn_point == null:
 		push_warning("PlayerSpawn node not found")
 
-        if _game_manager == null:
-                push_warning("GameManager node not found")
+	if _game_manager == null:
+		push_warning("GameManager node not found")
 
-        if _path_visualizer == null:
-                push_warning("PathVisualizer node not found")
-        else:
-                _path_visualizer.hide()
+	if _path_visualizer == null:
+		push_warning("PathVisualizer node not found")
+	else:
+		_path_visualizer.hide()
 
-        _update_copy_bar()
-        _update_copy_label()
+	_update_copy_bar()
+	_update_copy_label()
 
 
 func _physics_process(delta: float) -> void:
@@ -149,27 +149,27 @@ func _end_glide() -> void:
 
 
 func _handle_copy_actions(_delta: float) -> void:
-        if Input.is_action_just_pressed("next_copy"):
-                _selected_copy_idx = (_selected_copy_idx + 1) % _copy_keys.size()
-                _update_copy_label()
-        elif Input.is_action_just_pressed("prev_copy"):
-                _selected_copy_idx = (_selected_copy_idx - 1 + _copy_keys.size()) % _copy_keys.size()
-                _update_copy_label()
+	if Input.is_action_just_pressed("next_copy"):
+		_selected_copy_idx = (_selected_copy_idx + 1) % _copy_keys.size()
+		_update_copy_label()
+	elif Input.is_action_just_pressed("prev_copy"):
+		_selected_copy_idx = (_selected_copy_idx - 1 + _copy_keys.size()) % _copy_keys.size()
+		_update_copy_label()
 
-        if Input.is_action_pressed("aim_left"):
-                _last_side = -1
-        elif Input.is_action_pressed("aim_right"):
-                _last_side = 1
+	if Input.is_action_pressed("aim_left"):
+		_last_side = -1
+	elif Input.is_action_pressed("aim_right"):
+		_last_side = 1
 
-        if Input.is_action_just_pressed("copy_start"):
-                _spawn_ghost()
+	if Input.is_action_just_pressed("copy_start"):
+		_spawn_ghost()
 
-        if _ghost:
-                _update_ghost_position()
+	if _ghost:
+		_update_ghost_position()
 
-        if Input.is_action_just_pressed("copy_stop"):
-                if _ghost:
-                        _place_copy()
+	if Input.is_action_just_pressed("copy_stop"):
+		if _ghost:
+			_place_copy()
 
 
 func respawn() -> void:
@@ -200,64 +200,64 @@ func _check_crush() -> void:
 				env_above = true
 			elif col.get_normal().y < 0:
 				env_below = true
-        if (copy_above and env_below) or (copy_below and env_above):
-                respawn()
+				if (copy_above and env_below) or (copy_below and env_above):
+					respawn()
 
 func _update_copy_bar() -> void:
-        if _copy_bar == null:
-                return
-        var bg = _copy_bar.get_node_or_null("CopyTimeBar")
-        var fill = _copy_bar.get_node_or_null("RemainingTimeBar")
-        if bg and fill:
-                var ratio: float = 0.0
-                if max_copy_energy > 0:
-                        ratio = float(remaining_copy_energy) / float(max_copy_energy)
-                fill.size.x = bg.size.x * ratio
+	if _copy_bar == null:
+		return
+	var bg = _copy_bar.get_node_or_null("CopyTimeBar")
+	var fill = _copy_bar.get_node_or_null("RemainingTimeBar")
+	if bg and fill:
+		var ratio: float = 0.0
+		if game_mgr.max_copy_energy > 0:
+			ratio = float(game_mgr.remaining_copy_energy) / float(game_mgr.max_copy_energy)
+		fill.size.x = bg.size.x * ratio
 
 func _update_copy_label() -> void:
-        if _copy_type_label == null:
-                return
-        if _copy_keys.size() == 0:
-                _copy_type_label.text = ""
-        else:
-                _copy_type_label.text = _copy_keys[_selected_copy_idx]
+	if _copy_type_label == null:
+		return
+	if _copy_keys.size() == 0:
+		_copy_type_label.text = ""
+	else:
+		_copy_type_label.text = _copy_keys[_selected_copy_idx]
 
 func _spawn_ghost() -> void:
-        if _ghost:
-                _ghost.queue_free()
-        _ghost = preload("res://scripts/GhostPreview.gd").new()
-        var dims: Vector2 = copy_types[_copy_keys[_selected_copy_idx]].dimensions
-        _ghost.size = dims
-        get_parent().add_child(_ghost)
-        _update_ghost_position()
+	if _ghost:
+		_ghost.queue_free()
+	_ghost = preload("res://scripts/GhostPreview.gd").new()
+	var dims: Vector2 = copy_types[_copy_keys[_selected_copy_idx]].dimensions
+	_ghost.size = dims
+	get_parent().add_child(_ghost)
+	_update_ghost_position()
 
 func _update_ghost_position() -> void:
-        if _ghost == null:
-                return
-        var dims: Vector2 = copy_types[_copy_keys[_selected_copy_idx]].dimensions
-        var side = _last_side
-        var offset_x = side * (_player_half_width + dims.x * 0.5 + 32.0)
-        _ghost.global_position = Vector2(global_position.x + offset_x, global_position.y)
+	if _ghost == null:
+		return
+	var dims: Vector2 = copy_types[_copy_keys[_selected_copy_idx]].dimensions
+	var side = _last_side
+	var offset_x = side * (_player_half_width + dims.x * 0.5 + 32.0)
+	_ghost.global_position = Vector2(global_position.x + offset_x, global_position.y)
 
 func _place_copy() -> void:
-        var type_name = _copy_keys[_selected_copy_idx]
-        var data = copy_types[type_name]
-        var cost: int = data.get("copy cost", 1)
-        if remaining_copy_energy < cost:
-                push_warning("Not enough energy")
-                _ghost.queue_free()
-                _ghost = null
-                return
-        if _game_manager and _game_manager.has_method("spawn_copy"):
-                var copy = _game_manager.spawn_copy(type_name, _ghost.global_position)
-                if copy:
-                        remaining_copy_energy -= cost
-                        _update_copy_bar()
-                        if copy.has_signal("copy_removed"):
-                                copy.copy_removed.connect(_on_copy_removed)
-        _ghost.queue_free()
-        _ghost = null
+	var type_name = _copy_keys[_selected_copy_idx]
+	var data = copy_types[type_name]
+	var cost: int = data.get("copy cost", 1)
+	if game_mgr.remaining_copy_energy < cost:
+		push_warning("Not enough energy")
+		_ghost.queue_free()
+		_ghost = null
+		return
+	if _game_manager and _game_manager.has_method("spawn_copy"):
+		var copy = _game_manager.spawn_copy(type_name, _ghost.global_position)
+		if copy:
+			game_mgr.remaining_copy_energy -= cost
+			_update_copy_bar()
+			if copy.has_signal("copy_removed"):
+				copy.copy_removed.connect(_on_copy_removed)
+	_ghost.queue_free()
+	_ghost = null
 
 func _on_copy_removed(cost: int) -> void:
-        remaining_copy_energy = min(remaining_copy_energy + cost, max_copy_energy)
-        _update_copy_bar()
+	game_mgr.remaining_copy_energy = min(game_mgr.remaining_copy_energy + cost, game_mgr.max_copy_energy)
+	_update_copy_bar()

@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dg5m173sxg8v5"]
+
+[ext_resource type="Script" uid="uid://dknftgtgbua5w" path="res://scripts/CopyInstanceBehaviors/Platform.gd" id="1_axdvg"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_orc8j"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_axdvg"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_orc8j"]
+size = Vector2(64, 8)
+
+[node name="Platform" type="CharacterBody2D" groups=["Copy"]]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_axdvg")
+
+[node name="CopySprite" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_orc8j")
+
+[node name="CopyCollider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_axdvg")
+
+[node name="AboveChecker" type="Area2D" parent="."]
+position = Vector2(0, -13)
+collision_layer = 2
+
+[node name="AboveShape" type="CollisionShape2D" parent="AboveChecker"]
+shape = SubResource("RectangleShape2D_orc8j")

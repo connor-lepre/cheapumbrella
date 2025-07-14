@@ -87,8 +87,6 @@ offset_bottom = 4.0
 color = Color(0.80513, 0.797918, 0.759043, 1)
 
 [node name="CopyTypeLabel" type="Label" parent="Player"]
-layout_mode = 3
-anchors_preset = 0
 offset_left = -32.0
 offset_top = 32.0
 offset_right = 32.0
