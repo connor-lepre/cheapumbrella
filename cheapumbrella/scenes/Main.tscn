@@ -27,7 +27,7 @@ radius = 64.0
 script = ExtResource("1_0bbpv")
 player_copy_scn = ExtResource("3_copy")
 
-[node name="Floor" type="StaticBody2D" parent="."]
+[node name="Floor" type="StaticBody2D" parent="." groups=["Environment"]]
 position = Vector2(960, 960)
 
 [node name="FloorCollider" type="CollisionShape2D" parent="Floor"]
@@ -38,7 +38,7 @@ texture = SubResource("PlaceholderTexture2D_jyhfs")
 region_enabled = true
 region_rect = Rect2(0, 0, 1280, 40)
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" type="CharacterBody2D" parent="." groups=["Player"]]
 position = Vector2(416, 907)
 script = ExtResource("2_rarhs")
 

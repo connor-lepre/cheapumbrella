@@ -19,7 +19,7 @@ script = ExtResource("1_c7m67")
 [node name="CopySprite" type="Sprite2D" parent="."]
 texture = SubResource("PlaceholderTexture2D_c7m67")
 
-[node name="CopyCollider" type="CollisionShape2D" parent="."]
+[node name="CopyCollider" type="CollisionShape2D" parent="." groups=["Copy"]]
 shape = SubResource("RectangleShape2D_jyjwv")
 
 [node name="CopyPath" type="Path2D" parent="."]
