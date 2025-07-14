@@ -1,8 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://1i67iv3g6apn"]
+[gd_scene load_steps=8 format=3 uid="uid://1i67iv3g6apn"]
 
 [ext_resource type="Script" uid="uid://bubxavdqdvncd" path="res://scripts/sandbox.gd" id="1_jgjqi"]
 [ext_resource type="PackedScene" uid="uid://drk1vvovwjcq4" path="res://Scenes/StaticPlatform.tscn" id="2_vrv26"]
 [ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="3_ti018"]
+[ext_resource type="PackedScene" uid="uid://b6irkxtagc3ff" path="res://Scenes/CopyTimerUI.tscn.tscn" id="4_vrv26"]
+[ext_resource type="PackedScene" uid="uid://b3rxyajhry548" path="res://Scenes/crate.tscn" id="5_ti018"]
+
+[sub_resource type="SystemFont" id="SystemFont_ti018"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u6t3p"]
+font = SubResource("SystemFont_ti018")
+font_size = 40
+outline_size = 50
+outline_color = Color(0.364706, 0.0313726, 0.854902, 1)
 
 [node name="Sandbox_tscn" type="Node2D"]
 script = ExtResource("1_jgjqi")
@@ -11,9 +21,41 @@ script = ExtResource("1_jgjqi")
 position = Vector2(-87, 44)
 
 [node name="StaticPlatform_tscn2" parent="." instance=ExtResource("2_vrv26")]
-position = Vector2(452, 46)
+position = Vector2(433, 44)
 
 [node name="GhostPlatforms" type="Node2D" parent="."]
 
 [node name="SpawnPoint" parent="." instance=ExtResource("3_ti018")]
 position = Vector2(-232, -304)
+
+[node name="CanvasLayer" parent="." instance=ExtResource("4_vrv26")]
+
+[node name="Node2D" parent="." instance=ExtResource("5_ti018")]
+position = Vector2(-240, -64)
+
+[node name="StaticPlatform_tscn3" parent="." instance=ExtResource("2_vrv26")]
+position = Vector2(432, -1216)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -288.0
+offset_top = 110.0
+offset_right = 609.0
+offset_bottom = 281.0
+text = "R2 to record (up to five seconds) 
+
+X to jump! try to bounce off of your duplicates 
+hold X to glide :)"
+label_settings = SubResource("LabelSettings_u6t3p")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Label"]
+offset_left = 25.0
+offset_top = -681.0
+offset_right = 922.0
+offset_bottom = -510.0
+text = "go up!"
+label_settings = SubResource("LabelSettings_u6t3p")
+horizontal_alignment = 1
+
+[node name="StaticPlatform_tscn4" parent="." instance=ExtResource("2_vrv26")]
+position = Vector2(-1176, 783)

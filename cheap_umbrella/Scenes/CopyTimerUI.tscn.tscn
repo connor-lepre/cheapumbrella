@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://b6irkxtagc3ff"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="CopyTimerUI" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "5.0s"
