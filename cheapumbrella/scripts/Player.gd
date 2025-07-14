@@ -13,6 +13,7 @@ var _facing := 1
 var _copy_ready := false
 var _preview_copy: Node2D
 var _path_visualizer: Node2D
+var _last_aim_dir: Vector2 = Vector2.RIGHT
 
 @onready var _umbrella: Sprite2D = $UmbrellaSprite
 @onready var _spawn_point: Node2D = get_parent().get_node_or_null("PlayerSpawn")
@@ -100,17 +101,27 @@ func _handle_copy_spawn() -> void:
 		_hide_preview()
 
 func _get_quantized_direction() -> Vector2:
-	var aim := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
-	if aim.length() == 0.0:
-		var viewport := get_viewport()
-		if viewport:
-			aim = (viewport.get_mouse_position() - global_position).normalized()
-	if aim.length() == 0.0:
-		aim = Vector2(_facing, 0)
-	var angle := fposmod(aim.angle(), TAU)
-	var step := PI / 4.0
-	var index := int(round(angle / step)) % 8
-	return Vector2.RIGHT.rotated(index * step).normalized()
+        # Choose between controller aim (right stick) and mouse position.
+        var stick := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+        var aim_vec := Vector2.ZERO
+        if stick.length() > 0.2:
+                aim_vec = stick.normalized()
+        else:
+                var viewport := get_viewport()
+                if viewport:
+                        var mouse_vec := viewport.get_mouse_position() - global_position
+                        if mouse_vec.length() > 0.0:
+                                aim_vec = mouse_vec.normalized()
+
+        if aim_vec.length() == 0.0:
+                aim_vec = _last_aim_dir if _last_aim_dir.length() != 0.0 else Vector2.RIGHT
+
+        var angle := fposmod(aim_vec.angle(), TAU)
+        var step := PI / 4.0
+        var index := int(round(angle / step)) % 8
+        var quantized := Vector2.RIGHT.rotated(index * step).normalized()
+        _last_aim_dir = quantized
+        return quantized
 
 func _can_spawn_at(pos: Vector2) -> bool:
 	var space_state := get_world_2d().direct_space_state
