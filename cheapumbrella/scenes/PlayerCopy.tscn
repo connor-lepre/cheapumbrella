@@ -15,6 +15,7 @@ size = Vector2(64, 4)
 
 [node name="PlayerCopy" type="CharacterBody2D" groups=["Copy"]]
 collision_layer = 2
+collision_mask = 4
 script = ExtResource("1_c7m67")
 
 [node name="CopySprite" type="Sprite2D" parent="."]
