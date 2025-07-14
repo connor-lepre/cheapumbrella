@@ -29,10 +29,10 @@ func _ready() -> void:
 	add_to_group("Copy")
 	collision_layer = 2
 	collision_mask = 1
-       var rect = $CopyCollider.shape
-       if rect is RectangleShape2D:
-               _width = rect.size.x
-               _height = rect.size.y
+	var rect = $CopyCollider.shape
+	if rect is RectangleShape2D:
+		_width = rect.size.x
+		_height = rect.size.y
 
 
 func _has_valid_path() -> bool:
@@ -99,22 +99,22 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_nudge(base_target: Vector2, delta: float) -> void:
-       var params := PhysicsShapeQueryParameters2D.new()
-       params.shape = $CopyCollider.shape
-       params.transform = Transform2D(0.0, base_target + Vector2(_nudge, 0.0))
-       var results := get_world_2d().direct_space_state.intersect_shape(params)
-       var pushed := false
-       for r in results:
-               var b = r.collider
-               if b and b.is_in_group("Player"):
-                       var dy = abs(b.global_position.y - base_target.y)
-                       if dy <= _height * 0.5:
-                               pushed = true
-                               var diff = b.global_position.x - base_target.x
-                               if abs(diff) > _width:
-                                       queue_free()
-                                       return
-                               _nudge = clamp(diff, -_width, _width)
-                               break
-       if not pushed:
-               _nudge = lerp(_nudge, 0.0, delta * RETURN_SPEED)
+	var params := PhysicsShapeQueryParameters2D.new()
+	params.shape = $CopyCollider.shape
+	params.transform = Transform2D(0.0, base_target + Vector2(_nudge, 0.0))
+	var results := get_world_2d().direct_space_state.intersect_shape(params)
+	var pushed := false
+	for r in results:
+		var b = r.collider
+		if b and b.is_in_group("Player"):
+			var dy = abs(b.global_position.y - base_target.y)
+			if dy <= _height * 0.5:
+				pushed = true
+				var diff = b.global_position.x - base_target.x
+				if abs(diff) > _width:
+					queue_free()
+					return
+				_nudge = clamp(diff, -_width, _width)
+				break
+	if not pushed:
+		_nudge = lerp(_nudge, 0.0, delta * RETURN_SPEED)

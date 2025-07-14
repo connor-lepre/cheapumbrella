@@ -8,7 +8,7 @@ func _ready() -> void:
 func _draw() -> void:
 	if _points.size() == 0:
 		return
-	draw_polyline(_points, Color.WHITE)
+	draw_polyline(_points, Color.WHITE, true)
 	for p in _points:
 		draw_circle(p, 4.0, Color.YELLOW)
 

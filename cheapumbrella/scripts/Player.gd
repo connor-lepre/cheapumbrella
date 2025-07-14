@@ -5,9 +5,10 @@ const JUMP_VELOCITY := -800.0
 const GRAVITY := 2400.0
 const GLIDE_FACTOR := 0.6
 
-const MIN_COPY_TIME := 1.0
-const MAX_COPY_TIME := 5.0
+const MIN_COPY_TIME := 0.5
+const MAX_COPY_TIME := 3.0
 
+var current_copy_time: float
 var is_gliding := false
 var player_velocity: Vector2
 
@@ -22,13 +23,16 @@ var _record_points: Array[Vector2] = []
 
 
 func _ready() -> void:
-        if _umbrella:
-                _umbrella.visible = false
-        else:
-                push_warning("UmbrellaSprite node missing")
-        add_to_group("Player")
-       collision_layer = 1
-       collision_mask = 6
+	
+	current_copy_time = 3.0
+	
+	if _umbrella:
+		_umbrella.visible = false
+	else:
+		push_warning("UmbrellaSprite node missing")
+		add_to_group("Player")
+		collision_layer = 1
+		collision_mask = 6
 
 	if _spawn_point == null:
 		push_warning("PlayerSpawn node not found")
@@ -43,14 +47,11 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-        _handle_movement(delta)
-        _handle_copy_recording(delta)
-
+	_handle_movement(delta)
+	_handle_copy_recording(delta)
 
 func _handle_movement(delta: float) -> void:
-	var direction := (
-		Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	)
+	var direction = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
 	player_velocity.x = direction * MOVE_SPEED
 
 	if is_on_floor():
@@ -69,8 +70,8 @@ func _handle_movement(delta: float) -> void:
 	if is_gliding and player_velocity.y > 0.0:
 		# Slow the fall while gliding
 		player_velocity.y *= GLIDE_FACTOR
-       move_and_slide()
-       _check_crush()
+	move_and_slide()
+	_check_crush()
 
 
 func _start_glide() -> void:
@@ -93,16 +94,15 @@ func _end_glide() -> void:
 
 func _handle_copy_recording(delta: float) -> void:
 	if Input.is_action_just_pressed("copy_action"):
-		if _recording:
-			if _record_timer >= MIN_COPY_TIME:
-				_stop_recording()
-			else:
-				print("Copy recording too short to stop")
+		if current_copy_time <= 0.0:
+			print("No time left to copy")
 		else:
 			_start_recording()
 
 	if _recording:
 		_record_timer += delta
+		current_copy_time -= delta
+		print("time remaining: ", current_copy_time)
 		if _record_points.is_empty() or _record_points[-1] != global_position:
 			_record_points.append(global_position)
 			if _path_visualizer and _path_visualizer.has_method("set_points"):
@@ -113,7 +113,7 @@ func _handle_copy_recording(delta: float) -> void:
 
 func _start_recording() -> void:
 	_recording = true
-	_record_timer = 0.0
+	_record_timer = current_copy_time
 	_record_points.clear()
 	_record_points.append(global_position)
 	if _path_visualizer and _path_visualizer.has_method("set_points"):
@@ -145,32 +145,32 @@ func _stop_recording() -> void:
 
 
 func respawn() -> void:
-        if _spawn_point:
-                global_position = _spawn_point.global_position
-                velocity = Vector2.ZERO
-                _end_glide()
-        else:
-                push_warning("No spawn point for respawn")
+	if _spawn_point:
+		global_position = _spawn_point.global_position
+		velocity = Vector2.ZERO
+		_end_glide()
+	else:
+		push_warning("No spawn point for respawn")
 
 func _check_crush() -> void:
-       var copy_above := false
-       var copy_below := false
-       var env_above := false
-       var env_below := false
-       for i in range(get_slide_collision_count()):
-               var col = get_slide_collision(i)
-               var body = col.get_collider()
-               if body == null:
-                       continue
-               if body.is_in_group("Copy"):
-                       if col.get_normal().y > 0:
-                               copy_above = true
-                       elif col.get_normal().y < 0:
-                               copy_below = true
-               elif body.is_in_group("Environment"):
-                       if col.get_normal().y > 0:
-                               env_above = true
-                       elif col.get_normal().y < 0:
-                               env_below = true
-       if (copy_above and env_below) or (copy_below and env_above):
-               respawn()
+	var copy_above := false
+	var copy_below := false
+	var env_above := false
+	var env_below := false
+	for i in range(get_slide_collision_count()):
+		var col = get_slide_collision(i)
+		var body = col.get_collider()
+		if body == null:
+			continue
+		if body.is_in_group("Copy"):
+			if col.get_normal().y > 0:
+				copy_above = true
+			elif col.get_normal().y < 0:
+				copy_below = true
+		elif body.is_in_group("Environment"):
+			if col.get_normal().y > 0:
+				env_above = true
+			elif col.get_normal().y < 0:
+				env_below = true
+	if (copy_above and env_below) or (copy_below and env_above):
+		respawn()
