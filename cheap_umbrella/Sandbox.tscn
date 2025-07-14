@@ -59,3 +59,6 @@ horizontal_alignment = 1
 
 [node name="StaticPlatform_tscn4" parent="." instance=ExtResource("2_vrv26")]
 position = Vector2(-1176, 783)
+
+[node name="StaticPlatform_tscn5" parent="." instance=ExtResource("2_vrv26")]
+position = Vector2(1261, 44)
