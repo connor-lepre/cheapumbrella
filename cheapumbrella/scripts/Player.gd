@@ -14,10 +14,20 @@ var boost_timer: float = 0.0
 var max_copy_energy: int = 3
 var remaining_copy_energy: int
 
+var copy_types: Dictionary = preload("res://data/copy_types.gd").copy_types
+var _copy_keys: Array[String] = []
+var _selected_copy_idx: int = 0
+
+var _ghost: Node2D
+var _last_side: int = 1
+var _player_half_width: float = 16.0
+
+var _copy_bar: Control
+var _copy_type_label: Label
+
 var _facing := 1
 
-var _aiming := false
-var _aim_direction: Vector2 = Vector2.RIGHT
+var _aiming := false # unused placeholder
 
 @onready var _umbrella: Sprite2D = $UmbrellaSprite
 @onready var _spawn_point: Node2D = get_parent().get_node_or_null("PlayerSpawn")
@@ -27,24 +37,34 @@ var _aim_direction: Vector2 = Vector2.RIGHT
 
 func _ready() -> void:
 	
-	if _umbrella:
-		_umbrella.visible = false
-	else:
-		push_warning("UmbrellaSprite node missing")
-		add_to_group("Player")
-		collision_layer = 1
-		collision_mask = 6
+        if _umbrella:
+                _umbrella.visible = false
+        else:
+                push_warning("UmbrellaSprite node missing")
+        remaining_copy_energy = max_copy_energy
+        _copy_keys = copy_types.keys()
+
+        if has_node("CopyBar"):
+                _copy_bar = $CopyBar
+        if has_node("CopyTypeLabel"):
+                _copy_type_label = $CopyTypeLabel
+        add_to_group("Player")
+        collision_layer = 1
+        collision_mask = 6
 
 	if _spawn_point == null:
 		push_warning("PlayerSpawn node not found")
 
-	if _game_manager == null:
-		push_warning("GameManager node not found")
+        if _game_manager == null:
+                push_warning("GameManager node not found")
 
-	if _path_visualizer == null:
-		push_warning("PathVisualizer node not found")
-	else:
-		_path_visualizer.hide()
+        if _path_visualizer == null:
+                push_warning("PathVisualizer node not found")
+        else:
+                _path_visualizer.hide()
+
+        _update_copy_bar()
+        _update_copy_label()
 
 
 func _physics_process(delta: float) -> void:
@@ -129,57 +149,28 @@ func _end_glide() -> void:
 
 
 func _handle_copy_actions(_delta: float) -> void:
-	var aiming_pressed := Input.is_action_pressed("copy_start")
+        if Input.is_action_just_pressed("next_copy"):
+                _selected_copy_idx = (_selected_copy_idx + 1) % _copy_keys.size()
+                _update_copy_label()
+        elif Input.is_action_just_pressed("prev_copy"):
+                _selected_copy_idx = (_selected_copy_idx - 1 + _copy_keys.size()) % _copy_keys.size()
+                _update_copy_label()
 
-	if aiming_pressed and not _aiming:
-		_aiming = true
-		_aim_direction = Vector2(_facing, 0)
-		if _path_visualizer:
-			_path_visualizer.show()
+        if Input.is_action_pressed("aim_left"):
+                _last_side = -1
+        elif Input.is_action_pressed("aim_right"):
+                _last_side = 1
 
-	if _aiming:
-		var raw_dir := _get_aim_input()
-		if raw_dir.length() > 0.1:
-			_aim_direction = _quantize_direction(raw_dir)
-		_update_aim_visual()
+        if Input.is_action_just_pressed("copy_start"):
+                _spawn_ghost()
 
-		if Input.is_action_just_pressed("copy_stop"):
-			if _game_manager and _game_manager.has_method("spawn_player_copy"):
-				var spawn_pos = global_position + Vector2(0, -32)
-				_game_manager.spawn_player_copy(spawn_pos, _aim_direction)
-			else:
-				push_warning("Cannot spawn player copy - manager missing or invalid")
-			_aiming = false
-			if _path_visualizer:
-				_path_visualizer.hide()
+        if _ghost:
+                _update_ghost_position()
 
-	if not aiming_pressed and _aiming:
-		_aiming = false
-		if _path_visualizer:
-			_path_visualizer.hide()
+        if Input.is_action_just_pressed("copy_stop"):
+                if _ghost:
+                        _place_copy()
 
-func _get_aim_input() -> Vector2:
-	var vec := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
-	if vec.length() > 0.1:
-		return vec
-	var mouse_vec := get_global_mouse_position() - global_position
-	if mouse_vec.length() > 8.0:
-		return mouse_vec
-	return Vector2.ZERO
-
-func _quantize_direction(dir: Vector2) -> Vector2:
-	var angle = dir.angle()
-	var step = PI / 4.0
-	var idx = round(angle / step)
-	var new_angle = idx * step
-	return Vector2.RIGHT.rotated(new_angle).normalized()
-
-func _update_aim_visual() -> void:
-	if _path_visualizer and _aiming:
-		var start = global_position
-		var end = start + _aim_direction.normalized() * 64.0
-		var points: Array[Vector2] = [start, end]
-		_path_visualizer.set_points(points)
 
 func respawn() -> void:
 	if _spawn_point:
@@ -209,5 +200,64 @@ func _check_crush() -> void:
 				env_above = true
 			elif col.get_normal().y < 0:
 				env_below = true
-	if (copy_above and env_below) or (copy_below and env_above):
-		respawn()
+        if (copy_above and env_below) or (copy_below and env_above):
+                respawn()
+
+func _update_copy_bar() -> void:
+        if _copy_bar == null:
+                return
+        var bg = _copy_bar.get_node_or_null("CopyTimeBar")
+        var fill = _copy_bar.get_node_or_null("RemainingTimeBar")
+        if bg and fill:
+                var ratio: float = 0.0
+                if max_copy_energy > 0:
+                        ratio = float(remaining_copy_energy) / float(max_copy_energy)
+                fill.size.x = bg.size.x * ratio
+
+func _update_copy_label() -> void:
+        if _copy_type_label == null:
+                return
+        if _copy_keys.size() == 0:
+                _copy_type_label.text = ""
+        else:
+                _copy_type_label.text = _copy_keys[_selected_copy_idx]
+
+func _spawn_ghost() -> void:
+        if _ghost:
+                _ghost.queue_free()
+        _ghost = preload("res://scripts/GhostPreview.gd").new()
+        var dims: Vector2 = copy_types[_copy_keys[_selected_copy_idx]].dimensions
+        _ghost.size = dims
+        get_parent().add_child(_ghost)
+        _update_ghost_position()
+
+func _update_ghost_position() -> void:
+        if _ghost == null:
+                return
+        var dims: Vector2 = copy_types[_copy_keys[_selected_copy_idx]].dimensions
+        var side = _last_side
+        var offset_x = side * (_player_half_width + dims.x * 0.5 + 32.0)
+        _ghost.global_position = Vector2(global_position.x + offset_x, global_position.y)
+
+func _place_copy() -> void:
+        var type_name = _copy_keys[_selected_copy_idx]
+        var data = copy_types[type_name]
+        var cost: int = data.get("copy cost", 1)
+        if remaining_copy_energy < cost:
+                push_warning("Not enough energy")
+                _ghost.queue_free()
+                _ghost = null
+                return
+        if _game_manager and _game_manager.has_method("spawn_copy"):
+                var copy = _game_manager.spawn_copy(type_name, _ghost.global_position)
+                if copy:
+                        remaining_copy_energy -= cost
+                        _update_copy_bar()
+                        if copy.has_signal("copy_removed"):
+                                copy.copy_removed.connect(_on_copy_removed)
+        _ghost.queue_free()
+        _ghost = null
+
+func _on_copy_removed(cost: int) -> void:
+        remaining_copy_energy = min(remaining_copy_energy + cost, max_copy_energy)
+        _update_copy_bar()

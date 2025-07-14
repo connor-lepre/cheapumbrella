@@ -66,7 +66,7 @@ drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
 
-[node name="CopyTime" type="Control" parent="Player"]
+[node name="CopyBar" type="Control" parent="Player"]
 layout_mode = 3
 anchors_preset = 0
 offset_left = -16.0
@@ -74,17 +74,26 @@ offset_top = 24.0
 offset_right = 16.0
 offset_bottom = 28.0
 
-[node name="CopyTimeBar" type="ColorRect" parent="Player/CopyTime"]
+[node name="CopyTimeBar" type="ColorRect" parent="Player/CopyBar"]
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 4.0
 color = Color(0.223508, 0.220799, 0.198258, 1)
 
-[node name="RemainingTimeBar" type="ColorRect" parent="Player/CopyTime"]
+[node name="RemainingTimeBar" type="ColorRect" parent="Player/CopyBar"]
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 4.0
 color = Color(0.80513, 0.797918, 0.759043, 1)
+
+[node name="CopyTypeLabel" type="Label" parent="Player"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -32.0
+offset_top = 32.0
+offset_right = 32.0
+offset_bottom = 48.0
+text = "Block"
 
 [node name="CopiesRoot" type="Node2D" parent="."]
 
@@ -112,10 +121,10 @@ metadata/_edit_use_anchors_ = true
 [node name="UICanvas" type="CanvasLayer" parent="UI"]
 follow_viewport_enabled = true
 
-[node name="CopyTime" type="Label" parent="UI/UICanvas"]
+[node name="CopyBar" type="Label" parent="UI/UICanvas"]
 offset_right = 40.0
 offset_bottom = 23.0
-text = "Copy time remaining:"
+text = "Copy energy:"
 metadata/_edit_use_anchors_ = true
 
 [node name="CopiesActive" type="Label" parent="UI/UICanvas"]
