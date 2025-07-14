@@ -22,11 +22,13 @@ var _record_points: Array[Vector2] = []
 
 
 func _ready() -> void:
-	if _umbrella:
-		_umbrella.visible = false
-	else:
-		push_warning("UmbrellaSprite node missing")
-	add_to_group("Player")
+        if _umbrella:
+                _umbrella.visible = false
+        else:
+                push_warning("UmbrellaSprite node missing")
+        add_to_group("Player")
+       collision_layer = 1
+       collision_mask = 6
 
 	if _spawn_point == null:
 		push_warning("PlayerSpawn node not found")
@@ -41,8 +43,8 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	_handle_movement(delta)
-	_handle_copy_recording(delta)
+        _handle_movement(delta)
+        _handle_copy_recording(delta)
 
 
 func _handle_movement(delta: float) -> void:
@@ -67,7 +69,8 @@ func _handle_movement(delta: float) -> void:
 	if is_gliding and player_velocity.y > 0.0:
 		# Slow the fall while gliding
 		player_velocity.y *= GLIDE_FACTOR
-	move_and_slide()
+       move_and_slide()
+       _check_crush()
 
 
 func _start_glide() -> void:
@@ -142,9 +145,32 @@ func _stop_recording() -> void:
 
 
 func respawn() -> void:
-	if _spawn_point:
-		global_position = _spawn_point.global_position
-		velocity = Vector2.ZERO
-		_end_glide()
-	else:
-		push_warning("No spawn point for respawn")
+        if _spawn_point:
+                global_position = _spawn_point.global_position
+                velocity = Vector2.ZERO
+                _end_glide()
+        else:
+                push_warning("No spawn point for respawn")
+
+func _check_crush() -> void:
+       var copy_above := false
+       var copy_below := false
+       var env_above := false
+       var env_below := false
+       for i in range(get_slide_collision_count()):
+               var col = get_slide_collision(i)
+               var body = col.get_collider()
+               if body == null:
+                       continue
+               if body.is_in_group("Copy"):
+                       if col.get_normal().y > 0:
+                               copy_above = true
+                       elif col.get_normal().y < 0:
+                               copy_below = true
+               elif body.is_in_group("Environment"):
+                       if col.get_normal().y > 0:
+                               env_above = true
+                       elif col.get_normal().y < 0:
+                               env_below = true
+       if (copy_above and env_below) or (copy_below and env_above):
+               respawn()
