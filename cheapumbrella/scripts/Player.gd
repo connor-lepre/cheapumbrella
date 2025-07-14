@@ -119,40 +119,52 @@ func _start_glide() -> void:
 
 
 func _end_glide() -> void:
-	if is_gliding:
-		is_gliding = false
-		if _umbrella:
-			_umbrella.visible = false
-		else:
-			push_warning("Missing umbrella sprite when ending glide")
+        if is_gliding:
+                is_gliding = false
+                if _umbrella:
+                        _umbrella.visible = false
+                else:
+                        push_warning("Missing umbrella sprite when ending glide")
 
 
-func _handle_copy_actions(delta: float) -> void:
-	if Input.is_action_just_pressed("copy_start") and not _aiming:
-		_aiming = true
-		_aim_direction = Vector2(_facing, 0)
-		if _path_visualizer:
-			_path_visualizer.show()
-		_update_aim_visual()
+func _handle_copy_actions(_delta: float) -> void:
+        var aiming_pressed := Input.is_action_pressed("copy_start")
 
-	if _aiming:
-		var dir = Vector2(
-			Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
-			Input.get_action_strength("aim_down") - Input.get_action_strength("aim_up")
-		)
-		if dir.length() > 0.1:
-			_aim_direction = _quantize_direction(dir)
-		_update_aim_visual()
+        if aiming_pressed and not _aiming:
+                _aiming = true
+                _aim_direction = Vector2(_facing, 0)
+                if _path_visualizer:
+                        _path_visualizer.show()
 
-	if Input.is_action_just_pressed("copy_stop") and _aiming:
-		if _game_manager and _game_manager.has_method("spawn_player_copy"):
-			var spawn_pos = global_position + Vector2(0, -32)
-			_game_manager.spawn_player_copy(spawn_pos, _aim_direction)
-		else:
-			push_warning("Cannot spawn player copy - manager missing or invalid")
-		_aiming = false
-		if _path_visualizer:
-			_path_visualizer.hide()
+        if _aiming:
+                var raw_dir := _get_aim_input()
+                if raw_dir.length() > 0.1:
+                        _aim_direction = _quantize_direction(raw_dir)
+                _update_aim_visual()
+
+                if Input.is_action_just_pressed("copy_stop"):
+                        if _game_manager and _game_manager.has_method("spawn_player_copy"):
+                                var spawn_pos = global_position + Vector2(0, -32)
+                                _game_manager.spawn_player_copy(spawn_pos, _aim_direction)
+                        else:
+                                push_warning("Cannot spawn player copy - manager missing or invalid")
+                        _aiming = false
+                        if _path_visualizer:
+                                _path_visualizer.hide()
+
+        if not aiming_pressed and _aiming:
+                _aiming = false
+                if _path_visualizer:
+                        _path_visualizer.hide()
+
+func _get_aim_input() -> Vector2:
+        var vec := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+        if vec.length() > 0.1:
+                return vec
+        var mouse_vec := get_global_mouse_position() - global_position
+        if mouse_vec.length() > 8.0:
+                return mouse_vec
+        return Vector2.ZERO
 
 func _quantize_direction(dir: Vector2) -> Vector2:
 	var angle = dir.angle()
