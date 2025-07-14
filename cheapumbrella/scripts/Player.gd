@@ -4,16 +4,12 @@ const MOVE_SPEED := 600.0
 const JUMP_VELOCITY := -1600.0
 const GRAVITY := 4800.0
 const GLIDE_FACTOR := 0.6
-const BOOST_POWER := 1200.0
-const BOOST_DURATION := 0.15
 
 var max_copy_time: float
 var current_copy_time: float
 var copy_duration: float
 var is_gliding := false
 var player_velocity: Vector2
-var has_boosted := false
-var boost_timer: float = 0.0
  
 
 var _facing := 1
@@ -61,29 +57,14 @@ func _physics_process(delta: float) -> void:
 	_handle_copy_recording(delta)
 	_update_copy_time_bar()
 	
-	# Handle boost timer
-	if boost_timer > 0.0:
-		player_velocity.x = _facing * BOOST_POWER
-		boost_timer -= delta
-	else:
-		# Boost finished, allow normal movement code to set velocity.x
-		pass
 
-	# Handle boost input
-	if Input.is_action_just_pressed("boost"):
-		if not has_boosted:
-			_boost()
 
-	# Reset boost when landing
-	if is_on_floor():
-		has_boosted = false
 
 func _handle_movement(delta: float) -> void:
 	var direction = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	if boost_timer <= 0.0:
-		player_velocity.x = direction * MOVE_SPEED
-		if direction != 0:
-			_facing = sign(direction)
+	player_velocity.x = direction * MOVE_SPEED
+	if direction != 0:
+		_facing = sign(direction)
 
 	# 1. JUMP (ground only)
 	if is_on_floor():
@@ -92,7 +73,6 @@ func _handle_movement(delta: float) -> void:
 		else:
 			player_velocity.y = 0
 		_end_glide()
-		has_boosted = false
 
 	# 2. GLIDE (air only)
 	elif not is_on_floor():
@@ -113,12 +93,6 @@ func _handle_movement(delta: float) -> void:
 	self.velocity = player_velocity
 	move_and_slide()
 	_check_crush()
-
-
-func _boost() -> void:
-	boost_timer = BOOST_DURATION
-	player_velocity.x = _facing * BOOST_POWER
-	has_boosted = true
 
 func _start_glide() -> void:
 	if not is_gliding:
