@@ -11,7 +11,8 @@ var is_gliding := false
 var player_velocity: Vector2
 var has_boosted := false
 var boost_timer: float = 0.0
- 
+var max_copy_energy: int = 3
+var remaining_copy_energy: int
 
 var _facing := 1
 
