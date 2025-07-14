@@ -1,3 +1,4 @@
+## Player controller responsible for movement and copy placement mechanics.
 extends CharacterBody2D
 
 const MOVE_SPEED := 600.0
