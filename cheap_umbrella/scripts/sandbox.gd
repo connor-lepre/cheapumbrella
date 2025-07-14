@@ -4,7 +4,7 @@ extends Node2D
 @onready var ghost_platforms = $GhostPlatforms
 
 func _ready():
-	var player_scene = preload("res://Scenes/Player.tscn")
+	var player_scene = preload("res://Scenes/player.tscn")
 	var player = player_scene.instantiate()
 	player.global_position = spawn_point.global_position
 
