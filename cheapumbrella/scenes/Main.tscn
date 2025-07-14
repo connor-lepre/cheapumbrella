@@ -1,9 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://7qdqbbs424li"]
+[gd_scene load_steps=10 format=3 uid="uid://7qdqbbs424li"]
 
 [ext_resource type="Script" uid="uid://b0w6paev1qc28" path="res://scripts/GameManager.gd" id="1_0bbpv"]
 [ext_resource type="Script" uid="uid://dchhd81q1k6rf" path="res://scripts/Player.gd" id="2_rarhs"]
 [ext_resource type="PackedScene" uid="uid://b3v8kt2omktvr" path="res://scenes/PlayerCopy.tscn" id="3_copy"]
-[ext_resource type="Script" uid="uid://dpjenrwqtnjng" path="res://scripts/PathVisualizer.gd" id="4_pvis"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
 size = Vector2(1280, 20)
@@ -94,9 +93,6 @@ offset_bottom = 48.0
 text = "Block"
 
 [node name="CopiesRoot" type="Node2D" parent="."]
-
-[node name="PathVisualizer" type="Node2D" parent="CopiesRoot"]
-script = ExtResource("4_pvis")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
 position = Vector2(416, 907)

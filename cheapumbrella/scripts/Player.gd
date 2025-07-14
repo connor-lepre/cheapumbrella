@@ -1,12 +1,12 @@
 ## Player controller responsible for movement and copy placement mechanics.
 extends CharacterBody2D
 
-const MOVE_SPEED := 600.0
+const MOVE_SPEED := 400.0
 const JUMP_VELOCITY := -1600.0
 const GRAVITY := 4800.0
 const GLIDE_FACTOR := 0.6
-const BOOST_POWER := 2400.0
-const BOOST_DURATION := 0.25
+const BOOST_POWER := 1600.0
+const BOOST_DURATION := 0.15
 
 var is_gliding := false
 var player_velocity: Vector2
@@ -33,7 +33,6 @@ var _aiming := false # unused placeholder
 @onready var _umbrella: Sprite2D = $UmbrellaSprite
 @onready var _spawn_point: Node2D = get_parent().get_node_or_null("PlayerSpawn")
 @onready var _game_manager: Node = get_parent()
-@onready var _path_visualizer: Node2D = get_parent().get_node_or_null("CopiesRoot/PathVisualizer")
 
 
 func _ready() -> void:
@@ -58,11 +57,6 @@ func _ready() -> void:
 
 	if _game_manager == null:
 		push_warning("GameManager node not found")
-
-	if _path_visualizer == null:
-		push_warning("PathVisualizer node not found")
-	else:
-		_path_visualizer.hide()
 
 	_update_copy_bar()
 	_update_copy_label()
