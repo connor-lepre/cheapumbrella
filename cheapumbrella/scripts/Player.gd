@@ -153,7 +153,7 @@ func _handle_copy_recording(delta: float) -> void:
 			_record_points.append(global_position)
 			if _path_visualizer and _path_visualizer.has_method("set_points"):
 				_path_visualizer.set_points(_record_points)
-		if copy_duration >= current_copy_time or Input.is_action_just_released("copy_action"):
+		if copy_duration >= current_copy_time or Input.is_action_just_released("copy_stop"):
 			_stop_recording()
 
 

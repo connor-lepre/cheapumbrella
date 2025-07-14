@@ -32,13 +32,13 @@ func _ready() -> void:
 
 
 func _has_valid_path() -> bool:
-        if _path == null or _follow == null:
-                push_error("Copy path nodes missing")
-                return false
-        if _points.size() < 2:
-                push_warning("PlayerCopy has invalid path")
-                return false
-        return true
+	if _path == null or _follow == null:
+		push_error("Copy path nodes missing")
+		return false
+	if _points.size() < 2:
+		push_warning("PlayerCopy has invalid path")
+		return false
+	return true
 
 
 func init_copy(base_position: Vector2, rel_points: Array) -> void:
@@ -48,83 +48,79 @@ func init_copy(base_position: Vector2, rel_points: Array) -> void:
 	if rel_points.size() < 2:
 		push_warning("Copy path requires at least 2 points")
 		return
-        _base_position = base_position
-        global_position = base_position
+	
+	_base_position = base_position
+	global_position = base_position
 
-        if _path == null or _follow == null or _sprite == null:
-                push_error("Copy nodes missing; cannot initialize")
-                return
+	if _path == null or _follow == null or _sprite == null:
+		push_error("Copy nodes missing; cannot initialize")
+		return
 
-        # store relative points and create a NEW Curve2D for this copy
-        _points = rel_points.duplicate(true)
-        var curve = Curve2D.new()
-        for p in _points:
-                curve.add_point(p)
-        _path.curve = curve
+	# store relative points and create a NEW Curve2D for this copy
+	_points.clear()
+	for p in rel_points:
+		_points.append(p)
+	var curve = Curve2D.new()
+	for p in _points:
+		curve.add_point(p)
+	_path.curve = curve
 
-        _total_distance = 0.0
-        for i in range(_points.size() - 1):
-                _total_distance += _points[i].distance_to(_points[i + 1])
-        if _total_distance <= 0.0:
-                push_warning("Invalid copy path length")
-                _path.curve.clear_points()
-                return
+	_total_distance = 0.0
+	for i in range(_points.size() - 1):
+		_total_distance += _points[i].distance_to(_points[i + 1])
+	if _total_distance <= 0.0:
+		push_warning("Invalid copy path length")
+		_path.curve.clear_points()
+		return
 
-        _segment_index = 0
-        _segment_t = 0.0
-        _direction = 1
+	_segment_index = 0
+	_segment_t = 0.0
+	_direction = 1
 
-        var num_segments := _points.size() - 1
-        _segment_time = (_total_distance / speed) / num_segments
-        if _segment_time <= 0.0:
-                _segment_time = 0.01
+	var num_segments := _points.size() - 1
+	_segment_time = (_total_distance / speed) / num_segments
+	if _segment_time <= 0.0:
+		_segment_time = 0.01
 
-        _follow.progress = 0.0
-        _sprite.modulate.a = 0.6
-        _initialized = true
+	_follow.progress = 0.0
+	_sprite.modulate.a = 0.6
+	_initialized = true
 
 
 
 func _physics_process(delta: float) -> void:
-        if not _initialized or not _has_valid_path():
-                return
+	if not _initialized or not _has_valid_path():
+		return
 
-        var time_left := delta
-        while time_left > 0.0:
-                var remaining := _segment_time * (1.0 - _segment_t)
-                var step := min(time_left, remaining)
-                _segment_t += step / _segment_time
-                time_left -= step
+	var time_left := delta
+	while time_left > 0.0:
+		var remaining := _segment_time * (1.0 - _segment_t)
+		var step = min(time_left, remaining)
+		_segment_t += step / _segment_time
+		time_left -= step
 
-                if _segment_t >= 1.0:
-                        _segment_t -= 1.0
-                        _segment_index += _direction
+		if _segment_t >= 1.0:
+			_segment_t -= 1.0
+			_segment_index += _direction
 
-                        if _segment_index + _direction >= _points.size() or _segment_index + _direction < 0:
-                                _direction *= -1
-                                if _segment_index + _direction < 0:
-                                        _segment_index = 0
-                                elif _segment_index + _direction >= _points.size():
-                                        _segment_index = _points.size() - 2
+			if _segment_index + _direction >= _points.size() or _segment_index + _direction < 0:
+				_direction *= -1
+				if _segment_index + _direction < 0:
+					_segment_index = 0
+				elif _segment_index + _direction >= _points.size():
+					_segment_index = _points.size() - 2
 
-        var start := _points[_segment_index]
-        var finish := _points[_segment_index + _direction]
-        var local_pos := start.lerp(finish, _segment_t)
-        var target := _base_position + local_pos
-        var motion := target - global_position
+	var start := _points[_segment_index]
+	var finish := _points[_segment_index + _direction]
+	var local_pos := start.lerp(finish, _segment_t)
+	var target := _base_position + local_pos
+	var motion := target - global_position
 
-        global_position = target
-        velocity = motion / delta
+	global_position = target
+	velocity = motion / delta
 
-        if _path and _follow:
-                var offset = 0.0
-                if _path.curve:
-                        offset = _path.curve.get_closest_offset(local_pos)
-                _follow.progress = offset
-
-        # debug print (optional)
-        if OS.is_debug_build():
-                var seg_len := start.distance_to(finish)
-                var vel_mag := motion.length() / delta
-                print("Seg %d len %.2f vel %.2f" % [_segment_index, seg_len, vel_mag])
-
+	if _path and _follow:
+		var offset = 0.0
+		if _path.curve:
+			offset = _path.curve.get_closest_offset(local_pos)
+		_follow.progress = offset

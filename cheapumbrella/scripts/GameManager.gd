@@ -32,6 +32,10 @@ func _process(_delta: float) -> void:
 	if copies_label:
 		copies_label.text = "Copies active: %d" % active_copies
 
+func _input(event):
+	if event.is_action_pressed("reset"):
+		get_tree().reload_current_scene()
+
 func spawn_player_copy(base_position: Vector2, rel_points: Array) -> void:
 	if player_copy_scn == null:
 		push_error("Player copy scene not loaded")
