@@ -26,12 +26,12 @@ func _ready() -> void:
 	add_to_group("Player")
 	collision_layer = 1
 	collision_mask = 6
-        if _spawn_point == null:
-                push_warning("PlayerSpawn node not found")
-        if _game_manager == null:
-                push_warning("GameManager node not found")
-        else:
-                _path_visualizer = _game_manager.get_node_or_null("CopiesRoot/PathVisualizer")
+	if _spawn_point == null:
+		push_warning("PlayerSpawn node not found")
+	if _game_manager == null:
+		push_warning("GameManager node not found")
+	else:
+		_path_visualizer = _game_manager.get_node_or_null("CopiesRoot/PathVisualizer")
 
 func _physics_process(delta: float) -> void:
 	_handle_movement(delta)
@@ -78,26 +78,26 @@ func _end_glide() -> void:
 			_umbrella.visible = false
 
 func _handle_copy_spawn() -> void:
-        if Input.is_action_just_pressed("copy_preview"):
-                _copy_ready = true
+	if Input.is_action_just_pressed("copy_preview"):
+		_copy_ready = true
 
-        if _copy_ready and Input.is_action_pressed("copy_preview"):
-                _update_preview()
-        elif _copy_ready and Input.is_action_just_released("copy_preview"):
-                _copy_ready = false
-                _hide_preview()
+	if _copy_ready and Input.is_action_pressed("copy_preview"):
+		_update_preview()
+	elif _copy_ready and Input.is_action_just_released("copy_preview"):
+		_copy_ready = false
+		_hide_preview()
 
-        if not _copy_ready:
-                return
+	if not _copy_ready:
+		return
 
-        if Input.is_action_just_pressed("copy_spawn"):
-                var dir := _get_quantized_direction()
-                var spawn_pos := global_position + dir * COPY_SIZE
-                if _can_spawn_at(spawn_pos):
-                        if _game_manager and _game_manager.has_method("spawn_player_copy"):
-                                _game_manager.spawn_player_copy(spawn_pos, dir)
-                _copy_ready = false
-                _hide_preview()
+	if Input.is_action_just_pressed("copy_spawn"):
+		var dir := _get_quantized_direction()
+		var spawn_pos := global_position + dir * COPY_SIZE
+		if _can_spawn_at(spawn_pos):
+			if _game_manager and _game_manager.has_method("spawn_player_copy"):
+				_game_manager.spawn_player_copy(spawn_pos, dir)
+		_copy_ready = false
+		_hide_preview()
 
 func _get_quantized_direction() -> Vector2:
 	var aim := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
@@ -152,63 +152,63 @@ func _check_crush() -> void:
 				env_above = true
 			elif col.get_normal().y < 0:
 				env_below = true
-        if (copy_above and env_below) or (copy_below and env_above):
-                respawn()
+				if (copy_above and env_below) or (copy_below and env_above):
+					respawn()
 
 func _create_preview_copy() -> void:
-        if _preview_copy != null:
-                return
-        if _game_manager == null:
-                return
-        var scn: PackedScene = _game_manager.player_copy_scn
-        if scn == null:
-                return
-        var ghost = scn.instantiate()
-        ghost.set_script(null)
-        var collider = ghost.get_node_or_null("CopyCollider")
-        if collider:
-                collider.disabled = true
-        var area = ghost.get_node_or_null("AboveChecker")
-        if area:
-                area.monitoring = false
-        var sprite = ghost.get_node_or_null("CopySprite")
-        if sprite:
-                sprite.modulate.a = 0.5
-        if _game_manager.copies_root:
-                _game_manager.copies_root.add_child(ghost)
-        else:
-                add_child(ghost)
-        _preview_copy = ghost
+	if _preview_copy != null:
+		return
+	if _game_manager == null:
+		return
+	var scn: PackedScene = _game_manager.player_copy_scn
+	if scn == null:
+		return
+	var ghost = scn.instantiate()
+	ghost.set_script(null)
+	var collider = ghost.get_node_or_null("CopyCollider")
+	if collider:
+		collider.disabled = true
+	var area = ghost.get_node_or_null("AboveChecker")
+	if area:
+		area.monitoring = false
+	var sprite = ghost.get_node_or_null("CopySprite")
+	if sprite:
+		sprite.modulate.a = 0.5
+	if _game_manager.copies_root:
+		_game_manager.copies_root.add_child(ghost)
+	else:
+		add_child(ghost)
+	_preview_copy = ghost
 
 func _get_preview_path_end(start_pos: Vector2, dir: Vector2) -> Vector2:
-        var space_state := get_world_2d().direct_space_state
-        var params := PhysicsRayQueryParameters2D.create(start_pos, start_pos + dir * COPY_DISTANCE)
-        params.collide_with_bodies = true
-        params.collide_with_areas = false
-        var result = space_state.intersect_ray(params)
-        if result:
-                return result.position - dir * (COPY_SIZE * 0.5)
-        return start_pos + dir * COPY_DISTANCE
+	var space_state := get_world_2d().direct_space_state
+	var params := PhysicsRayQueryParameters2D.create(start_pos, start_pos + dir * COPY_DISTANCE)
+	params.collide_with_bodies = true
+	params.collide_with_areas = false
+	var result = space_state.intersect_ray(params)
+	if result:
+		return result.position - dir * (COPY_SIZE * 0.5)
+	return start_pos + dir * COPY_DISTANCE
 
 func _update_preview() -> void:
-        var dir := _get_quantized_direction()
-        var spawn_pos := global_position + dir * COPY_SIZE
-        if not _can_spawn_at(spawn_pos):
-                _hide_preview()
-                _copy_ready = false
-                return
-        _create_preview_copy()
-        if _preview_copy:
-                _preview_copy.global_position = spawn_pos
-        if _path_visualizer:
-                var end_pos := _get_preview_path_end(spawn_pos, dir)
-                _path_visualizer.set_points([spawn_pos, end_pos])
-                _path_visualizer.visible = true
+	var dir := _get_quantized_direction()
+	var spawn_pos := global_position + dir * COPY_SIZE
+	if not _can_spawn_at(spawn_pos):
+		_hide_preview()
+		_copy_ready = false
+		return
+	_create_preview_copy()
+	if _preview_copy:
+		_preview_copy.global_position = spawn_pos
+	if _path_visualizer:
+		var end_pos := _get_preview_path_end(spawn_pos, dir)
+		_path_visualizer.set_points([spawn_pos, end_pos])
+		_path_visualizer.visible = true
 
 func _hide_preview() -> void:
-        if _preview_copy and _preview_copy.is_inside_tree():
-                _preview_copy.queue_free()
-        _preview_copy = null
-        if _path_visualizer:
-                _path_visualizer.visible = false
-                _path_visualizer.set_points([])
+	if _preview_copy and _preview_copy.is_inside_tree():
+		_preview_copy.queue_free()
+	_preview_copy = null
+	if _path_visualizer:
+		_path_visualizer.visible = false
+		_path_visualizer.set_points([Vector2.ZERO, Vector2.ZERO])

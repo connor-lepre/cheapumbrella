@@ -89,7 +89,7 @@ color = Color(1, 0, 1, 1)
 
 [node name="CopiesRoot" type="Node2D" parent="."]
 
-[node name="PathVisualizer" type="Node2D" parent="CopiesRoot"]
+[node name="PathVisualizer" type="Line2D" parent="CopiesRoot"]
 script = ExtResource("4_pvis")
 
 [node name="PlayerSpawn" type="Marker2D" parent="."]
