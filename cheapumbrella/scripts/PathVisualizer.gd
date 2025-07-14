@@ -6,13 +6,9 @@ func _ready() -> void:
 	visible = false
 
 func _draw() -> void:
-	if _points.size() < 2:
-		return
-	if _points.size() == 0:
-		return
-	draw_polyline(_points, Color.WHITE, true)
-	for p in _points:
-		draw_circle(p, 4.0, Color.YELLOW)
+        if _points.size() < 2:
+                return
+        draw_line(_points[0], _points[1], Color.CYAN, 2.0)
 
 func set_points(points: Array[Vector2]) -> void:
 	_points.clear()
