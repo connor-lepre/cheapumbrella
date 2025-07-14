@@ -5,15 +5,13 @@ const JUMP_VELOCITY := -800.0
 const GRAVITY := 2400.0
 const GLIDE_FACTOR := 0.6
 
-const MIN_COPY_TIME := 0.5
-const MAX_COPY_TIME := 3.0
-
+var max_copy_time: float
 var current_copy_time: float
+var copy_duration: float
 var is_gliding := false
 var player_velocity: Vector2
 
 var _recording := false
-var _record_timer := 0.0
 var _record_points: Array[Vector2] = []
 
 @onready var _umbrella: Sprite2D = $UmbrellaSprite
@@ -23,8 +21,10 @@ var _record_points: Array[Vector2] = []
 
 
 func _ready() -> void:
-	
-	current_copy_time = 3.0
+
+        max_copy_time = 3.0
+        current_copy_time = max_copy_time
+        copy_duration = 0.0
 	
 	if _umbrella:
 		_umbrella.visible = false
@@ -93,55 +93,60 @@ func _end_glide() -> void:
 
 
 func _handle_copy_recording(delta: float) -> void:
-	if Input.is_action_just_pressed("copy_action"):
-		if current_copy_time <= 0.0:
-			print("No time left to copy")
-		else:
-			_start_recording()
+        if Input.is_action_just_pressed("copy_action") and not _recording:
+                if current_copy_time <= 0.0:
+                        print("No time left to copy")
+                else:
+                        _start_recording()
 
-	if _recording:
-		_record_timer += delta
-		current_copy_time -= delta
-		print("time remaining: ", current_copy_time)
-		if _record_points.is_empty() or _record_points[-1] != global_position:
-			_record_points.append(global_position)
-			if _path_visualizer and _path_visualizer.has_method("set_points"):
-				_path_visualizer.set_points(_record_points)
-		if _record_timer >= MAX_COPY_TIME:
-			_stop_recording()
+        if _recording:
+                copy_duration += delta
+                if _record_points.is_empty() or _record_points[-1] != global_position:
+                        _record_points.append(global_position)
+                        if _path_visualizer and _path_visualizer.has_method("set_points"):
+                                _path_visualizer.set_points(_record_points)
+                if copy_duration >= current_copy_time or Input.is_action_just_released("copy_action"):
+                        _stop_recording()
 
 
 func _start_recording() -> void:
-	_recording = true
-	_record_timer = current_copy_time
-	_record_points.clear()
-	_record_points.append(global_position)
-	if _path_visualizer and _path_visualizer.has_method("set_points"):
-		_path_visualizer.show()
-		_path_visualizer.set_points(_record_points)
-	print("Copy recording started")
+        _recording = true
+        copy_duration = 0.0
+        _record_points.clear()
+        _record_points.append(global_position)
+        if _path_visualizer and _path_visualizer.has_method("set_points"):
+                _path_visualizer.show()
+                _path_visualizer.set_points(_record_points)
+        print("Copy recording started")
 
 
 func _stop_recording() -> void:
-	_recording = false
-	if _path_visualizer:
-		_path_visualizer.hide()
-	if _record_points.size() < 2:
-		print("Not enough points to create copy")
-		return
-	var base := _record_points[0]
-	var rel_points: Array = []
-	for p in _record_points:
-		rel_points.append(p - base)
-	if _game_manager and _game_manager.has_method("spawn_player_copy"):
-		_game_manager.spawn_player_copy(base, rel_points)
-	else:
-		push_warning("Cannot spawn player copy - manager missing or invalid")
-	if _spawn_point:
-		global_position = _spawn_point.global_position
-		velocity = Vector2.ZERO
-	_end_glide()
-	print("Copy recording stopped")
+        _recording = false
+        if _path_visualizer:
+                _path_visualizer.hide()
+        if _record_points.size() < 2:
+                print("Not enough points to create copy")
+                return
+
+        current_copy_time -= copy_duration
+        if current_copy_time < 0.0:
+                current_copy_time = 0.0
+
+        var base := _record_points[0]
+        var rel_points: Array = []
+        for p in _record_points:
+                rel_points.append(p - base)
+
+        if _game_manager and _game_manager.has_method("spawn_player_copy"):
+                _game_manager.spawn_player_copy(base, rel_points)
+        else:
+                push_warning("Cannot spawn player copy - manager missing or invalid")
+
+        if _spawn_point:
+                global_position = _spawn_point.global_position
+                velocity = Vector2.ZERO
+        _end_glide()
+        print("Copy recording stopped, time remaining: %f" % current_copy_time)
 
 
 func respawn() -> void:
