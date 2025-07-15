@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
-@export var push_multiplier_x := 12
-@export var push_multiplier_y := 20
+@export var push_multiplier_x := 50
+@export var push_multiplier_y := 200
+var launched_objects := {}  # Track what we've already launched
 var path: Array = []
 var frame_index := 0
 var direction := 1
@@ -62,17 +63,33 @@ func push_objects():
 		var collision = get_slide_collision(i)
 		var collider = collision.get_collider()
 		var normal = collision.get_normal()
-
 		if collider and collider.has_method("add_external_velocity"):
+			# Check if we've already launched this object recently
+			var object_id = collider.get_instance_id()
+			if object_id in launched_objects:
+				continue  # Skip if already launched this frame cycle
+			
 			var raw_push_force = Vector2(
 				estimated_velocity.x * push_multiplier_x,
 				estimated_velocity.y * push_multiplier_y
 			)
-
-			var push_force = Vector2(
-				raw_push_force.x,
-				clamp(raw_push_force.y, -40, 20)
-			)
-
+			
+			# Special handling for upward launches
+			var push_force = Vector2.ZERO
+			if estimated_velocity.y < -50:  # Ghost moving upward significantly
+				# Give one big launch kick and then remember we launched it
+				push_force = Vector2(
+					raw_push_force.x,
+					raw_push_force.y  # Don't clamp upward launches
+				)
+				launched_objects[object_id] = true  # Mark as launched
+				print("🚀 Ghost launching with force: ", push_force)
+			else:
+				# Normal pushing for other directions
+				push_force = Vector2(
+					raw_push_force.x,
+					clamp(raw_push_force.y, -200, 200)
+				)
+			
 			if abs(normal.x) > 0.7 or abs(normal.y) > 0.7:
-				collider.add_external_velocity(push_force)
+				collider.add_external_velocity(push_force, 1.2)  # Even higher multiplier for instant kick

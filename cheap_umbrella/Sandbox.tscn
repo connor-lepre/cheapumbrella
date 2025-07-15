@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://1i67iv3g6apn"]
+[gd_scene load_steps=10 format=3 uid="uid://1i67iv3g6apn"]
 
 [ext_resource type="Script" uid="uid://bubxavdqdvncd" path="res://scripts/sandbox.gd" id="1_jgjqi"]
 [ext_resource type="PackedScene" uid="uid://drk1vvovwjcq4" path="res://Scenes/StaticPlatform.tscn" id="2_vrv26"]
 [ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="3_ti018"]
 [ext_resource type="PackedScene" uid="uid://b6irkxtagc3ff" path="res://Scenes/CopyTimerUI.tscn.tscn" id="4_vrv26"]
-[ext_resource type="PackedScene" uid="uid://b3rxyajhry548" path="res://Scenes/crate.tscn" id="5_ti018"]
+[ext_resource type="Script" uid="uid://xd550ikn3mxm" path="res://scripts/killplane.gd" id="6_u6t3p"]
+[ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/physics_crate.tscn" id="7_fucb2"]
 
 [sub_resource type="SystemFont" id="SystemFont_ti018"]
 
@@ -13,6 +14,9 @@ font = SubResource("SystemFont_ti018")
 font_size = 40
 outline_size = 50
 outline_color = Color(0.364706, 0.0313726, 0.854902, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fucb2"]
+size = Vector2(10419, 2071)
 
 [node name="Sandbox_tscn" type="Node2D"]
 script = ExtResource("1_jgjqi")
@@ -29,9 +33,6 @@ position = Vector2(433, 44)
 position = Vector2(-232, -304)
 
 [node name="CanvasLayer" parent="." instance=ExtResource("4_vrv26")]
-
-[node name="Node2D" parent="." instance=ExtResource("5_ti018")]
-position = Vector2(-240, -64)
 
 [node name="StaticPlatform_tscn3" parent="." instance=ExtResource("2_vrv26")]
 position = Vector2(432, -1216)
@@ -62,4 +63,21 @@ horizontal_alignment = 1
 position = Vector2(-1176, 783)
 
 [node name="StaticPlatform_tscn5" parent="." instance=ExtResource("2_vrv26")]
-position = Vector2(1261, 44)
+position = Vector2(1580, 44)
+
+[node name="killplane" type="Area2D" parent="."]
+position = Vector2(355, 2201.5)
+script = ExtResource("6_u6t3p")
+
+[node name="KillCollider" type="CollisionShape2D" parent="killplane"]
+shape = SubResource("RectangleShape2D_fucb2")
+
+[node name="StaticPlatform_tscn6" parent="." instance=ExtResource("2_vrv26")]
+position = Vector2(460, 536)
+
+[node name="StaticPlatform_tscn7" parent="." instance=ExtResource("2_vrv26")]
+position = Vector2(693, -219)
+rotation = -1.59203
+
+[node name="Node2D2" parent="." instance=ExtResource("7_fucb2")]
+position = Vector2(454, -374)

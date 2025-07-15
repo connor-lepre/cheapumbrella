@@ -6,61 +6,71 @@ const GRAVITY := 5000
 const GLIDE_GRAVITY := 200.0
 const RECORD_THRESHOLD := 0.5
 const SKIP_TIME_AT_START := 2
-const MAX_TOTAL_RECORD_TIME := 5.0
-const RESET_HOLD_TIME := 2.0
+const MAX_TOTAL_RECORD_TIME := 2.0
+const RESET_HOLD_TIME := 1.0
+
+const PUSH_MULTIPLIER_X := 20
+const PUSH_MULTIPLIER_Y := 0
+const PUSH_FORCE_LIMIT := 1000
+
+@export var max_ghosts := 4
 
 var reset_hold_timer := 0.0
 var spawn_point: Vector2
 var is_gliding := false
-var is_recording := false
-var recording := []
 var physics_fps := 60.0
-var total_recorded_time: float = 0.0
-var time_left := MAX_TOTAL_RECORD_TIME
-var timer_ui: Node = null
-var can_record := true
+var was_recording_pressed := false
+
+var previous_position := Vector2.ZERO
+var estimated_velocity := Vector2.ZERO
+
+var ghost_container: Node = null
+
+var current_ghost_index := 0
+var is_recording_per_ghost := []
+var recordings := []
+var time_left_per_ghost := []
+var timer_labels := []
 
 func _ready():
 	print("Player ready")
-	is_recording = false
-	recording.clear()
-	total_recorded_time = 0.0
 	physics_fps = Engine.get_physics_ticks_per_second()
-	
+
 	var start_node = get_tree().get_current_scene().get_node_or_null("SpawnPoint")
-	if start_node:
-		spawn_point = start_node.global_position
-	else:
-		print("⚠️ SpawnPoint not found in scene!")
-	
-	timer_ui = get_tree().get_current_scene().get_node_or_null("CanvasLayer/CopyTimerUI")
+	spawn_point = start_node.global_position if start_node else global_position
+
+	# Setup timers
+	for i in range(max_ghosts):
+		var label = get_tree().get_current_scene().get_node_or_null("CanvasLayer/Timer" + str(i + 1))
+		timer_labels.append(label)
+		time_left_per_ghost.append(MAX_TOTAL_RECORD_TIME)
+		is_recording_per_ghost.append(false)
+		recordings.append([])
+
+	for label in timer_labels:
+		if label:
+			label.text = "—"
+
+	previous_position = global_position
 	update_timer_ui()
 
 func _physics_process(delta):
-	# Block downward push-through when on floor
-	if is_on_floor() and velocity.y > 0:
-		velocity.y = 0
-
+	# Input, movement, gliding
 	handle_input(delta)
-	handle_recording()
+
+	# Movement
 	move_and_slide()
+
+	# Push crates using ghost-style force
+	push_crates_ghost_style()
+
+	# Estimate velocity AFTER movement
+	estimated_velocity = global_position - previous_position
+	previous_position = global_position
+
+	# Recording & level reset
+	handle_recording()
 	handle_reset_hold(delta)
-
-	for i in range(get_slide_collision_count()):
-		var collision = get_slide_collision(i)
-		var collider = collision.get_collider()
-		var normal = collision.get_normal()
-
-		if collider and collider.has_method("add_external_velocity"):
-			# Push crates horizontally
-			if abs(normal.x) > 0.7:
-				var push_force = velocity.x * 5
-				collider.add_external_velocity(Vector2(push_force, 0))
-
-		# Block being shoved through ground
-		if normal.y < -0.7 and velocity.y > 0:
-			velocity.y = 0
-			global_position.y -= 4
 
 func handle_input(delta):
 	var direction = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -72,69 +82,106 @@ func handle_input(delta):
 	is_gliding = Input.is_action_pressed("jump") and not is_on_floor() and velocity.y > 0
 	velocity.y += (GLIDE_GRAVITY if is_gliding else GRAVITY) * delta
 
+func push_crates_ghost_style():
+	for i in range(get_slide_collision_count()):
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		var normal = collision.get_normal()
+		
+		if collider and collider.has_method("apply_push"):
+			var is_side_push = abs(normal.x) > 0.6
+			if not is_side_push:
+				continue
+
+			# Only push if you're actually trying to move
+			if abs(velocity.x) < 5:
+				continue
+
+			var push_force = Vector2(velocity.x * .5, 0)  # Smooth force instead of burst
+			collider.apply_push(push_force)
+
+
 func handle_recording():
-	if not can_record:
+	if current_ghost_index >= max_ghosts:
+		for i in range(max_ghosts):
+			if timer_labels[i]:
+				timer_labels[i].text = "X"
 		return
 
 	var strength = Input.get_action_strength("record")
+	var is_pressed = strength > RECORD_THRESHOLD
 
-	if strength > RECORD_THRESHOLD and not is_recording:
-		is_recording = true
-		recording.clear()
-		total_recorded_time = 0.0
-		print("🎥 Recording started")
+	if is_pressed and not was_recording_pressed and not is_recording_per_ghost[current_ghost_index]:
+		is_recording_per_ghost[current_ghost_index] = true
+		recordings[current_ghost_index].clear()
+		time_left_per_ghost[current_ghost_index] = MAX_TOTAL_RECORD_TIME
+		print("🎥 Started recording ghost", current_ghost_index + 1)
 
-	elif strength <= RECORD_THRESHOLD and is_recording:
-		is_recording = false
-		print("🛑 Recording ended (manual)")
-		spawn_ghost()
+	elif not is_pressed and is_recording_per_ghost[current_ghost_index]:
+		is_recording_per_ghost[current_ghost_index] = false
+		print("🛑 Manual end for ghost", current_ghost_index + 1)
+		spawn_ghost(recordings[current_ghost_index])
 		reset_player_position_after_recording()
 
-	if is_recording:
-		recording.append(global_position)
+	was_recording_pressed = is_pressed
+
+	if current_ghost_index < max_ghosts and is_recording_per_ghost[current_ghost_index]:
+		recordings[current_ghost_index].append(global_position)
 		var delta_time = 1.0 / physics_fps
-		total_recorded_time += delta_time
-		time_left -= delta_time
+		time_left_per_ghost[current_ghost_index] -= delta_time
 		update_timer_ui()
 
-		if time_left <= 0.0:
-			time_left = 0.0
-			can_record = false
-			is_recording = false
-			print("⏱ Recording ended (time limit reached)")
-			spawn_ghost()
+		if time_left_per_ghost[current_ghost_index] <= 0.0:
+			is_recording_per_ghost[current_ghost_index] = false
+			time_left_per_ghost[current_ghost_index] = 0.0
+			print("⏱ Recording ended for ghost", current_ghost_index + 1)
+			spawn_ghost(recordings[current_ghost_index])
 			reset_player_position_after_recording()
 
-func reset_player_position_after_recording():
-	var skip_frames := int(SKIP_TIME_AT_START * physics_fps)
-	var safe_index = clamp(skip_frames, 0, recording.size() - 1)
-	global_position = spawn_point
-
-func spawn_ghost():
+func spawn_ghost(recording: Array):
 	if recording.size() < 2:
 		print("Recording too short — no ghost spawned.")
 		return
 
-	print("📦 Spawning ghost with", recording.size(), "points.")
+	if ghost_container == null:
+		ghost_container = get_tree().get_current_scene().get_node_or_null("GhostPlatforms")
+		if ghost_container == null:
+			print("❌ GhostPlatforms node not found in scene root.")
+			return
+
+	if ghost_container.get_child_count() >= max_ghosts:
+		print("🚫 Max ghost count reached. No new ghost spawned.")
+		return
+
 	var ghost_scene = preload("res://Scenes/GhostPlatforms.tscn")
 	var ghost = ghost_scene.instantiate()
 	ghost.set_path(recording)
 	ghost.global_position = recording[0] - Vector2(0, 64)
 
-	var scene_root = get_tree().get_current_scene()
-	var ghost_container = scene_root.get_node_or_null("GhostPlatforms")
+	ghost_container.add_child(ghost)
+	print("✅ Ghost added to GhostPlatforms.")
+	current_ghost_index += 1
+	if current_ghost_index >= max_ghosts:
+		print("✅ All ghosts used.")
+		current_ghost_index = max_ghosts
+	update_timer_ui()
 
-	if ghost_container:
-		ghost_container.add_child(ghost)
-		print("✅ Ghost added to GhostPlatforms.")
-	else:
-		print("❌ GhostPlatforms node not found in scene root.")
+func reset_player_position_after_recording():
+	global_position = spawn_point
 
 func update_timer_ui():
-	if timer_ui == null:
-		return
-	var display_time = max(0, floor(time_left * 10) / 10.0)
-	timer_ui.text = str(display_time) + "s"
+	for i in range(max_ghosts):
+		var label = timer_labels[i]
+		if label == null:
+			continue
+		if i < current_ghost_index:
+			label.text = "X"
+		elif i == current_ghost_index and is_recording_per_ghost[i]:
+			var clamped_time = max(0.0, time_left_per_ghost[i])
+			var display_time = floor(clamped_time * 10) / 10.0
+			label.text = str(display_time) + "s"
+		else:
+			label.text = "READY"
 
 func handle_reset_hold(delta):
 	if Input.is_action_pressed("reset_level"):
@@ -145,6 +192,11 @@ func handle_reset_hold(delta):
 			reload_scene()
 	else:
 		reset_hold_timer = 0.0
+
+func respawn():
+	print("💀 Player hit killplane - respawning")
+	global_position = spawn_point
+	velocity = Vector2.ZERO
 
 func reload_scene():
 	get_tree().reload_current_scene()
