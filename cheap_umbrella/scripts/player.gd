@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED := 400.0
+const SPEED := 800.0
 const JUMP_VELOCITY := -1500.0
 const GRAVITY := 5000
 const GLIDE_GRAVITY := 200.0
@@ -11,9 +11,12 @@ const RESET_HOLD_TIME := 1.0
 
 const PUSH_MULTIPLIER_X := 20
 const PUSH_MULTIPLIER_Y := 0
-const PUSH_FORCE_LIMIT := 1000
+const PUSH_FORCE_LIMIT := 60
 
 @export var max_ghosts := 4
+
+@onready var facing = Vector2.LEFT
+@onready var player_sprite = $Sprite2D
 
 var reset_hold_timer := 0.0
 var spawn_point: Vector2
@@ -63,6 +66,9 @@ func _physics_process(delta):
 
 	# Push crates using ghost-style force
 	push_crates_ghost_style()
+	
+	# Sprite handling
+	sprite_flip()
 
 	# Estimate velocity AFTER movement
 	estimated_velocity = global_position - previous_position
@@ -138,6 +144,14 @@ func handle_recording():
 			spawn_ghost(recordings[current_ghost_index])
 			reset_player_position_after_recording()
 
+func sprite_flip():
+	if Input.is_action_pressed("move_right"):
+		facing = Vector2.RIGHT
+		player_sprite.flip_h = true
+	if Input.is_action_pressed("move_left"):
+		facing = Vector2.LEFT
+		player_sprite.flip_h = false
+
 func spawn_ghost(recording: Array):
 	if recording.size() < 2:
 		print("Recording too short — no ghost spawned.")
@@ -192,6 +206,7 @@ func handle_reset_hold(delta):
 			reload_scene()
 	else:
 		reset_hold_timer = 0.0
+		
 
 func respawn():
 	print("💀 Player hit killplane - respawning")

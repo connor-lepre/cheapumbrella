@@ -81,3 +81,4 @@ rotation = -1.59203
 
 [node name="Node2D2" parent="." instance=ExtResource("7_fucb2")]
 position = Vector2(454, -374)
+lock_rotation = true
