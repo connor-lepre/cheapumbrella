@@ -1,0 +1,71 @@
+[gd_scene load_steps=11 format=3 uid="uid://1i67iv3g6apn"]
+
+[ext_resource type="Script" uid="uid://bubxavdqdvncd" path="res://scripts/sandbox.gd" id="1_qx8wr"]
+[ext_resource type="PackedScene" uid="uid://drk1vvovwjcq4" path="res://Scenes/StaticPlatform.tscn" id="2_do50k"]
+[ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="3_dnd5l"]
+[ext_resource type="Script" uid="uid://xd550ikn3mxm" path="res://scripts/killplane.gd" id="4_7yicx"]
+[ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/physics_crate.tscn" id="5_n2jbg"]
+[ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="6_foql8"]
+[ext_resource type="PackedScene" uid="uid://b4d4wnxexbtw6" path="res://Scenes/ShotClock.tscn" id="7_do50k"]
+
+[sub_resource type="SystemFont" id="SystemFont_ti018"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_u6t3p"]
+font = SubResource("SystemFont_ti018")
+font_size = 40
+outline_size = 50
+outline_color = Color(0.364706, 0.0313726, 0.854902, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fucb2"]
+size = Vector2(10419, 2071)
+
+[node name="Sandbox_tscn" type="Node2D"]
+script = ExtResource("1_qx8wr")
+
+[node name="StaticPlatform_tscn" parent="." instance=ExtResource("2_do50k")]
+position = Vector2(182, 0)
+
+[node name="GhostPlatforms" type="Node2D" parent="."]
+
+[node name="SpawnPoint" parent="." instance=ExtResource("3_dnd5l")]
+position = Vector2(-144, -236)
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -288.0
+offset_top = 110.0
+offset_right = 609.0
+offset_bottom = 281.0
+text = "R2 to record (up to five seconds) 
+
+X to jump! try to bounce off of your duplicates 
+hold X to glide :)"
+label_settings = SubResource("LabelSettings_u6t3p")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="Label"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -681.0
+offset_right = 922.0
+offset_bottom = -510.0
+text = "go up!"
+label_settings = SubResource("LabelSettings_u6t3p")
+horizontal_alignment = 1
+
+[node name="killplane" type="Area2D" parent="."]
+position = Vector2(355, 2201.5)
+script = ExtResource("4_7yicx")
+
+[node name="KillCollider" type="CollisionShape2D" parent="killplane"]
+shape = SubResource("RectangleShape2D_fucb2")
+
+[node name="Node2D" parent="." instance=ExtResource("5_n2jbg")]
+position = Vector2(425, -468)
+
+[node name="Basket" parent="." instance=ExtResource("6_foql8")]
+position = Vector2(1234, -418)
+
+[node name="ShotClock" parent="." instance=ExtResource("7_do50k")]
+offset = Vector2(300, -200)
+transform = Transform2D(1, 0, 0, 1, 300, -200)

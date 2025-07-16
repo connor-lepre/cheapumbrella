@@ -15,15 +15,19 @@ const PUSH_FORCE_LIMIT := 60
 
 @export var max_ghosts := 4
 
-@onready var push_force = 1.0
+@onready var hud_scene = preload("res://Scenes/PlayerHUD.tscn")
+var player_hud = null
 
 @onready var facing = Vector2.LEFT
 @onready var player_sprite = $Sprite2D
 @onready var umbrella = $Sprite2D/Umbrella
 @onready var helmet = $helmet
 var is_moving := false
+var was_on_floor := false
 var is_gliding := false
 var is_jumping := false
+var coyote_time := 0.0
+var coyote_time_max := 0.3
 signal moving
 signal gliding
 signal jumping
@@ -58,6 +62,12 @@ func _ready():
 	var start_node = get_tree().get_current_scene().get_node_or_null("SpawnPoint")
 	spawn_point = start_node.global_position if start_node else global_position
 
+	var parent = get_parent()
+	player_hud = hud_scene.instantiate()
+	parent.add_child(player_hud)
+	update_copy_ui()
+
+
 	# Setup timers
 	for i in range(max_ghosts):
 		var label = get_tree().get_current_scene().get_node_or_null("CanvasLayer/Timer" + str(i + 1))
@@ -80,9 +90,6 @@ func _physics_process(delta):
 	# Movement
 	move_and_slide()
 	collision_with_RigidBody2d()
-
-	# Push crates using ghost-style force
-	#push_crates_ghost_style()
 	
 	# Sprite handling
 	sprite_flip()
@@ -106,12 +113,26 @@ func handle_input(delta):
 	else:
 		is_moving = false
 
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		emit_signal("jumping")
+	var just_landed = false
+	if not was_on_floor and is_on_floor():
+		is_jumping = false
+		just_landed = true
 
-	is_gliding = Input.is_action_pressed("jump") and not is_on_floor() and velocity.y > 0
+	if is_on_floor():
+		coyote_time = coyote_time_max
+	else:
+		coyote_time = max(0.0, coyote_time - delta)
+
+	if Input.is_action_just_pressed("jump") and (is_on_floor() or coyote_time > 0.0):
+		velocity.y = JUMP_VELOCITY
+		is_jumping = true
+		emit_signal("jumping")
+		coyote_time = 0.0
+
+	is_gliding = Input.is_action_pressed("jump") and not is_on_floor() and velocity.y > 5
 	velocity.y += (GLIDE_GRAVITY if is_gliding else GRAVITY) * delta
+	
+	was_on_floor = is_on_floor()
 
 func collision_with_RigidBody2d():
 	for i in get_slide_collision_count():
@@ -121,35 +142,17 @@ func collision_with_RigidBody2d():
 			var pushDir = -c.get_normal()
 			var diffVelInPushDir: float = max(0.0, velocity.dot(pushDir) - rigid.linear_velocity.dot(pushDir))
 			var massRatio: float = min(1.0, kgMass / rigid.mass)
-			var pushForce: float = massRatio * 5.0
-			# rigid.apply_impulse(pushDir * diffVelInPushDir * pushForce, c.get_position() - rigid.position) 
+			var pushForce: float = massRatio * 4.0
+			var maxImpulse: float = 400.0
 			var impulseAmt = pushDir * diffVelInPushDir * pushForce
+			impulseAmt = impulseAmt.limit_length(maxImpulse)
+			
 			rigid.apply_central_impulse(impulseAmt)
+			print("Impulse amount: ", impulseAmt)
 			
 func helmet_push(body):
-	
-	if body.get_parent() is RigidBody2D:
-		body.get_parent().apply_central_impulse(Vector2(0, -500))
-		print("helmet push was called and an impulse was attempted")
-
-#func push_crates_ghost_style():
-	#for i in range(get_slide_collision_count()):
-		#var collision = get_slide_collision(i)
-		#var collider = collision.get_collider()
-		#var normal = collision.get_normal()
-		#
-		#if collider and collider.has_method("apply_push"):
-			#var is_side_push = abs(normal.x) > 0.6
-			#if not is_side_push:
-				#continue
-#
-			## Only push if you're actually trying to move
-			#if abs(velocity.x) < 5:
-				#continue
-#
-			#var push_force = Vector2(velocity.x * .5, 0)  # Smooth force instead of burst
-			#collider.apply_push(push_force)
-
+	if body is RigidBody2D:
+		body.apply_central_impulse(Vector2(0, -800))
 
 func handle_recording():
 	if current_ghost_index >= max_ghosts:
@@ -201,6 +204,8 @@ func sprite_anim_switch():
 		player_sprite.play("glide")
 	elif is_moving:
 		player_sprite.play("move")
+	elif is_jumping:
+		player_sprite.play("jump")
 	else:
 		player_sprite.play("idle")
 		
@@ -236,10 +241,26 @@ func spawn_ghost(recording: Array):
 	if current_ghost_index >= max_ghosts:
 		print("✅ All ghosts used.")
 		current_ghost_index = max_ghosts
+	update_copy_ui()
 	update_timer_ui()
 
 func reset_player_position_after_recording():
 	global_position = spawn_point
+
+func update_copy_ui():
+	if player_hud == null:
+		return
+	var hbox = player_hud.get_node("AvailableCopies")
+	for i in range(hbox.get_child_count() - 1, 0, -1):
+		hbox.get_child(i).queue_free()
+	for i in range(max_ghosts):
+		var token
+		if i == 0:
+			token = hbox.get_child(0)
+		else:
+			token = hbox.get_child(0).duplicate()
+			hbox.add_child(token)
+		token.visible = (i >= current_ghost_index)
 
 func update_timer_ui():
 	for i in range(max_ghosts):

@@ -1,0 +1,101 @@
+[gd_scene load_steps=11 format=3 uid="uid://cuuam67r4dpao"]
+
+[ext_resource type="Script" uid="uid://durir3g3yvjoa" path="res://Scenes/Goal.gd" id="1_hlgd5"]
+[ext_resource type="Texture2D" uid="uid://mgssxv8jogrt" path="res://Assets/sprites/props/backboard.png" id="2_fn8i1"]
+[ext_resource type="Texture2D" uid="uid://ch60u0kanftv4" path="res://Assets/sprites/props/rim.png" id="3_klp67"]
+[ext_resource type="Texture2D" uid="uid://cmkfirert5ku1" path="res://Assets/sprites/props/net.png" id="4_s5qqq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l2h7g"]
+size = Vector2(178, 420)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1vpyn"]
+size = Vector2(280, 179)
+
+[sub_resource type="Gradient" id="Gradient_hlgd5"]
+colors = PackedColorArray(0.965802, 0.600765, 7.70092e-07, 1, 0.862745, 0.823529, 0.164706, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fn8i1"]
+gradient = SubResource("Gradient_hlgd5")
+width = 12
+height = 24
+fill_to = Vector2(1, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hlgd5"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(64, 16, 1)
+inherit_velocity_ratio = 2.0
+direction = Vector3(0, -500, 0)
+spread = 144.759
+angular_velocity_min = 16.55
+angular_velocity_max = 720.0
+radial_velocity_min = 632.18
+radial_velocity_max = 1000.0
+gravity = Vector3(0, 320, 0)
+scale_max = 2.0
+scale_over_velocity_max = 1000.0
+hue_variation_min = -0.01
+hue_variation_max = 0.53
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lxehk"]
+size = Vector2(6, 32)
+
+[node name="Basket" type="Node2D"]
+script = ExtResource("1_hlgd5")
+
+[node name="Backboard" type="StaticBody2D" parent="."]
+z_index = -1
+position = Vector2(112, 0)
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Backboard"]
+position = Vector2(13, -1)
+shape = SubResource("RectangleShape2D_l2h7g")
+
+[node name="backboardsprite" type="Sprite2D" parent="Backboard"]
+texture = ExtResource("2_fn8i1")
+
+[node name="Goal" type="Area2D" parent="."]
+position = Vector2(-240, 136)
+collision_layer = 8
+collision_mask = 4
+
+[node name="GoalCollider" type="CollisionShape2D" parent="Goal"]
+position = Vector2(147, 114.5)
+shape = SubResource("RectangleShape2D_1vpyn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="ScoreFX" type="GPUParticles2D" parent="."]
+position = Vector2(-112, 136)
+emitting = false
+amount = 64
+texture = SubResource("GradientTexture2D_fn8i1")
+lifetime = 3.04
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+randomness = 1.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_hlgd5")
+
+[node name="Rim" type="StaticBody2D" parent="."]
+position = Vector2(-112, 145)
+collision_layer = 8
+collision_mask = 4
+
+[node name="rimleft" type="CollisionShape2D" parent="Rim"]
+position = Vector2(-157, 0)
+shape = SubResource("RectangleShape2D_lxehk")
+
+[node name="rimright" type="CollisionShape2D" parent="Rim"]
+position = Vector2(157, 0)
+shape = SubResource("RectangleShape2D_lxehk")
+
+[node name="rimsprite" type="Sprite2D" parent="Rim"]
+texture = ExtResource("3_klp67")
+
+[node name="net" type="Sprite2D" parent="."]
+position = Vector2(-111, 251)
+texture = ExtResource("4_s5qqq")
