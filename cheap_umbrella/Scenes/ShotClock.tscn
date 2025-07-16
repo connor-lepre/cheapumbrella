@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4d4wnxexbtw6"]
+[gd_scene load_steps=5 format=3 uid="uid://b4d4wnxexbtw6"]
 
-[ext_resource type="Script" uid="uid://ct56hni63rtx" path="res://Scenes/shot_clock.gd" id="1_rnuuk"]
+[ext_resource type="Script" uid="uid://ct56hni63rtx" path="res://scripts/shot_clock.gd" id="1_rnuuk"]
+[ext_resource type="FontFile" uid="uid://beni43735fod8" path="res://Assets/fonts/VT323-Regular.ttf" id="2_hh5vo"]
 
 [sub_resource type="Gradient" id="Gradient_vx3q5"]
 colors = PackedColorArray(0.20443, 0.0980597, 0.0989473, 1, 0.193854, 0.0967883, 0.057261, 1)
@@ -17,19 +18,20 @@ script = ExtResource("1_rnuuk")
 motion_scale = Vector2(0.8, 0.8)
 
 [node name="Background" type="TextureRect" parent="ParallaxLayer"]
-offset_left = -178.0
-offset_top = -118.0
-offset_right = 182.0
-offset_bottom = 122.0
+offset_left = -231.0
+offset_top = -140.0
+offset_right = 235.0
+offset_bottom = 144.0
 texture = SubResource("GradientTexture2D_rnuuk")
 
 [node name="Timer" type="Label" parent="ParallaxLayer"]
-offset_left = -157.0
-offset_top = -108.0
-offset_right = 161.0
-offset_bottom = 111.0
+offset_left = -189.0
+offset_top = -128.0
+offset_right = 195.0
+offset_bottom = 130.0
 theme_override_colors/font_color = Color(1, 0.438262, 0.21448, 1)
-theme_override_font_sizes/font_size = 160
+theme_override_fonts/font = ExtResource("2_hh5vo")
+theme_override_font_sizes/font_size = 240
 text = "2:00"
 horizontal_alignment = 1
 vertical_alignment = 1

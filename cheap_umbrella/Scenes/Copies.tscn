@@ -1,18 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://oqd1g8e36mas"]
+[gd_scene load_steps=11 format=3 uid="uid://cdq3kbildgmlr"]
 
-[ext_resource type="Script" uid="uid://cokrbnovaoyhu" path="res://scripts/player.gd" id="1_v0iea"]
-[ext_resource type="Texture2D" uid="uid://de8cekthvsbx0" path="res://Assets/sprites/player/player_glide.png" id="2_x3wgy"]
-[ext_resource type="Texture2D" uid="uid://dqngtlolvf3jf" path="res://Assets/sprites/player/player_def.png" id="3_3smsa"]
-[ext_resource type="Texture2D" uid="uid://c4bsca8h4kell" path="res://Assets/sprites/player/player_jump.png" id="4_3smsa"]
-[ext_resource type="Texture2D" uid="uid://da0jgf2luuify" path="res://Assets/sprites/player/player_move0.png" id="4_8erm5"]
-[ext_resource type="Texture2D" uid="uid://cqs6tpx3eb16f" path="res://Assets/sprites/player/player_move1.png" id="5_f1ek2"]
-[ext_resource type="Texture2D" uid="uid://dltr4457o4sk5" path="res://Assets/sprites/props/umbrella.png" id="6_tx1dd"]
+[ext_resource type="Script" uid="uid://dduq7cm0ewm30" path="res://scripts/Copies.gd" id="1_6p5lp"]
+[ext_resource type="Texture2D" uid="uid://de8cekthvsbx0" path="res://Assets/sprites/player/player_glide.png" id="2_0bh84"]
+[ext_resource type="Texture2D" uid="uid://dqngtlolvf3jf" path="res://Assets/sprites/player/player_def.png" id="3_y1egf"]
+[ext_resource type="Texture2D" uid="uid://c4bsca8h4kell" path="res://Assets/sprites/player/player_jump.png" id="4_jqoys"]
+[ext_resource type="Texture2D" uid="uid://da0jgf2luuify" path="res://Assets/sprites/player/player_move0.png" id="5_g2pok"]
+[ext_resource type="Texture2D" uid="uid://cqs6tpx3eb16f" path="res://Assets/sprites/player/player_move1.png" id="6_xeu8r"]
+[ext_resource type="Texture2D" uid="uid://dltr4457o4sk5" path="res://Assets/sprites/props/umbrella.png" id="7_py6yc"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gymyn"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_x3wgy")
+"texture": ExtResource("2_0bh84")
 }],
 "loop": true,
 "name": &"glide",
@@ -20,7 +20,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_3smsa")
+"texture": ExtResource("3_y1egf")
 }],
 "loop": true,
 "name": &"idle",
@@ -28,7 +28,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_3smsa")
+"texture": ExtResource("4_jqoys")
 }],
 "loop": true,
 "name": &"jump",
@@ -36,16 +36,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_8erm5")
+"texture": ExtResource("5_g2pok")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_3smsa")
+"texture": ExtResource("3_y1egf")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_f1ek2")
+"texture": ExtResource("6_xeu8r")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_3smsa")
+"texture": ExtResource("3_y1egf")
 }],
 "loop": true,
 "name": &"move",
@@ -62,16 +62,17 @@ size = Vector2(72, 8)
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_mask = 7
 floor_block_on_wall = false
-script = ExtResource("1_v0iea")
+script = ExtResource("1_6p5lp")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
+self_modulate = Color(0, 0.835294, 1, 0.760784)
 sprite_frames = SubResource("SpriteFrames_gymyn")
 animation = &"jump"
 
 [node name="Umbrella" type="Sprite2D" parent="PlayerSprite"]
 visible = false
 position = Vector2(0, -52.5)
-texture = ExtResource("6_tx1dd")
+texture = ExtResource("7_py6yc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_3smsa")

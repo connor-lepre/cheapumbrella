@@ -1,15 +1,12 @@
 [gd_scene load_steps=11 format=3 uid="uid://cuuam67r4dpao"]
 
-[ext_resource type="Script" uid="uid://durir3g3yvjoa" path="res://Scenes/Goal.gd" id="1_hlgd5"]
+[ext_resource type="Script" uid="uid://durir3g3yvjoa" path="res://scripts/Goal.gd" id="1_hlgd5"]
 [ext_resource type="Texture2D" uid="uid://mgssxv8jogrt" path="res://Assets/sprites/props/backboard.png" id="2_fn8i1"]
 [ext_resource type="Texture2D" uid="uid://ch60u0kanftv4" path="res://Assets/sprites/props/rim.png" id="3_klp67"]
 [ext_resource type="Texture2D" uid="uid://cmkfirert5ku1" path="res://Assets/sprites/props/net.png" id="4_s5qqq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2h7g"]
 size = Vector2(178, 420)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1vpyn"]
-size = Vector2(280, 179)
 
 [sub_resource type="Gradient" id="Gradient_hlgd5"]
 colors = PackedColorArray(0.965802, 0.600765, 7.70092e-07, 1, 0.862745, 0.823529, 0.164706, 1)
@@ -37,6 +34,9 @@ scale_over_velocity_max = 1000.0
 hue_variation_min = -0.01
 hue_variation_max = 0.53
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1vpyn"]
+size = Vector2(244, 37)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lxehk"]
 size = Vector2(6, 32)
 
@@ -56,15 +56,6 @@ shape = SubResource("RectangleShape2D_l2h7g")
 [node name="backboardsprite" type="Sprite2D" parent="Backboard"]
 texture = ExtResource("2_fn8i1")
 
-[node name="Goal" type="Area2D" parent="."]
-position = Vector2(-240, 136)
-collision_layer = 8
-collision_mask = 4
-
-[node name="GoalCollider" type="CollisionShape2D" parent="Goal"]
-position = Vector2(147, 114.5)
-shape = SubResource("RectangleShape2D_1vpyn")
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="ScoreFX" type="GPUParticles2D" parent="."]
@@ -79,6 +70,18 @@ explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_hlgd5")
+
+[node name="Goal" type="Area2D" parent="."]
+position = Vector2(-240, 136)
+collision_layer = 8
+collision_mask = 4
+
+[node name="RimCheck" type="CollisionShape2D" parent="Goal"]
+position = Vector2(129, 11.5)
+shape = SubResource("RectangleShape2D_1vpyn")
+
+[node name="NetCheck" type="CollisionPolygon2D" parent="Goal"]
+polygon = PackedVector2Array(-16, 48, 32, 216, 216, 216, 270, 48, 120, 80)
 
 [node name="Rim" type="StaticBody2D" parent="."]
 position = Vector2(-112, 145)

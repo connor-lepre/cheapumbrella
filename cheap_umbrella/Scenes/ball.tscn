@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dd08uoybce4dc"]
 
-[ext_resource type="Script" uid="uid://cmxlapocxj5tq" path="res://Scenes/physics_crate.gd" id="1_5ju8n"]
+[ext_resource type="Script" uid="uid://cmxlapocxj5tq" path="res://scripts/ball.gd" id="1_5ju8n"]
 [ext_resource type="Texture2D" uid="uid://dny25pc1pq8lc" path="res://Assets/sprites/props/ball.png" id="2_ujhkp"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ujhkp"]
@@ -10,7 +10,7 @@ bounce = 0.75
 [sub_resource type="CircleShape2D" id="CircleShape2D_ujhkp"]
 radius = 64.0
 
-[node name="Node2D" type="RigidBody2D" groups=["ball"]]
+[node name="Ball" type="RigidBody2D" groups=["ball"]]
 collision_layer = 4
 collision_mask = 15
 physics_material_override = SubResource("PhysicsMaterial_ujhkp")

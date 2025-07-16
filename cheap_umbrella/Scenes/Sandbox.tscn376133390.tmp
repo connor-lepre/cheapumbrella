@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://1i67iv3g6apn"]
+[gd_scene load_steps=11 format=3 uid="uid://1i67iv3g6apn"]
 
 [ext_resource type="Script" uid="uid://bubxavdqdvncd" path="res://scripts/sandbox.gd" id="1_qx8wr"]
 [ext_resource type="PackedScene" uid="uid://drk1vvovwjcq4" path="res://Scenes/Platform.tscn" id="2_do50k"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_n2jbg"]
 [ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="6_foql8"]
 [ext_resource type="PackedScene" uid="uid://b4d4wnxexbtw6" path="res://Scenes/ShotClock.tscn" id="7_do50k"]
-[ext_resource type="PackedScene" uid="uid://chmisb7852ntv" path="res://Scenes/UI/PlayerHUD.tscn" id="8_dnd5l"]
 
 [sub_resource type="SystemFont" id="SystemFont_ti018"]
 
@@ -20,7 +19,7 @@ outline_color = Color(0.364706, 0.0313726, 0.854902, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fucb2"]
 size = Vector2(10419, 2071)
 
-[node name="Sandbox" type="Node2D"]
+[node name="Sandbox_tscn" type="Node2D"]
 script = ExtResource("1_qx8wr")
 
 [node name="Label" type="Label" parent="."]
@@ -69,5 +68,3 @@ position = Vector2(744, -412)
 [node name="ShotClock" parent="." instance=ExtResource("7_do50k")]
 offset = Vector2(300, -200)
 transform = Transform2D(1, 0, 0, 1, 300, -200)
-
-[node name="PlayerHud" parent="." instance=ExtResource("8_dnd5l")]
