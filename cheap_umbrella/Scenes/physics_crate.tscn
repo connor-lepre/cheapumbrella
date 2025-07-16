@@ -1,19 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://dd08uoybce4dc"]
+[gd_scene load_steps=5 format=3 uid="uid://dd08uoybce4dc"]
 
 [ext_resource type="Script" uid="uid://cmxlapocxj5tq" path="res://Scenes/physics_crate.gd" id="1_5ju8n"]
+[ext_resource type="Texture2D" uid="uid://dny25pc1pq8lc" path="res://Assets/sprites/props/ball.png" id="2_ujhkp"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7brft"]
-size = Vector2(128, 128)
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ujhkp"]
+friction = 2.0
+bounce = 0.65
 
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_7brft"]
-size = Vector2(128, 128)
+[sub_resource type="CircleShape2D" id="CircleShape2D_ujhkp"]
+radius = 64.0
 
 [node name="Node2D" type="RigidBody2D"]
+collision_layer = 4
 collision_mask = 15
+mass = 2.0
+physics_material_override = SubResource("PhysicsMaterial_ujhkp")
+can_sleep = false
 script = ExtResource("1_5ju8n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_7brft")
+scale = Vector2(0.6, 0.6)
+shape = SubResource("CircleShape2D_ujhkp")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("PlaceholderTexture2D_7brft")
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+texture = ExtResource("2_ujhkp")

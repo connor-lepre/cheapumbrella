@@ -1,7 +1,50 @@
-[gd_scene load_steps=3 format=3 uid="uid://oqd1g8e36mas"]
+[gd_scene load_steps=9 format=3 uid="uid://oqd1g8e36mas"]
 
 [ext_resource type="Script" uid="uid://cokrbnovaoyhu" path="res://scripts/player.gd" id="1_v0iea"]
-[ext_resource type="Texture2D" uid="uid://bmmq6pl4cahgm" path="res://Assets/sprites/player/testguy.png" id="2_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://de8cekthvsbx0" path="res://Assets/sprites/player/player_glide.png" id="2_x3wgy"]
+[ext_resource type="Texture2D" uid="uid://dqngtlolvf3jf" path="res://Assets/sprites/player/player_def.png" id="3_3smsa"]
+[ext_resource type="Texture2D" uid="uid://da0jgf2luuify" path="res://Assets/sprites/player/player_move0.png" id="4_8erm5"]
+[ext_resource type="Texture2D" uid="uid://cqs6tpx3eb16f" path="res://Assets/sprites/player/player_move1.png" id="5_f1ek2"]
+[ext_resource type="Texture2D" uid="uid://dltr4457o4sk5" path="res://Assets/sprites/props/umbrella.png" id="6_tx1dd"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gymyn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_x3wgy")
+}],
+"loop": true,
+"name": &"glide",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_3smsa")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_8erm5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3smsa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_f1ek2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3smsa")
+}],
+"loop": true,
+"name": &"move",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3wgy"]
+size = Vector2(72, 8)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_mask = 7
@@ -11,11 +54,24 @@ script = ExtResource("1_v0iea")
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-32, -64, 32, -64, 64, 0, 64, 64, -64, 64, -64, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_cvnsp")
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gymyn")
+animation = &"idle"
+
+[node name="Umbrella" type="Sprite2D" parent="Sprite2D"]
+visible = false
+position = Vector2(0, -52.5)
+texture = ExtResource("6_tx1dd")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.5, 0.5)
+zoom = Vector2(0.7, 0.7)
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 2.0
+
+[node name="helmet" type="Area2D" parent="."]
+position = Vector2(0, -61)
+collision_mask = 6
+
+[node name="Polygon2D" type="CollisionShape2D" parent="helmet"]
+shape = SubResource("RectangleShape2D_x3wgy")

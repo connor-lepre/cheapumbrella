@@ -11,6 +11,8 @@ var tick := 0
 const FRAME_SPEED := 1
 const PHYSICS_FPS := 60.0
 
+var kgMass = 1.0
+
 var previous_position := Vector2.ZERO
 var estimated_velocity := Vector2.ZERO
 
@@ -25,14 +27,15 @@ var push_force = Vector2(
 	clamp(raw_push_force.y, -100, 50)  # Limit upward force especially
 )
 
+@onready var sprite = $Sprite2D
 
 func set_path(p: Array):
 	if p.size() < 2:
 		queue_free()
 		return
 	path = p.duplicate()
-	global_position = path[0]
-	previous_position = path[0]
+	global_position = path[0][0]
+	previous_position = path[0][0]
 
 func _physics_process(delta):
 	if path.size() < 2:
@@ -44,11 +47,14 @@ func _physics_process(delta):
 	tick = 0
 
 	# Estimate velocity
-	estimated_velocity = (path[frame_index] - previous_position) * PHYSICS_FPS
+	estimated_velocity = (path[frame_index][0] - previous_position) * PHYSICS_FPS
 	previous_position = global_position
 
-	global_position = path[frame_index]
-	push_objects()
+	var frame_pos = path[frame_index][0]
+	var frame_facing = path[frame_index][1]
+	global_position = frame_pos
+	_set_sprite_facing(frame_facing)
+	collision_with_RigidBody2d()
 
 	frame_index += direction
 	if frame_index >= path.size():
@@ -58,38 +64,21 @@ func _physics_process(delta):
 		frame_index = 1
 		direction = 1
 
-func push_objects():
-	for i in range(get_slide_collision_count()):
-		var collision = get_slide_collision(i)
-		var collider = collision.get_collider()
-		var normal = collision.get_normal()
-		if collider and collider.has_method("add_external_velocity"):
-			# Check if we've already launched this object recently
-			var object_id = collider.get_instance_id()
-			if object_id in launched_objects:
-				continue  # Skip if already launched this frame cycle
-			
-			var raw_push_force = Vector2(
-				estimated_velocity.x * push_multiplier_x,
-				estimated_velocity.y * push_multiplier_y
-			)
-			
-			# Special handling for upward launches
-			var push_force = Vector2.ZERO
-			if estimated_velocity.y < -50:  # Ghost moving upward significantly
-				# Give one big launch kick and then remember we launched it
-				push_force = Vector2(
-					raw_push_force.x,
-					raw_push_force.y  # Don't clamp upward launches
-				)
-				launched_objects[object_id] = true  # Mark as launched
-				print("🚀 Ghost launching with force: ", push_force)
-			else:
-				# Normal pushing for other directions
-				push_force = Vector2(
-					raw_push_force.x,
-					clamp(raw_push_force.y, -200, 200)
-				)
-			
-			if abs(normal.x) > 0.7 or abs(normal.y) > 0.7:
-				collider.add_external_velocity(push_force, 1.2)  # Even higher multiplier for instant kick
+func _set_sprite_facing(facing):
+	if facing == Vector2.RIGHT:
+		sprite.flip_h = true
+	if facing == Vector2.LEFT:
+		sprite.flip_h = false
+
+func collision_with_RigidBody2d():
+	for i in get_slide_collision_count():
+		var c: KinematicCollision2D = get_slide_collision(i)
+		var rigid: RigidBody2D = c.get_collider() if c.get_collider() is RigidBody2D else null
+		if rigid:
+			var pushDir = -c.get_normal()
+			var diffVelInPushDir: float = max(0.0, velocity.dot(pushDir) - rigid.linear_velocity.dot(pushDir))
+			var massRatio: float = min(1.0, kgMass / rigid.mass)
+			var pushForce: float = massRatio * 5.0
+			# rigid.apply_impulse(pushDir * diffVelInPushDir * pushForce, c.get_position() - rigid.position) 
+			var impulseAmt = pushDir * diffVelInPushDir * pushForce
+			rigid.apply_central_impulse(impulseAmt)

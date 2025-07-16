@@ -57,4 +57,4 @@ reset_level={
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0.412139, 0.367344, 0.728633, 1)
+environment/defaults/default_clear_color=Color(0.719283, 0.673223, 0.812726, 1)

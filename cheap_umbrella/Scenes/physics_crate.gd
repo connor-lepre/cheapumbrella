@@ -3,7 +3,6 @@ extends RigidBody2D
 @export var spawn_delay := 1.0
 var spawn_position: Vector2
 var is_respawning := false
-var friction = 2000
 
 func _ready():
 	spawn_position = global_position

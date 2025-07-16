@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 const SPEED := 800.0
 const JUMP_VELOCITY := -1500.0
-const GRAVITY := 5000
+const GRAVITY := 5000.0
 const GLIDE_GRAVITY := 200.0
 const RECORD_THRESHOLD := 0.5
 const SKIP_TIME_AT_START := 2
@@ -15,12 +15,26 @@ const PUSH_FORCE_LIMIT := 60
 
 @export var max_ghosts := 4
 
+@onready var push_force = 1.0
+
 @onready var facing = Vector2.LEFT
 @onready var player_sprite = $Sprite2D
+@onready var umbrella = $Sprite2D/Umbrella
+@onready var helmet = $helmet
+var is_moving := false
+var is_gliding := false
+var is_jumping := false
+signal moving
+signal gliding
+signal jumping
+
+var kgMass = 1.0
+
+
 
 var reset_hold_timer := 0.0
 var spawn_point: Vector2
-var is_gliding := false
+
 var physics_fps := 60.0
 var was_recording_pressed := false
 
@@ -38,6 +52,8 @@ var timer_labels := []
 func _ready():
 	print("Player ready")
 	physics_fps = Engine.get_physics_ticks_per_second()
+
+	helmet.body_entered.connect(helmet_push)
 
 	var start_node = get_tree().get_current_scene().get_node_or_null("SpawnPoint")
 	spawn_point = start_node.global_position if start_node else global_position
@@ -63,12 +79,15 @@ func _physics_process(delta):
 
 	# Movement
 	move_and_slide()
+	collision_with_RigidBody2d()
 
 	# Push crates using ghost-style force
-	push_crates_ghost_style()
+	#push_crates_ghost_style()
 	
 	# Sprite handling
 	sprite_flip()
+	sprite_anim_switch()
+	hide_show_umbrella()
 
 	# Estimate velocity AFTER movement
 	estimated_velocity = global_position - previous_position
@@ -81,30 +100,55 @@ func _physics_process(delta):
 func handle_input(delta):
 	var direction = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	velocity.x = direction * SPEED
+	
+	if abs(velocity.x) > 0.1 and is_on_floor():
+		is_moving = true
+	else:
+		is_moving = false
 
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		emit_signal("jumping")
 
 	is_gliding = Input.is_action_pressed("jump") and not is_on_floor() and velocity.y > 0
 	velocity.y += (GLIDE_GRAVITY if is_gliding else GRAVITY) * delta
 
-func push_crates_ghost_style():
-	for i in range(get_slide_collision_count()):
-		var collision = get_slide_collision(i)
-		var collider = collision.get_collider()
-		var normal = collision.get_normal()
-		
-		if collider and collider.has_method("apply_push"):
-			var is_side_push = abs(normal.x) > 0.6
-			if not is_side_push:
-				continue
+func collision_with_RigidBody2d():
+	for i in get_slide_collision_count():
+		var c: KinematicCollision2D = get_slide_collision(i)
+		var rigid: RigidBody2D = c.get_collider() if c.get_collider() is RigidBody2D else null
+		if rigid:
+			var pushDir = -c.get_normal()
+			var diffVelInPushDir: float = max(0.0, velocity.dot(pushDir) - rigid.linear_velocity.dot(pushDir))
+			var massRatio: float = min(1.0, kgMass / rigid.mass)
+			var pushForce: float = massRatio * 5.0
+			# rigid.apply_impulse(pushDir * diffVelInPushDir * pushForce, c.get_position() - rigid.position) 
+			var impulseAmt = pushDir * diffVelInPushDir * pushForce
+			rigid.apply_central_impulse(impulseAmt)
+			
+func helmet_push(body):
+	
+	if body.get_parent() is RigidBody2D:
+		body.get_parent().apply_central_impulse(Vector2(0, -500))
+		print("helmet push was called and an impulse was attempted")
 
-			# Only push if you're actually trying to move
-			if abs(velocity.x) < 5:
-				continue
-
-			var push_force = Vector2(velocity.x * .5, 0)  # Smooth force instead of burst
-			collider.apply_push(push_force)
+#func push_crates_ghost_style():
+	#for i in range(get_slide_collision_count()):
+		#var collision = get_slide_collision(i)
+		#var collider = collision.get_collider()
+		#var normal = collision.get_normal()
+		#
+		#if collider and collider.has_method("apply_push"):
+			#var is_side_push = abs(normal.x) > 0.6
+			#if not is_side_push:
+				#continue
+#
+			## Only push if you're actually trying to move
+			#if abs(velocity.x) < 5:
+				#continue
+#
+			#var push_force = Vector2(velocity.x * .5, 0)  # Smooth force instead of burst
+			#collider.apply_push(push_force)
 
 
 func handle_recording():
@@ -132,7 +176,7 @@ func handle_recording():
 	was_recording_pressed = is_pressed
 
 	if current_ghost_index < max_ghosts and is_recording_per_ghost[current_ghost_index]:
-		recordings[current_ghost_index].append(global_position)
+		recordings[current_ghost_index].append([global_position, facing])
 		var delta_time = 1.0 / physics_fps
 		time_left_per_ghost[current_ghost_index] -= delta_time
 		update_timer_ui()
@@ -152,6 +196,20 @@ func sprite_flip():
 		facing = Vector2.LEFT
 		player_sprite.flip_h = false
 
+func sprite_anim_switch():
+	if is_gliding:
+		player_sprite.play("glide")
+	elif is_moving:
+		player_sprite.play("move")
+	else:
+		player_sprite.play("idle")
+		
+func hide_show_umbrella():
+	if is_gliding:
+		umbrella.visible = true
+	else:
+		umbrella.visible = false
+
 func spawn_ghost(recording: Array):
 	if recording.size() < 2:
 		print("Recording too short — no ghost spawned.")
@@ -170,7 +228,7 @@ func spawn_ghost(recording: Array):
 	var ghost_scene = preload("res://Scenes/GhostPlatforms.tscn")
 	var ghost = ghost_scene.instantiate()
 	ghost.set_path(recording)
-	ghost.global_position = recording[0] - Vector2(0, 64)
+	ghost.global_position = recording[0][0] - Vector2(0, 64)
 
 	ghost_container.add_child(ghost)
 	print("✅ Ghost added to GhostPlatforms.")
