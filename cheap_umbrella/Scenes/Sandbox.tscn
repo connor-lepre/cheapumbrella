@@ -48,10 +48,16 @@ horizontal_alignment = 1
 
 [node name="Platform" parent="." instance=ExtResource("2_do50k")]
 
+[node name="Platform2" parent="." instance=ExtResource("2_do50k")]
+position = Vector2(905, 0)
+
+[node name="Platform3" parent="." instance=ExtResource("2_do50k")]
+position = Vector2(-906, 0)
+
 [node name="Copies" type="Node2D" parent="."]
 
 [node name="SpawnPoint" parent="." instance=ExtResource("3_dnd5l")]
-position = Vector2(-144, -236)
+position = Vector2(-1118, -314)
 
 [node name="killplane" type="Area2D" parent="."]
 position = Vector2(355, 2201.5)
@@ -60,14 +66,14 @@ script = ExtResource("4_7yicx")
 [node name="KillCollider" type="CollisionShape2D" parent="killplane"]
 shape = SubResource("RectangleShape2D_fucb2")
 
-[node name="Ball" parent="." instance=ExtResource("5_n2jbg")]
-position = Vector2(255, -249)
-
 [node name="Basket" parent="." instance=ExtResource("6_foql8")]
-position = Vector2(744, -412)
+position = Vector2(921, -653)
 
 [node name="ShotClock" parent="." instance=ExtResource("7_do50k")]
 offset = Vector2(300, -200)
 transform = Transform2D(1, 0, 0, 1, 300, -200)
 
 [node name="PlayerHud" parent="." instance=ExtResource("8_dnd5l")]
+
+[node name="Ball" parent="." instance=ExtResource("5_n2jbg")]
+position = Vector2(5, -780)

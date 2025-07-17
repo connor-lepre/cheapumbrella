@@ -90,6 +90,7 @@ collision_mask = 4
 polygon = PackedVector2Array(-16, 48, 32, 216, 216, 216, 270, 48, 120, 80)
 
 [node name="Rim" type="StaticBody2D" parent="."]
+z_index = 10
 position = Vector2(-112, 145)
 collision_layer = 8
 collision_mask = 4
@@ -106,5 +107,6 @@ shape = SubResource("RectangleShape2D_lxehk")
 texture = ExtResource("3_klp67")
 
 [node name="net" type="Sprite2D" parent="."]
+z_index = 10
 position = Vector2(-111, 251)
 texture = ExtResource("4_s5qqq")

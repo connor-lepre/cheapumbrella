@@ -27,8 +27,17 @@ var was_on_floor := false
 var coyote_time := 0.0
 var coyote_time_max := 0.3
 
+# Ball holding state
+var held_ball: RigidBody2D = null    # Reference to the held ball, or null if not holding
+var ball_hold_timer := 0.0
+const BALL_HOLD_TIME := 2.0   # Max seconds to hold before penalty
+const PICKUP_DISTANCE := 120.0 # Tweak as needed
+var ready_to_shoot := false
+
 var reset_hold_timer := 0.0
 var spawn_point: Vector2
+
+signal player_traveled(ball)
 
 var was_recording_pressed := false
 var is_recording := false
@@ -44,8 +53,8 @@ func _ready():
 	print("Player ready")
 	physics_fps = Engine.get_physics_ticks_per_second()
 
-	if helmet:
-		helmet.body_entered.connect(helmet_push)
+	#if helmet:
+		#helmet.body_entered.connect(helmet_push)
 
 	player_hud = get_tree().get_current_scene().get_node_or_null("PlayerHud")
 	update_copy_ui()
@@ -56,6 +65,7 @@ func _ready():
 
 func _physics_process(delta):
 	handle_input(delta)
+	handle_ball_interaction(delta)
 	move_and_slide()
 	collision_with_RigidBody2d()
 	sprite_flip(facing)
@@ -107,9 +117,89 @@ func collision_with_RigidBody2d():
 			impulseAmt = impulseAmt.limit_length(maxImpulse)
 			rigid.apply_central_impulse(impulseAmt)
 
-func helmet_push(body):
-	if body is RigidBody2D:
-		body.apply_central_impulse(Vector2(0, -800))
+#func helmet_push(body):
+	#if body is RigidBody2D:
+		#body.apply_central_impulse(Vector2(0, -800))
+
+func handle_ball_interaction(delta):
+	if held_ball:
+		# Already holding, manage timer and actions
+		ball_hold_timer += delta
+		if ball_hold_timer > BALL_HOLD_TIME:
+			# Penalty for traveling
+			drop_ball(true)
+			return
+
+		# Drop (simple), e.g. on button release
+		if Input.is_action_just_pressed("drop"):
+			drop_ball()
+			return
+
+		# Shoot mechanism (double press for shoot, single to prep)
+		if Input.is_action_just_pressed("shoot"):
+			if not ready_to_shoot:
+				ready_to_shoot = true
+				# Move ball above player
+				held_ball.global_position = global_position + Vector2(0, -32)
+			else:
+				shoot_ball()
+			return
+
+		# Keep ball stuck to center as you move
+		held_ball.global_position = global_position
+
+		# Optionally: freeze physics, hide shadow, etc
+		held_ball.freeze_ball(true)
+	else:
+		# Not holding: check for nearby ball and pickup action
+		if Input.is_action_just_pressed("grab"):
+			var ball = get_nearby_ball()
+			if ball:
+				pickup_ball(ball)
+				print("Grabbed ball")
+
+func get_nearby_ball():
+	# Naive: loop all balls, find nearest within distance
+	for ball in get_tree().get_nodes_in_group("ball"):
+		if ball.global_position.distance_to(global_position) < PICKUP_DISTANCE and not ball.is_held:
+			return ball
+	return null
+
+func pickup_ball(ball):
+	held_ball = ball
+	held_ball.is_held = true
+	ball_hold_timer = 0.0
+	ready_to_shoot = false
+	held_ball.freeze_ball(true)
+	held_ball.global_position = global_position
+	collision_mask &= ~(1 << 2)
+
+func drop_ball(penalized: bool = false):
+	if held_ball:
+		held_ball.is_held = false
+		held_ball.freeze_ball(false)
+		if penalized:
+			emit_signal("player_traveled", held_ball) # optional signal for penalty
+		held_ball = null
+		ready_to_shoot = false
+		ball_hold_timer = 0.0
+		collision_mask |= (1 << 2)
+
+func shoot_ball():
+	if held_ball:
+		# Place ball above player and unfreeze
+		held_ball.global_position = global_position + Vector2(0, -32)
+		held_ball.freeze_ball(false)
+		var direction_x = facing.x
+		if direction_x == 0:
+			direction_x = 1 # default to right if somehow 0
+		var throw_force = Vector2(direction_x * 750, -900)
+		held_ball.apply_throw(throw_force)
+		held_ball.is_held = false
+		held_ball = null
+		ready_to_shoot = false
+		ball_hold_timer = 0.0
+		collision_mask |= (1 << 2)
 
 func handle_recording():
 	if available_copies <= 0:

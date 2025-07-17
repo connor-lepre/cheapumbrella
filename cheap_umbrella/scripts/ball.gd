@@ -4,6 +4,8 @@ extends RigidBody2D
 var spawn_position: Vector2
 var is_respawning := false
 
+var is_held := false
+
 func _ready():
 	spawn_position = global_position
 
@@ -23,3 +25,11 @@ func respawn():
 	global_position = spawn_position
 	visible = true
 	is_respawning = false
+
+func freeze_ball(state: bool):
+	freeze = state  # Godot 4 property for RigidBody2D
+
+
+func apply_throw(force: Vector2):
+	linear_velocity = Vector2.ZERO
+	apply_central_impulse(force)

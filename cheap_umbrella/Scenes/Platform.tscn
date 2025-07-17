@@ -8,6 +8,8 @@
 size = Vector2(903, 104)
 
 [node name="Platform" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 15
 physics_material_override = SubResource("PhysicsMaterial_klj2b")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
