@@ -16,7 +16,6 @@ collision_layer = 4
 collision_mask = 14
 physics_material_override = SubResource("PhysicsMaterial_ujhkp")
 can_sleep = false
-freeze_mode = 1
 script = ExtResource("1_5ju8n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

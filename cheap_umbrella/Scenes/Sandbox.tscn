@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://1i67iv3g6apn"]
+[gd_scene load_steps=11 format=3 uid="uid://1i67iv3g6apn"]
 
 [ext_resource type="Script" uid="uid://bubxavdqdvncd" path="res://scripts/sandbox.gd" id="1_qx8wr"]
 [ext_resource type="PackedScene" uid="uid://drk1vvovwjcq4" path="res://Scenes/Platform.tscn" id="2_do50k"]
@@ -8,14 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="6_foql8"]
 [ext_resource type="PackedScene" uid="uid://b4d4wnxexbtw6" path="res://Scenes/ShotClock.tscn" id="7_do50k"]
 [ext_resource type="PackedScene" uid="uid://chmisb7852ntv" path="res://Scenes/UI/PlayerHUD.tscn" id="8_dnd5l"]
-
-[sub_resource type="SystemFont" id="SystemFont_ti018"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_u6t3p"]
-font = SubResource("SystemFont_ti018")
-font_size = 40
-outline_size = 50
-outline_color = Color(0.364706, 0.0313726, 0.854902, 1)
+[ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="9_7yicx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fucb2"]
 size = Vector2(10419, 2071)
@@ -23,36 +16,13 @@ size = Vector2(10419, 2071)
 [node name="Sandbox" type="Node2D"]
 script = ExtResource("1_qx8wr")
 
-[node name="Label" type="Label" parent="."]
-visible = false
-offset_left = -288.0
-offset_top = 110.0
-offset_right = 609.0
-offset_bottom = 339.0
-text = "R2 to record (up to five seconds) 
-
-X to jump! try to bounce off of your duplicates 
-hold X to glide :)"
-label_settings = SubResource("LabelSettings_u6t3p")
-horizontal_alignment = 1
-
-[node name="Label" type="Label" parent="Label"]
-layout_mode = 0
-offset_left = 25.0
-offset_top = -681.0
-offset_right = 922.0
-offset_bottom = -510.0
-text = "go up!"
-label_settings = SubResource("LabelSettings_u6t3p")
-horizontal_alignment = 1
-
 [node name="Platform" parent="." instance=ExtResource("2_do50k")]
 
 [node name="Platform2" parent="." instance=ExtResource("2_do50k")]
-position = Vector2(905, 0)
+position = Vector2(900, 0)
 
 [node name="Platform3" parent="." instance=ExtResource("2_do50k")]
-position = Vector2(-906, 0)
+position = Vector2(-900, 0)
 
 [node name="Copies" type="Node2D" parent="."]
 
@@ -70,10 +40,12 @@ shape = SubResource("RectangleShape2D_fucb2")
 position = Vector2(921, -653)
 
 [node name="ShotClock" parent="." instance=ExtResource("7_do50k")]
-offset = Vector2(300, -200)
-transform = Transform2D(1, 0, 0, 1, 300, -200)
+offset = Vector2(500, 100)
+transform = Transform2D(1, 0, 0, 1, 500, 100)
 
 [node name="PlayerHud" parent="." instance=ExtResource("8_dnd5l")]
 
 [node name="Ball" parent="." instance=ExtResource("5_n2jbg")]
 position = Vector2(5, -780)
+
+[node name="Background" parent="." instance=ExtResource("9_7yicx")]

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Cheap_Umbrella"
-run/main_scene="uid://1i67iv3g6apn"
+run/main_scene="uid://i0gqela3swqn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -75,4 +75,4 @@ shoot={
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0.719283, 0.673223, 0.812726, 1)
+environment/defaults/default_clear_color=Color(0.713726, 0.666667, 0.568627, 1)

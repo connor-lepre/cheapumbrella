@@ -2,20 +2,32 @@ extends ParallaxBackground
 
 @export var start_time_sec := 120  # 2:00 in seconds
 var time_left := 0.0
+var player_score := 0
 
-@onready var label = $ParallaxLayer/Timer
+@onready var shotclock = $ParallaxLayer/Timer
+@onready var score = $ParallaxLayer/Score
 
 func _ready():
 	time_left = start_time_sec
-	update_label()
+	update_shotclock()
+	
+	var goal_node = get_parent().get_node("Basket")
+	goal_node.ball_scored.connect(_on_ball_scored)
 
 func _process(delta):
 	if time_left > 0:
 		time_left -= delta
 		time_left = max(time_left, 0)
-		update_label()
+		update_shotclock()
 
-func update_label():
+func update_shotclock():
 	var minutes = int(time_left) / 60
 	var seconds = int(time_left) % 60
-	label.text = "%d:%02d" % [minutes, seconds]
+	shotclock.text = "%d:%02d" % [minutes, seconds]
+
+func _on_ball_scored(body):
+	player_score += 1
+	update_score()
+
+func update_score():
+	score.text = "Score:%d" % [player_score]

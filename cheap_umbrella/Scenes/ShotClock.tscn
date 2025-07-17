@@ -1,37 +1,64 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4d4wnxexbtw6"]
+[gd_scene load_steps=4 format=3 uid="uid://b4d4wnxexbtw6"]
 
 [ext_resource type="Script" uid="uid://ct56hni63rtx" path="res://scripts/shot_clock.gd" id="1_rnuuk"]
 [ext_resource type="FontFile" uid="uid://beni43735fod8" path="res://Assets/fonts/VT323-Regular.ttf" id="2_hh5vo"]
-
-[sub_resource type="Gradient" id="Gradient_vx3q5"]
-colors = PackedColorArray(0.20443, 0.0980597, 0.0989473, 1, 0.193854, 0.0967883, 0.057261, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_rnuuk"]
-gradient = SubResource("Gradient_vx3q5")
-width = 360
-height = 240
+[ext_resource type="Texture2D" uid="uid://b6ld0cl0lftuu" path="res://Assets/sprites/props/bumbotron.png" id="2_uxymq"]
 
 [node name="ShotClock" type="ParallaxBackground"]
+layer = -80
 script = ExtResource("1_rnuuk")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="."]
-motion_scale = Vector2(0.8, 0.8)
+motion_scale = Vector2(0.2, 0.2)
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.0
+offset_top = -802.0
+offset_right = 129.0
+offset_bottom = -197.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.219608, 0.239216, 0.235294, 1)
 
 [node name="Background" type="TextureRect" parent="ParallaxLayer"]
-offset_left = -231.0
-offset_top = -140.0
-offset_right = 235.0
-offset_bottom = 144.0
-texture = SubResource("GradientTexture2D_rnuuk")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -342.5
+offset_top = -270.0
+offset_right = 342.5
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_uxymq")
 
 [node name="Timer" type="Label" parent="ParallaxLayer"]
 offset_left = -189.0
-offset_top = -128.0
+offset_top = -28.0
 offset_right = 195.0
-offset_bottom = 130.0
+offset_bottom = 230.0
 theme_override_colors/font_color = Color(1, 0.438262, 0.21448, 1)
 theme_override_fonts/font = ExtResource("2_hh5vo")
 theme_override_font_sizes/font_size = 240
 text = "2:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="ParallaxLayer"]
+offset_left = -289.0
+offset_top = -206.0
+offset_right = 287.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(1, 0.438262, 0.21448, 1)
+theme_override_fonts/font = ExtResource("2_hh5vo")
+theme_override_font_sizes/font_size = 140
+text = "Score:000"
 horizontal_alignment = 1
 vertical_alignment = 1

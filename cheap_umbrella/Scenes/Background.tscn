@@ -1,0 +1,117 @@
+[gd_scene load_steps=4 format=3 uid="uid://fiue5usek1vc"]
+
+[ext_resource type="Texture2D" uid="uid://cr53lac1ivtdr" path="res://Assets/sprites/env/tile animated repeat.png" id="1_c8m3x"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c8m3x"]
+texture = ExtResource("1_c8m3x")
+texture_region_size = Vector2i(733, 733)
+0:0/animation_columns = 3
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_kc7sw"]
+sources/2 = SubResource("TileSetAtlasSource_c8m3x")
+
+[node name="Background" type="ParallaxBackground"]
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="."]
+position = Vector2(0, 1464)
+motion_scale = Vector2(0, 0)
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxLayer4"]
+offset_left = -1161.0
+offset_top = -216.0
+offset_right = 3439.0
+offset_bottom = 104.0
+color = Color(0.484492, 0.410279, 0.418229, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CrowdTop" type="ParallaxLayer" parent="."]
+modulate = Color(0.585062, 0.585062, 0.585062, 1)
+position = Vector2(-1036, 1080)
+scale = Vector2(0.4, 0.4)
+motion_scale = Vector2(0.004, 0.004)
+
+[node name="Crowd" type="TileMapLayer" parent="CrowdTop"]
+use_parent_material = true
+tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_kc7sw")
+
+[node name="Crowd2" type="TileMapLayer" parent="CrowdTop"]
+use_parent_material = true
+position = Vector2(2875, 0)
+tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_kc7sw")
+
+[node name="Crowd3" type="TileMapLayer" parent="CrowdTop"]
+use_parent_material = true
+position = Vector2(5747.5, 0)
+tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_kc7sw")
+
+[node name="Crowd4" type="TileMapLayer" parent="CrowdTop"]
+use_parent_material = true
+position = Vector2(8622.5, 0)
+tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_kc7sw")
+
+[node name="CrowdMid" type="ParallaxLayer" parent="."]
+modulate = Color(0.76662, 0.76662, 0.76662, 1)
+z_index = 1
+position = Vector2(-1036, 1268)
+scale = Vector2(0.4, 0.4)
+motion_scale = Vector2(0.003, 0.003)
+
+[node name="Crowd" type="TileMapLayer" parent="CrowdMid"]
+use_parent_material = true
+tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_kc7sw")
+
+[node name="Crowd2" type="TileMapLayer" parent="CrowdMid"]
+use_parent_material = true
+position = Vector2(2875, 0)
+tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_kc7sw")
+
+[node name="Crowd3" type="TileMapLayer" parent="CrowdMid"]
+use_parent_material = true
+position = Vector2(5747.5, 0)
+tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_kc7sw")
+
+[node name="Crowd4" type="TileMapLayer" parent="CrowdMid"]
+use_parent_material = true
+position = Vector2(8622.5, 0)
+tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_kc7sw")
+
+[node name="CrowdBottom" type="ParallaxLayer" parent="."]
+z_index = 1
+position = Vector2(-1036, 1436)
+scale = Vector2(0.4, 0.4)
+motion_scale = Vector2(0.002, 0.002)
+
+[node name="Crowd" type="TileMapLayer" parent="CrowdBottom"]
+use_parent_material = true
+tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_kc7sw")
+
+[node name="Crowd2" type="TileMapLayer" parent="CrowdBottom"]
+use_parent_material = true
+position = Vector2(2875, 0)
+tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_kc7sw")
+
+[node name="Crowd3" type="TileMapLayer" parent="CrowdBottom"]
+use_parent_material = true
+position = Vector2(5747.5, 0)
+tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_kc7sw")
+
+[node name="Crowd4" type="TileMapLayer" parent="CrowdBottom"]
+use_parent_material = true
+position = Vector2(8622.5, 0)
+tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
+tile_set = SubResource("TileSet_kc7sw")

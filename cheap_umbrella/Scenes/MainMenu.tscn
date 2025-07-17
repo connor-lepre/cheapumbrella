@@ -1,0 +1,112 @@
+[gd_scene load_steps=6 format=3 uid="uid://i0gqela3swqn"]
+
+[ext_resource type="Script" uid="uid://b7ovmjtm45je8" path="res://Scenes/MainMenu.gd" id="1_8saeu"]
+[ext_resource type="Texture2D" uid="uid://0xwowgdbjbfu" path="res://Assets/title.png" id="1_853f1"]
+[ext_resource type="FontFile" uid="uid://b3s0cbjdr6870" path="res://Assets/fonts/Jersey10-Regular.ttf" id="2_8saeu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8saeu"]
+content_margin_left = 32.0
+content_margin_top = 8.0
+content_margin_right = 32.0
+content_margin_bottom = 8.0
+bg_color = Color(0.192157, 0.635294, 0.94902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ghw46"]
+content_margin_left = 32.0
+content_margin_top = 8.0
+content_margin_right = 32.0
+content_margin_bottom = 8.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 12
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_8saeu")
+
+[node name="MenuLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuLayer"]
+offset_left = 80.0
+offset_top = 80.0
+offset_right = 940.0
+offset_bottom = 479.0
+theme_override_constants/separation = 64
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuLayer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Logo" type="TextureRect" parent="MenuLayer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_853f1")
+
+[node name="line1" type="Label" parent="MenuLayer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.192157, 0.635294, 0.94902, 1)
+theme_override_fonts/font = ExtResource("2_8saeu")
+theme_override_font_sizes/font_size = 36
+text = "a connor + jake videotainment experience"
+
+[node name="line2" type="Label" parent="MenuLayer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.921569, 0.537255, 0.192157, 1)
+theme_override_fonts/font = ExtResource("2_8saeu")
+theme_override_font_sizes/font_size = 36
+text = "special thanks to gavin rapp"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MenuLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 8
+
+[node name="Start" type="Button" parent="MenuLayer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_8saeu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/hover = SubResource("StyleBoxFlat_8saeu")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ghw46")
+text = "Start Game"
+alignment = 0
+
+[node name="Tutorial" type="Button" parent="MenuLayer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_8saeu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/hover = SubResource("StyleBoxFlat_8saeu")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ghw46")
+text = "How To Play"
+alignment = 0
+
+[node name="Quit" type="Button" parent="MenuLayer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_8saeu")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/hover = SubResource("StyleBoxFlat_8saeu")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ghw46")
+text = "Quit Game"
+alignment = 0
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="Background" type="ColorRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="pressed" from="MenuLayer/VBoxContainer/VBoxContainer2/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MenuLayer/VBoxContainer/VBoxContainer2/Tutorial" to="." method="_on_tutorial_pressed"]
+[connection signal="pressed" from="MenuLayer/VBoxContainer/VBoxContainer2/Quit" to="." method="_on_quit_pressed"]

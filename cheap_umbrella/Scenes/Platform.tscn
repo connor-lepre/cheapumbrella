@@ -5,9 +5,9 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_klj2b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2i1t"]
-size = Vector2(903, 104)
+size = Vector2(900, 107)
 
-[node name="Platform" type="StaticBody2D"]
+[node name="Floor" type="StaticBody2D"]
 collision_layer = 8
 collision_mask = 15
 physics_material_override = SubResource("PhysicsMaterial_klj2b")
@@ -34,4 +34,5 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_y2i1t")
