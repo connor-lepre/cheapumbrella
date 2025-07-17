@@ -1,5 +1,10 @@
 extends Node2D
 
+enum GoalType { STANDARD, TEMPORARY, REQUIRED }
+@export var goal_type: GoalType = GoalType.STANDARD
+@export var is_required: bool = false # Optional, for clarity in editor
+signal required_goal_scored
+
 @onready var rim_check = $Goal/RimCheck
 @onready var net_check = $Goal/NetCheck
 @onready var score_fx = $ScoreFX
@@ -28,13 +33,34 @@ func _on_net_check_entered(body):
 	var id = body.get_instance_id()
 	if id in balls_in_rim and body.linear_velocity.y > 0:
 		emit_signal("ball_scored", body)
+
+		# First-score FX and hiding
 		if not first_score:
-			first_score_fx.visible = true
-			first_score_fx.emitting = false
+			if first_score_fx:
+				first_score_fx.visible = true
+				first_score_fx.emitting = false
 			first_score = true
 			print("First score on this net")
-		print("ball scored")
+
+		# Regular score FX
 		if score_fx:
 			score_fx.emitting = false
 			score_fx.emitting = true
+
+		# Handle Goal Type
+		match goal_type:
+			GoalType.STANDARD:
+				# Do nothing extra, keep basket
+				pass
+			GoalType.TEMPORARY:
+				# Disable further scoring/collisions
+				$Goal.set_deferred("monitoring", false)
+				# Play FX, then delete after short delay (or wait for signal if you prefer)
+				await get_tree().create_timer(0.6).timeout  # Tune delay to your FX duration
+				queue_free()
+			GoalType.REQUIRED:
+				# Mark as "completed"
+				is_required = false
+				emit_signal("required_goal_scored", self)
+
 		balls_in_rim.erase(id)

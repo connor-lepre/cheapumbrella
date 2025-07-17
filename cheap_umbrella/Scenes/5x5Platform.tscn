@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://btb2c6vni2i4g"]
+
+[ext_resource type="Texture2D" uid="uid://c6m6yvomcd288" path="res://Assets/sprites/env/env-light.png" id="1_o0731"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_klj2b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y2i1t"]
+size = Vector2(640, 640)
+
+[node name="5x5" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 15
+physics_material_override = SubResource("PhysicsMaterial_klj2b")
+
+[node name="Platform9Patch" type="NinePatchRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -320.0
+offset_right = 320.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_o0731")
+region_rect = Rect2(0, 0, 160, 160)
+patch_margin_left = 53
+patch_margin_top = 53
+patch_margin_right = 53
+patch_margin_bottom = 53
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="PlatformCollider" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_y2i1t")

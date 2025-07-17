@@ -74,12 +74,13 @@ hue_variation_min = -1.0
 hue_variation_max = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1vpyn"]
-size = Vector2(244, 37)
+size = Vector2(114, 37)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lxehk"]
 size = Vector2(6, 32)
 
 [node name="Basket" type="Node2D"]
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_hlgd5")
 
 [node name="Backboard" type="StaticBody2D" parent="."]
@@ -136,7 +137,7 @@ collision_layer = 8
 collision_mask = 4
 
 [node name="NetCheck" type="CollisionPolygon2D" parent="Goal/NetCheck"]
-polygon = PackedVector2Array(-16, 48, 32, 216, 216, 216, 270, 48, 120, 80)
+polygon = PackedVector2Array(68, 80, 28, 214, 228, 214, 190, 80, 128, 96)
 
 [node name="Rim" type="StaticBody2D" parent="."]
 z_index = 10

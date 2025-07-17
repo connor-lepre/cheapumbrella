@@ -1,51 +1,195 @@
 [gd_scene load_steps=11 format=3 uid="uid://1i67iv3g6apn"]
 
 [ext_resource type="Script" uid="uid://bubxavdqdvncd" path="res://scripts/sandbox.gd" id="1_qx8wr"]
-[ext_resource type="PackedScene" uid="uid://drk1vvovwjcq4" path="res://Scenes/Platform.tscn" id="2_do50k"]
 [ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="3_dnd5l"]
-[ext_resource type="Script" uid="uid://xd550ikn3mxm" path="res://scripts/killplane.gd" id="4_7yicx"]
 [ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_n2jbg"]
 [ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="6_foql8"]
 [ext_resource type="PackedScene" uid="uid://b4d4wnxexbtw6" path="res://Scenes/ShotClock.tscn" id="7_do50k"]
+[ext_resource type="PackedScene" uid="uid://fqfhrhdjemky" path="res://Scenes/3x10Boundary.tscn" id="8_7yicx"]
 [ext_resource type="PackedScene" uid="uid://chmisb7852ntv" path="res://Scenes/UI/PlayerHUD.tscn" id="8_dnd5l"]
+[ext_resource type="PackedScene" uid="uid://iuqy4j1tlfgs" path="res://Scenes/1x1Platform.tscn" id="8_foql8"]
 [ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="9_7yicx"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fucb2"]
-size = Vector2(10419, 2071)
+[ext_resource type="PackedScene" uid="uid://c43hjg1lewl84" path="res://Scenes/3x3Platform.tscn" id="10_foql8"]
 
 [node name="Sandbox" type="Node2D"]
 script = ExtResource("1_qx8wr")
 
-[node name="Platform" parent="." instance=ExtResource("2_do50k")]
-
-[node name="Platform2" parent="." instance=ExtResource("2_do50k")]
-position = Vector2(900, 0)
-
-[node name="Platform3" parent="." instance=ExtResource("2_do50k")]
-position = Vector2(-900, 0)
-
 [node name="Copies" type="Node2D" parent="."]
 
 [node name="SpawnPoint" parent="." instance=ExtResource("3_dnd5l")]
-position = Vector2(-1118, -314)
-
-[node name="killplane" type="Area2D" parent="."]
-position = Vector2(355, 2201.5)
-script = ExtResource("4_7yicx")
-
-[node name="KillCollider" type="CollisionShape2D" parent="killplane"]
-shape = SubResource("RectangleShape2D_fucb2")
+position = Vector2(-8704, 6104)
 
 [node name="Basket" parent="." instance=ExtResource("6_foql8")]
-position = Vector2(921, -653)
+z_index = 2
+position = Vector2(-7472, 5760)
+goal_type = 1
+is_required = true
+
+[node name="Ball" parent="." instance=ExtResource("5_n2jbg")]
+position = Vector2(-8384, 6168)
 
 [node name="ShotClock" parent="." instance=ExtResource("7_do50k")]
+visible = false
 offset = Vector2(500, 100)
 transform = Transform2D(1, 0, 0, 1, 500, 100)
 
 [node name="PlayerHud" parent="." instance=ExtResource("8_dnd5l")]
-
-[node name="Ball" parent="." instance=ExtResource("5_n2jbg")]
-position = Vector2(5, -780)
+visible = false
 
 [node name="Background" parent="." instance=ExtResource("9_7yicx")]
+visible = false
+
+[node name="1x1Wedge" type="Node2D" parent="."]
+
+[node name="1x1" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+position = Vector2(-7656, 6144)
+
+[node name="1x4" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+position = Vector2(-7400, 6144)
+
+[node name="1x5" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+position = Vector2(-7400, 5888)
+
+[node name="1x6" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+position = Vector2(-7400, 6016)
+
+[node name="1x7" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+position = Vector2(-7272, 6016)
+
+[node name="1x8" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+position = Vector2(-7272, 6144)
+
+[node name="1x9" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+position = Vector2(-7144, 6144)
+
+[node name="1x2" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+position = Vector2(-7528, 6144)
+
+[node name="1x3" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+position = Vector2(-7528, 6016)
+
+[node name="3x10" parent="." instance=ExtResource("8_7yicx")]
+position = Vector2(-8320, 3840)
+
+[node name="3x11" parent="." instance=ExtResource("8_7yicx")]
+position = Vector2(-7040, 3841)
+
+[node name="3x12" parent="." instance=ExtResource("8_7yicx")]
+position = Vector2(-5760, 3841)
+
+[node name="3x13" parent="." instance=ExtResource("8_7yicx")]
+position = Vector2(-4480, 3841)
+
+[node name="3x14" parent="." instance=ExtResource("8_7yicx")]
+position = Vector2(-3648, 4288)
+rotation = 1.5708
+
+[node name="3x15" parent="." instance=ExtResource("8_7yicx")]
+position = Vector2(-3648, 5040)
+rotation = 1.5708
+
+[node name="WorldBox" type="Node2D" parent="."]
+position = Vector2(0, 6592)
+scale = Vector2(2, 2)
+
+[node name="Bottom" type="Node2D" parent="WorldBox"]
+
+[node name="3x10Platform" parent="WorldBox/Bottom" instance=ExtResource("8_7yicx")]
+
+[node name="3x10Platform2" parent="WorldBox/Bottom" instance=ExtResource("8_7yicx")]
+position = Vector2(-1280, 0)
+
+[node name="3x10Platform3" parent="WorldBox/Bottom" instance=ExtResource("8_7yicx")]
+position = Vector2(1280, 0)
+
+[node name="3x10Platform4" parent="WorldBox/Bottom" instance=ExtResource("8_7yicx")]
+position = Vector2(-2560, 0)
+
+[node name="3x10Platform5" parent="WorldBox/Bottom" instance=ExtResource("8_7yicx")]
+position = Vector2(2560, 0)
+
+[node name="3x10Platform11" parent="WorldBox/Bottom" instance=ExtResource("8_7yicx")]
+position = Vector2(3840, 0)
+
+[node name="3x10Platform12" parent="WorldBox/Bottom" instance=ExtResource("8_7yicx")]
+position = Vector2(-3840, 0)
+
+[node name="Top" type="Node2D" parent="WorldBox"]
+position = Vector2(0, -6784)
+
+[node name="3x10Platform" parent="WorldBox/Top" instance=ExtResource("8_7yicx")]
+
+[node name="3x10Platform2" parent="WorldBox/Top" instance=ExtResource("8_7yicx")]
+position = Vector2(-1280, 0)
+
+[node name="3x10Platform3" parent="WorldBox/Top" instance=ExtResource("8_7yicx")]
+position = Vector2(1280, 0)
+
+[node name="3x10Platform4" parent="WorldBox/Top" instance=ExtResource("8_7yicx")]
+position = Vector2(-2560, 0)
+
+[node name="3x10Platform5" parent="WorldBox/Top" instance=ExtResource("8_7yicx")]
+position = Vector2(2560, 0)
+
+[node name="3x10Platform11" parent="WorldBox/Top" instance=ExtResource("8_7yicx")]
+position = Vector2(3840, 0)
+
+[node name="3x10Platform12" parent="WorldBox/Top" instance=ExtResource("8_7yicx")]
+position = Vector2(-3840, 0)
+
+[node name="Right" type="Node2D" parent="WorldBox"]
+
+[node name="3x10Platform6" parent="WorldBox/Right" instance=ExtResource("8_7yicx")]
+position = Vector2(4672, -832)
+rotation = 1.5708
+
+[node name="3x10Platform7" parent="WorldBox/Right" instance=ExtResource("8_7yicx")]
+position = Vector2(4672, -3392)
+rotation = 1.5708
+
+[node name="3x10Platform8" parent="WorldBox/Right" instance=ExtResource("8_7yicx")]
+position = Vector2(4672, -4672)
+rotation = 1.5708
+
+[node name="3x10Platform9" parent="WorldBox/Right" instance=ExtResource("8_7yicx")]
+position = Vector2(4672, -2112)
+rotation = 1.5708
+
+[node name="3x10Platform10" parent="WorldBox/Right" instance=ExtResource("8_7yicx")]
+position = Vector2(4672, -5952)
+rotation = 1.5708
+
+[node name="Left" type="Node2D" parent="WorldBox"]
+position = Vector2(-9343, 0)
+
+[node name="3x10Platform6" parent="WorldBox/Left" instance=ExtResource("8_7yicx")]
+position = Vector2(4672, -832)
+rotation = 1.5708
+
+[node name="3x10Platform7" parent="WorldBox/Left" instance=ExtResource("8_7yicx")]
+position = Vector2(4672, -3392)
+rotation = 1.5708
+
+[node name="3x10Platform8" parent="WorldBox/Left" instance=ExtResource("8_7yicx")]
+position = Vector2(4672, -4672)
+rotation = 1.5708
+
+[node name="3x10Platform9" parent="WorldBox/Left" instance=ExtResource("8_7yicx")]
+position = Vector2(4672, -2112)
+rotation = 1.5708
+
+[node name="3x10Platform10" parent="WorldBox/Left" instance=ExtResource("8_7yicx")]
+position = Vector2(4672, -5952)
+rotation = 1.5708
+
+[node name="BottomLeftCorner" parent="WorldBox" instance=ExtResource("10_foql8")]
+position = Vector2(-4672, 0)
+
+[node name="BottomRightCorner" parent="WorldBox" instance=ExtResource("10_foql8")]
+position = Vector2(4672, 0)
+
+[node name="TopLeftCorner" parent="WorldBox" instance=ExtResource("10_foql8")]
+position = Vector2(-4672, -6784)
+
+[node name="TopRightCorner" parent="WorldBox" instance=ExtResource("10_foql8")]
+position = Vector2(4672, -6784)

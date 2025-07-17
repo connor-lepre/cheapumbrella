@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://i0gqela3swqn"]
+[gd_scene load_steps=7 format=3 uid="uid://i0gqela3swqn"]
 
 [ext_resource type="Script" uid="uid://b7ovmjtm45je8" path="res://Scenes/MainMenu.gd" id="1_8saeu"]
 [ext_resource type="Texture2D" uid="uid://0xwowgdbjbfu" path="res://Assets/title.png" id="1_853f1"]
@@ -10,6 +10,27 @@ content_margin_top = 8.0
 content_margin_right = 32.0
 content_margin_bottom = 8.0
 bg_color = Color(0.192157, 0.635294, 0.94902, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 1
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_df05h"]
+content_margin_left = 32.0
+content_margin_top = 8.0
+content_margin_right = 32.0
+content_margin_bottom = 8.0
+bg_color = Color(0.0318751, 0.362019, 0.569772, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ghw46"]
 content_margin_left = 32.0
@@ -59,12 +80,12 @@ theme_override_fonts/font = ExtResource("2_8saeu")
 theme_override_font_sizes/font_size = 36
 text = "special thanks to gavin rapp"
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MenuLayer/VBoxContainer"]
+[node name="Buttons" type="VBoxContainer" parent="MenuLayer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 8
 
-[node name="Start" type="Button" parent="MenuLayer/VBoxContainer/VBoxContainer2"]
+[node name="Start" type="Button" parent="MenuLayer/VBoxContainer/Buttons"]
 layout_mode = 2
 theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -72,12 +93,14 @@ theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_8saeu")
 theme_override_font_sizes/font_size = 64
 theme_override_styles/focus = SubResource("StyleBoxFlat_8saeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_df05h")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8saeu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_df05h")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ghw46")
 text = "Start Game"
 alignment = 0
 
-[node name="Tutorial" type="Button" parent="MenuLayer/VBoxContainer/VBoxContainer2"]
+[node name="Tutorial" type="Button" parent="MenuLayer/VBoxContainer/Buttons"]
 layout_mode = 2
 theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -85,12 +108,14 @@ theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_8saeu")
 theme_override_font_sizes/font_size = 64
 theme_override_styles/focus = SubResource("StyleBoxFlat_8saeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_df05h")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8saeu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_df05h")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ghw46")
 text = "How To Play"
 alignment = 0
 
-[node name="Quit" type="Button" parent="MenuLayer/VBoxContainer/VBoxContainer2"]
+[node name="Quit" type="Button" parent="MenuLayer/VBoxContainer/Buttons"]
 layout_mode = 2
 theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -98,7 +123,9 @@ theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_8saeu")
 theme_override_font_sizes/font_size = 64
 theme_override_styles/focus = SubResource("StyleBoxFlat_8saeu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_df05h")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8saeu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_df05h")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ghw46")
 text = "Quit Game"
 alignment = 0
@@ -113,6 +140,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[connection signal="pressed" from="MenuLayer/VBoxContainer/VBoxContainer2/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="MenuLayer/VBoxContainer/VBoxContainer2/Tutorial" to="." method="_on_tutorial_pressed"]
-[connection signal="pressed" from="MenuLayer/VBoxContainer/VBoxContainer2/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="MenuLayer/VBoxContainer/Buttons/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MenuLayer/VBoxContainer/Buttons/Tutorial" to="." method="_on_tutorial_pressed"]
+[connection signal="pressed" from="MenuLayer/VBoxContainer/Buttons/Quit" to="." method="_on_quit_pressed"]

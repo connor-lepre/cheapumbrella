@@ -9,9 +9,6 @@ var is_held := false
 func _ready():
 	spawn_position = global_position
 
-func _physics_process(delta):
-	pass
-
 func respawn():
 	if is_respawning:
 		return
@@ -30,6 +27,8 @@ func freeze_ball(state: bool):
 	freeze = state  # Godot 4 property for RigidBody2D
 
 
-func apply_throw(force: Vector2):
+func apply_throw(force: Vector2, torque: float = 0.0):
 	linear_velocity = Vector2.ZERO
+	angular_velocity = 0.0
 	apply_central_impulse(force)
+	apply_torque_impulse(torque)

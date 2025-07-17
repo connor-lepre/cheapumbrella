@@ -4,18 +4,21 @@
 [ext_resource type="Texture2D" uid="uid://dny25pc1pq8lc" path="res://Assets/sprites/props/ball.png" id="2_ujhkp"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ujhkp"]
-friction = 0.8
+friction = 0.4
 bounce = 0.8
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ujhkp"]
-radius = 64.0
+radius = 70.0
 
 [node name="Ball" type="RigidBody2D" groups=["ball"]]
 z_index = 6
 collision_layer = 4
 collision_mask = 14
+mass = 0.75
 physics_material_override = SubResource("PhysicsMaterial_ujhkp")
-can_sleep = false
+gravity_scale = 2.0
+linear_damp = 0.5
+angular_damp = 0.1
 script = ExtResource("1_5ju8n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

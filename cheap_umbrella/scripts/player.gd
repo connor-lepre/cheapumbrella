@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const SPEED := 800.0
-const JUMP_VELOCITY := -1500.0
+const JUMP_VELOCITY := -1300.0
 const GRAVITY := 5000.0
 const GLIDE_GRAVITY := 200.0
 const RECORD_THRESHOLD := 0.5
@@ -142,12 +142,13 @@ func handle_ball_interaction(delta):
 		held_ball.global_position = global_position
 		held_ball.freeze_ball(true)
 	else:
-		# Not holding: check for nearby ball and pickup action
-		if Input.is_action_just_pressed("grab"):
-			var ball = get_nearby_ball()
-			if ball:
-				pickup_ball(ball)
-				print("Grabbed ball")
+		var ball = get_nearby_ball()
+		if Input.is_action_just_pressed("grab") and ball:
+			pickup_ball(ball)
+			print("Grabbed ball")
+		elif Input.is_action_just_pressed("drop") and ball:
+			dribble_ball(ball)
+			print("Dribbled ball")
 
 
 func get_nearby_ball():
@@ -162,16 +163,28 @@ func pickup_ball(ball):
 	held_ball.is_held = true
 	ball_hold_timer = 0.0
 	held_ball.freeze_ball(true)
+	held_ball.freeze_mode = RigidBody2D.FREEZE_MODE_STATIC
 	held_ball.global_position = global_position
 
 func drop_ball(penalized: bool = false):
 	if held_ball:
 		held_ball.is_held = false
 		held_ball.freeze_ball(false)
+		# Use *current* movement for x direction
+		var move_x = clamp(velocity.x, -900, 900)  # Adjust clamp as needed
+		var drop_force = Vector2(move_x, 200)
+		held_ball.apply_throw(drop_force)
 		if penalized:
-			emit_signal("player_traveled", held_ball) # optional signal for penalty
+			emit_signal("player_traveled", held_ball)
 		held_ball = null
 		ball_hold_timer = 0.0
+
+func dribble_ball(ball):
+	# Applies a bounce force downward and a bit forward, **based on current movement**
+	var move_x = clamp(velocity.x, -1200, 1200)  # Adjust for "push" left/right
+	var dribble_force = Vector2(move_x, 420)   # Y value = bounce height
+	ball.apply_throw(dribble_force)
+
 
 func shoot_ball():
 	if held_ball:
@@ -181,8 +194,8 @@ func shoot_ball():
 		var direction_x = facing.x
 		if direction_x == 0:
 			direction_x = 1 # default to right if somehow 0
-		var throw_force = Vector2(direction_x * 750, -900)
-		held_ball.apply_throw(throw_force)
+		var throw_force = Vector2(direction_x * 800, -800)
+		held_ball.apply_throw(throw_force, 50.0)
 		held_ball.is_held = false
 		held_ball = null
 		ball_hold_timer = 0.0
