@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://en8e0qqtacyt"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_o1cj1"]
+[ext_resource type="Texture2D" uid="uid://owtqgeiu2chn" path="res://Assets/sprites/env/tile animated repeat.png" id="2_c5p4t"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ijruj"]
+texture = ExtResource("2_c5p4t")
+texture_region_size = Vector2i(733, 733)
+0:0/animation_columns = 3
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_e7sn3"]
+sources/2 = SubResource("TileSetAtlasSource_ijruj")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3smsa"]
+radius = 64.0
+height = 128.0
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_mask = 7
+floor_block_on_wall = false
+script = ExtResource("1_o1cj1")
+
+[node name="Crowd Tile" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_e7sn3")
+format = 2
+layer_0/tile_data = PackedInt32Array(-1507326, 2, 0, -1507281, 2, 0, -1507236, 2, 0, -1507192, 2, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_3smsa")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.7, 0.7)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0

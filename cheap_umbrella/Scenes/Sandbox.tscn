@@ -1,13 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://1i67iv3g6apn"]
+[gd_scene load_steps=13 format=3 uid="uid://1i67iv3g6apn"]
 
-[ext_resource type="Script" uid="uid://bubxavdqdvncd" path="res://scripts/sandbox.gd" id="1_qx8wr"]
+[ext_resource type="Script" path="res://scripts/sandbox.gd" id="1_qx8wr"]
 [ext_resource type="PackedScene" uid="uid://drk1vvovwjcq4" path="res://Scenes/Platform.tscn" id="2_do50k"]
 [ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="3_dnd5l"]
-[ext_resource type="Script" uid="uid://xd550ikn3mxm" path="res://scripts/killplane.gd" id="4_7yicx"]
+[ext_resource type="Script" path="res://scripts/killplane.gd" id="4_7yicx"]
 [ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_n2jbg"]
 [ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="6_foql8"]
 [ext_resource type="PackedScene" uid="uid://b4d4wnxexbtw6" path="res://Scenes/ShotClock.tscn" id="7_do50k"]
 [ext_resource type="PackedScene" uid="uid://chmisb7852ntv" path="res://Scenes/UI/PlayerHUD.tscn" id="8_dnd5l"]
+[ext_resource type="PackedScene" uid="uid://en8e0qqtacyt" path="res://Scenes/crowd.tscn" id="9_dleg4"]
 
 [sub_resource type="SystemFont" id="SystemFont_ti018"]
 
@@ -64,10 +65,17 @@ shape = SubResource("RectangleShape2D_fucb2")
 position = Vector2(255, -249)
 
 [node name="Basket" parent="." instance=ExtResource("6_foql8")]
+z_index = 5
 position = Vector2(744, -412)
 
 [node name="ShotClock" parent="." instance=ExtResource("7_do50k")]
 offset = Vector2(300, -200)
 transform = Transform2D(1, 0, 0, 1, 300, -200)
+scroll_offset = Vector2(749.274, 385.797)
 
 [node name="PlayerHud" parent="." instance=ExtResource("8_dnd5l")]
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("9_dleg4")]
+z_index = 1
+position = Vector2(-608, 51)
+scale = Vector2(0.585746, 0.585746)
