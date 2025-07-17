@@ -85,7 +85,8 @@ position_smoothing_speed = 2.0
 [node name="helmet" type="Area2D" parent="."]
 visible = false
 position = Vector2(0, -61)
-collision_mask = 6
+collision_layer = 0
+collision_mask = 0
 
 [node name="Polygon2D" type="CollisionShape2D" parent="helmet"]
 visible = false

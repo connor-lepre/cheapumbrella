@@ -172,7 +172,6 @@ func pickup_ball(ball):
 	ready_to_shoot = false
 	held_ball.freeze_ball(true)
 	held_ball.global_position = global_position
-	collision_mask &= ~(1 << 2)
 
 func drop_ball(penalized: bool = false):
 	if held_ball:
@@ -183,7 +182,6 @@ func drop_ball(penalized: bool = false):
 		held_ball = null
 		ready_to_shoot = false
 		ball_hold_timer = 0.0
-		collision_mask |= (1 << 2)
 
 func shoot_ball():
 	if held_ball:
@@ -199,7 +197,6 @@ func shoot_ball():
 		held_ball = null
 		ready_to_shoot = false
 		ball_hold_timer = 0.0
-		collision_mask |= (1 << 2)
 
 func handle_recording():
 	if available_copies <= 0:
