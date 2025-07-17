@@ -71,16 +71,22 @@ randomness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_hlgd5")
 
-[node name="Goal" type="Area2D" parent="."]
+[node name="Goal" type="Node2D" parent="."]
 position = Vector2(-240, 136)
+
+[node name="RimCheck" type="Area2D" parent="Goal"]
 collision_layer = 8
 collision_mask = 4
 
-[node name="RimCheck" type="CollisionShape2D" parent="Goal"]
+[node name="RimCheck" type="CollisionShape2D" parent="Goal/RimCheck"]
 position = Vector2(129, 11.5)
 shape = SubResource("RectangleShape2D_1vpyn")
 
-[node name="NetCheck" type="CollisionPolygon2D" parent="Goal"]
+[node name="NetCheck" type="Area2D" parent="Goal"]
+collision_layer = 8
+collision_mask = 4
+
+[node name="NetCheck" type="CollisionPolygon2D" parent="Goal/NetCheck"]
 polygon = PackedVector2Array(-16, 48, 32, 216, 216, 216, 270, 48, 120, 80)
 
 [node name="Rim" type="StaticBody2D" parent="."]
