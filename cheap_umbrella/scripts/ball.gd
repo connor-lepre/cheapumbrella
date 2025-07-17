@@ -4,6 +4,9 @@ extends RigidBody2D
 var spawn_position: Vector2
 var is_respawning := false
 
+@onready var trail = $Trail
+const TRAIL_LENGTH = 2000
+
 var is_held := false
 
 func _ready():

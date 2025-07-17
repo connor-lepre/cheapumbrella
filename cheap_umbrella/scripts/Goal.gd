@@ -9,6 +9,7 @@ signal required_goal_scored
 @onready var net_check = $Goal/NetCheck
 @onready var score_fx = $ScoreFX
 @onready var first_score_fx = $FirstScoreFX
+@onready var checkpoint_scene = preload("res://Scenes/Checkpoint.tscn")
 var first_score := false
 signal ball_scored
 
@@ -59,8 +60,11 @@ func _on_net_check_entered(body):
 				await get_tree().create_timer(0.6).timeout  # Tune delay to your FX duration
 				queue_free()
 			GoalType.REQUIRED:
-				# Mark as "completed"
 				is_required = false
 				emit_signal("required_goal_scored", self)
+				# Spawn checkpoint here
+				var checkpoint = checkpoint_scene.instantiate()
+				checkpoint.global_position = global_position + Vector2(0, -64) # Adjust as needed
+				get_tree().current_scene.add_child(checkpoint)
 
 		balls_in_rim.erase(id)

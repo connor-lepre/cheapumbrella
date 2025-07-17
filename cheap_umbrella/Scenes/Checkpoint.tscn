@@ -1,0 +1,73 @@
+[gd_scene load_steps=12 format=3 uid="uid://dnjsiwf7otnm1"]
+
+[ext_resource type="Script" uid="uid://b6p1xi31lkjg2" path="res://Scenes/Checkpoint.gd" id="1_3njwc"]
+[ext_resource type="Texture2D" uid="uid://b6jmp8wygu14" path="res://Assets/sprites/props/checkpoint_0.png" id="1_6vgh2"]
+[ext_resource type="Texture2D" uid="uid://dv85e88c8we6g" path="res://Assets/sprites/props/checkpoint_1.png" id="2_3njwc"]
+[ext_resource type="Texture2D" uid="uid://b11j3j25ocxt5" path="res://Assets/sprites/props/checkpoint_2.png" id="3_fvcyh"]
+[ext_resource type="Texture2D" uid="uid://ouvvq1q7j2y4" path="res://Assets/sprites/props/checkpoint_3.png" id="4_mjhki"]
+[ext_resource type="Texture2D" uid="uid://dqyquxc6a4x7p" path="res://Assets/sprites/props/checkpoint_4.png" id="5_dlchq"]
+[ext_resource type="Texture2D" uid="uid://dfwkq118v8aa0" path="res://Assets/sprites/props/checkpoint_5.png" id="6_mqfr3"]
+[ext_resource type="Texture2D" uid="uid://dtgqcraoytusy" path="res://Assets/sprites/props/checkpoint_6.png" id="7_73tam"]
+[ext_resource type="Texture2D" uid="uid://b2tqny7n20pmt" path="res://Assets/sprites/props/checkpoint_7.png" id="8_41vf3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k75nq"]
+size = Vector2(200, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a6mvm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6vgh2")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_6vgh2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_3njwc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_fvcyh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_mjhki")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_dlchq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_mqfr3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_73tam")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_41vf3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_6vgh2")
+}],
+"loop": false,
+"name": &"set",
+"speed": 12.0
+}]
+
+[node name="Checkpoint" type="Area2D"]
+collision_layer = 16
+collision_mask = 15
+script = ExtResource("1_3njwc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(16, -62)
+shape = SubResource("RectangleShape2D_k75nq")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -62)
+sprite_frames = SubResource("SpriteFrames_a6mvm")
+animation = &"set"
+frame = 8
+frame_progress = 1.0

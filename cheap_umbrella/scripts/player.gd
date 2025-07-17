@@ -30,11 +30,12 @@ var coyote_time_max := 0.3
 # Ball holding state
 var held_ball: RigidBody2D = null    # Reference to the held ball, or null if not holding
 var ball_hold_timer := 0.0
-const BALL_HOLD_TIME := 2.0   # Max seconds to hold before penalty
+const BALL_HOLD_TIME := 0.8   # Max seconds to hold before penalty
 const PICKUP_DISTANCE := 120.0 # Tweak as needed
 
 var reset_hold_timer := 0.0
 var spawn_point: Vector2
+var latest_checkpoint: Vector2
 
 signal player_traveled(ball)
 
@@ -51,6 +52,7 @@ var copies_container: Node = null
 func _ready():
 	print("Player ready")
 	physics_fps = Engine.get_physics_ticks_per_second()
+	add_to_group("Player")
 
 	#if helmet:
 		#helmet.body_entered.connect(helmet_push)
@@ -134,7 +136,7 @@ func handle_ball_interaction(delta):
 			return
 
 		# Shoot if pressing grab while already holding
-		if Input.is_action_just_pressed("grab"):
+		if Input.is_action_just_pressed("shoot"):
 			shoot_ball()
 			return
 
@@ -322,9 +324,15 @@ func handle_reset_hold(delta):
 	else:
 		reset_hold_timer = 0.0
 
+func set_checkpoint(pos: Vector2):
+	latest_checkpoint = pos
+	print("Checkpoint set at: ", pos)
+
 func respawn():
-	print("💀 Player hit killplane - respawning")
-	global_position = spawn_point
+	if latest_checkpoint:
+		global_position = latest_checkpoint
+	else:
+		global_position = spawn_point
 	velocity = Vector2.ZERO
 
 func reload_scene():

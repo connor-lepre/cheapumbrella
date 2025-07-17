@@ -1,15 +1,16 @@
-[gd_scene load_steps=11 format=3 uid="uid://1i67iv3g6apn"]
+[gd_scene load_steps=12 format=3 uid="uid://1i67iv3g6apn"]
 
 [ext_resource type="Script" uid="uid://bubxavdqdvncd" path="res://scripts/sandbox.gd" id="1_qx8wr"]
 [ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="3_dnd5l"]
 [ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_n2jbg"]
 [ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="6_foql8"]
 [ext_resource type="PackedScene" uid="uid://b4d4wnxexbtw6" path="res://Scenes/ShotClock.tscn" id="7_do50k"]
-[ext_resource type="PackedScene" uid="uid://fqfhrhdjemky" path="res://Scenes/3x10Boundary.tscn" id="8_7yicx"]
+[ext_resource type="PackedScene" uid="uid://fqfhrhdjemky" path="res://Scenes/Platforms/3x10Boundary.tscn" id="8_7yicx"]
 [ext_resource type="PackedScene" uid="uid://chmisb7852ntv" path="res://Scenes/UI/PlayerHUD.tscn" id="8_dnd5l"]
-[ext_resource type="PackedScene" uid="uid://iuqy4j1tlfgs" path="res://Scenes/1x1Platform.tscn" id="8_foql8"]
+[ext_resource type="PackedScene" uid="uid://iuqy4j1tlfgs" path="res://Scenes/Platforms/1x1Platform.tscn" id="8_foql8"]
 [ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="9_7yicx"]
-[ext_resource type="PackedScene" uid="uid://c43hjg1lewl84" path="res://Scenes/3x3Platform.tscn" id="10_foql8"]
+[ext_resource type="PackedScene" uid="uid://xgh6jhlcxufx" path="res://Scenes/Platforms/1x3Platform.tscn" id="9_foql8"]
+[ext_resource type="PackedScene" uid="uid://c43hjg1lewl84" path="res://Scenes/Platforms/3x3Platform.tscn" id="10_foql8"]
 
 [node name="Sandbox" type="Node2D"]
 script = ExtResource("1_qx8wr")
@@ -21,7 +22,7 @@ position = Vector2(-8704, 6104)
 
 [node name="Basket" parent="." instance=ExtResource("6_foql8")]
 z_index = 2
-position = Vector2(-7472, 5760)
+position = Vector2(-7512, 5760)
 goal_type = 1
 is_required = true
 
@@ -39,34 +40,29 @@ visible = false
 [node name="Background" parent="." instance=ExtResource("9_7yicx")]
 visible = false
 
-[node name="1x1Wedge" type="Node2D" parent="."]
+[node name="TutorialBlocks" type="Node2D" parent="."]
 
-[node name="1x1" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+[node name="1x1" parent="TutorialBlocks" instance=ExtResource("8_foql8")]
 position = Vector2(-7656, 6144)
 
-[node name="1x4" parent="1x1Wedge" instance=ExtResource("8_foql8")]
-position = Vector2(-7400, 6144)
-
-[node name="1x5" parent="1x1Wedge" instance=ExtResource("8_foql8")]
-position = Vector2(-7400, 5888)
-
-[node name="1x6" parent="1x1Wedge" instance=ExtResource("8_foql8")]
-position = Vector2(-7400, 6016)
-
-[node name="1x7" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+[node name="1x7" parent="TutorialBlocks" instance=ExtResource("8_foql8")]
 position = Vector2(-7272, 6016)
 
-[node name="1x8" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+[node name="1x8" parent="TutorialBlocks" instance=ExtResource("8_foql8")]
 position = Vector2(-7272, 6144)
 
-[node name="1x9" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+[node name="1x9" parent="TutorialBlocks" instance=ExtResource("8_foql8")]
 position = Vector2(-7144, 6144)
 
-[node name="1x2" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+[node name="1x2" parent="TutorialBlocks" instance=ExtResource("8_foql8")]
 position = Vector2(-7528, 6144)
 
-[node name="1x3" parent="1x1Wedge" instance=ExtResource("8_foql8")]
+[node name="1x3" parent="TutorialBlocks" instance=ExtResource("8_foql8")]
 position = Vector2(-7528, 6016)
+
+[node name="1x4" parent="TutorialBlocks" instance=ExtResource("9_foql8")]
+position = Vector2(-7400, 6016)
+rotation = 1.5708
 
 [node name="3x10" parent="." instance=ExtResource("8_7yicx")]
 position = Vector2(-8320, 3840)
