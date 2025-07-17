@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cuuam67r4dpao"]
+[gd_scene load_steps=14 format=3 uid="uid://cuuam67r4dpao"]
 
 [ext_resource type="Script" uid="uid://durir3g3yvjoa" path="res://scripts/Goal.gd" id="1_hlgd5"]
 [ext_resource type="Texture2D" uid="uid://mgssxv8jogrt" path="res://Assets/sprites/props/backboard.png" id="2_fn8i1"]
@@ -33,6 +33,45 @@ scale_max = 2.0
 scale_over_velocity_max = 1000.0
 hue_variation_min = -0.01
 hue_variation_max = 0.53
+
+[sub_resource type="Gradient" id="Gradient_fn8i1"]
+interpolation_mode = 1
+colors = PackedColorArray(0.925235, 0.665446, 0.906148, 1, 0.922091, 0.836991, 0.974034, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_klp67"]
+gradient = SubResource("Gradient_fn8i1")
+width = 12
+height = 12
+fill = 1
+fill_from = Vector2(0.495413, 0.518349)
+fill_to = Vector2(0.711009, 0.701835)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s5qqq"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 61.24
+emission_ring_radius = 25.1
+emission_ring_inner_radius = 144.58
+emission_ring_cone_angle = 90.0
+orbit_velocity_min = -0.253
+orbit_velocity_max = 0.667
+radial_velocity_min = -137.93
+radial_velocity_max = 68.97
+gravity = Vector3(0, -102, 0)
+linear_accel_min = -70.11
+linear_accel_max = -21.83
+radial_accel_min = -2.23517e-06
+radial_accel_max = 80.46
+tangential_accel_min = -44.83
+tangential_accel_max = -36.78
+damping_min = 12.644
+damping_max = 54.024
+scale_min = 0.01
+scale_max = 2.5
+color = Color(1, 0.781379, 0.991084, 1)
+hue_variation_min = -1.0
+hue_variation_max = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1vpyn"]
 size = Vector2(244, 37)
@@ -70,6 +109,16 @@ explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_hlgd5")
+
+[node name="FirstScoreFX" type="GPUParticles2D" parent="."]
+position = Vector2(-114, 144)
+amount = 32
+texture = SubResource("GradientTexture2D_klp67")
+lifetime = 3.0
+fixed_fps = 60
+collision_base_size = 0.0
+visibility_rect = Rect2(-270, 130, 320, 32)
+process_material = SubResource("ParticleProcessMaterial_s5qqq")
 
 [node name="Goal" type="Node2D" parent="."]
 position = Vector2(-240, 136)

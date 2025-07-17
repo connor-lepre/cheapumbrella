@@ -32,7 +32,6 @@ var held_ball: RigidBody2D = null    # Reference to the held ball, or null if no
 var ball_hold_timer := 0.0
 const BALL_HOLD_TIME := 2.0   # Max seconds to hold before penalty
 const PICKUP_DISTANCE := 120.0 # Tweak as needed
-var ready_to_shoot := false
 
 var reset_hold_timer := 0.0
 var spawn_point: Vector2
@@ -126,29 +125,21 @@ func handle_ball_interaction(delta):
 		# Already holding, manage timer and actions
 		ball_hold_timer += delta
 		if ball_hold_timer > BALL_HOLD_TIME:
-			# Penalty for traveling
 			drop_ball(true)
 			return
 
-		# Drop (simple), e.g. on button release
+		# Drop (simple), e.g. on button press
 		if Input.is_action_just_pressed("drop"):
 			drop_ball()
 			return
 
-		# Shoot mechanism (double press for shoot, single to prep)
-		if Input.is_action_just_pressed("shoot"):
-			if not ready_to_shoot:
-				ready_to_shoot = true
-				# Move ball above player
-				held_ball.global_position = global_position + Vector2(0, -32)
-			else:
-				shoot_ball()
+		# Shoot if pressing grab while already holding
+		if Input.is_action_just_pressed("grab"):
+			shoot_ball()
 			return
 
 		# Keep ball stuck to center as you move
 		held_ball.global_position = global_position
-
-		# Optionally: freeze physics, hide shadow, etc
 		held_ball.freeze_ball(true)
 	else:
 		# Not holding: check for nearby ball and pickup action
@@ -157,6 +148,7 @@ func handle_ball_interaction(delta):
 			if ball:
 				pickup_ball(ball)
 				print("Grabbed ball")
+
 
 func get_nearby_ball():
 	# Naive: loop all balls, find nearest within distance
@@ -169,7 +161,6 @@ func pickup_ball(ball):
 	held_ball = ball
 	held_ball.is_held = true
 	ball_hold_timer = 0.0
-	ready_to_shoot = false
 	held_ball.freeze_ball(true)
 	held_ball.global_position = global_position
 
@@ -180,7 +171,6 @@ func drop_ball(penalized: bool = false):
 		if penalized:
 			emit_signal("player_traveled", held_ball) # optional signal for penalty
 		held_ball = null
-		ready_to_shoot = false
 		ball_hold_timer = 0.0
 
 func shoot_ball():
@@ -195,7 +185,6 @@ func shoot_ball():
 		held_ball.apply_throw(throw_force)
 		held_ball.is_held = false
 		held_ball = null
-		ready_to_shoot = false
 		ball_hold_timer = 0.0
 
 func handle_recording():

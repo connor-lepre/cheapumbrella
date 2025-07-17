@@ -1,18 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://cdq3kbildgmlr"]
+[gd_scene load_steps=7 format=3 uid="uid://cdq3kbildgmlr"]
 
 [ext_resource type="Script" uid="uid://dduq7cm0ewm30" path="res://scripts/Copies.gd" id="1_6p5lp"]
-[ext_resource type="Texture2D" uid="uid://de8cekthvsbx0" path="res://Assets/sprites/player/player_glide.png" id="2_0bh84"]
-[ext_resource type="Texture2D" uid="uid://dqngtlolvf3jf" path="res://Assets/sprites/player/player_def.png" id="3_y1egf"]
-[ext_resource type="Texture2D" uid="uid://c4bsca8h4kell" path="res://Assets/sprites/player/player_jump.png" id="4_jqoys"]
-[ext_resource type="Texture2D" uid="uid://da0jgf2luuify" path="res://Assets/sprites/player/player_move0.png" id="5_g2pok"]
-[ext_resource type="Texture2D" uid="uid://cqs6tpx3eb16f" path="res://Assets/sprites/player/player_move1.png" id="6_xeu8r"]
+[ext_resource type="Texture2D" uid="uid://c4tif2ksjr8xh" path="res://Assets/sprites/player/copy_def.png" id="2_gjisp"]
 [ext_resource type="Texture2D" uid="uid://dltr4457o4sk5" path="res://Assets/sprites/props/umbrella.png" id="7_py6yc"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gymyn"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_0bh84")
+"texture": ExtResource("2_gjisp")
 }],
 "loop": true,
 "name": &"glide",
@@ -20,7 +16,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_y1egf")
+"texture": ExtResource("2_gjisp")
 }],
 "loop": true,
 "name": &"idle",
@@ -28,7 +24,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_jqoys")
+"texture": ExtResource("2_gjisp")
 }],
 "loop": true,
 "name": &"jump",
@@ -36,16 +32,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_g2pok")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_y1egf")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_xeu8r")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_y1egf")
+"texture": ExtResource("2_gjisp")
 }],
 "loop": true,
 "name": &"move",
@@ -66,9 +53,8 @@ floor_block_on_wall = false
 script = ExtResource("1_6p5lp")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
-self_modulate = Color(0, 0.835294, 1, 0.760784)
 sprite_frames = SubResource("SpriteFrames_gymyn")
-animation = &"jump"
+animation = &"glide"
 
 [node name="Umbrella" type="Sprite2D" parent="PlayerSprite"]
 visible = false
