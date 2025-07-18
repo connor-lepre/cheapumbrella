@@ -231,7 +231,43 @@ func handle_reset_hold(delta):
 			update_copy_ui()
 			reload_scene()
 	else:
+<<<<<<< Updated upstream
 		reset_hold_timer = 0.0
+=======
+		reload_hold_timer = 0.0
+
+func handle_retry_hold(delta):
+	if Input.is_action_pressed("retry"):
+		retry_hold_timer += delta
+		if retry_hold_timer >= RESET_HOLD_TIME:
+			print("🔁 Retry triggered")
+			retry_hold_timer = 0.0
+			available_copies = max_copies
+			update_copy_ui()
+			respawn()
+			for child in copies_container.get_children():
+				child.queue_free()
+			move_ball_in_front()
+			
+	else:
+		retry_hold_timer = 0.0
+
+func move_ball_in_front():
+	var ball = null
+	for node in get_tree().get_nodes_in_group("ball"):
+		ball = node
+		break
+	if ball:
+		var offset = facing.x if facing.x != 0 else 1
+		ball.global_position = global_position + Vector2(offset * 64, 0)
+		ball.linear_velocity = Vector2.ZERO
+		ball.angular_velocity = 0.0
+		# Optionally, call a method like ball.respawn() if you want to reset anything else.
+
+func set_checkpoint(pos: Vector2):
+	prev_checkpoint = pos
+	print("Checkpoint set at: ", pos)
+>>>>>>> Stashed changes
 
 func respawn():
 	print("💀 Player hit killplane - respawning")

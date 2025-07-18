@@ -77,10 +77,13 @@ texture = ExtResource("6_tx1dd")
 shape = SubResource("CapsuleShape2D_3smsa")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+<<<<<<< Updated upstream
+=======
+offset = Vector2(0, -340)
+>>>>>>> Stashed changes
 zoom = Vector2(0.7, 0.7)
 process_callback = 0
-position_smoothing_enabled = true
-position_smoothing_speed = 2.0
+position_smoothing_speed = 1.0
 
 [node name="helmet" type="Area2D" parent="."]
 position = Vector2(0, -61)

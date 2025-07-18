@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://cw1il8ohhi1tr"]
+
+[ext_resource type="Script" uid="uid://so240jrtr4jo" path="res://base_level.gd" id="1_bkkah"]
+[ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="3_qixis"]
+[ext_resource type="PackedScene" uid="uid://6v5qmhbcdpio" path="res://Scenes/Platforms/3X16.tscn" id="4_3o4py"]
+[ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_bkkah"]
+[ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="6_xjg0i"]
+[ext_resource type="PackedScene" uid="uid://chmisb7852ntv" path="res://Scenes/UI/PlayerHUD.tscn" id="7_2elnx"]
+[ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="7_ykwpl"]
+
+[node name="BaseLevel" type="Node2D"]
+script = ExtResource("1_bkkah")
+
+[node name="Platforms" type="Node2D" parent="."]
+position = Vector2(-47, -254)
+
+[node name="Background" parent="." instance=ExtResource("3_qixis")]
+
+[node name="3x30" parent="." instance=ExtResource("4_3o4py")]
+position = Vector2(0, 201)
+
+[node name="3x31" parent="." instance=ExtResource("4_3o4py")]
+position = Vector2(-1089, -897)
+rotation = 1.57079
+
+[node name="3x32" parent="." instance=ExtResource("4_3o4py")]
+position = Vector2(1088, -885)
+rotation = 1.57079
+
+[node name="3x33" parent="." instance=ExtResource("4_3o4py")]
+position = Vector2(0, -2080)
+
+[node name="Ball" parent="." instance=ExtResource("5_bkkah")]
+position = Vector2(-410, -41)
+
+[node name="Basket" parent="." instance=ExtResource("6_xjg0i")]
+position = Vector2(792, -392)
+
+[node name="SpawnPoint" parent="." instance=ExtResource("7_ykwpl")]
+position = Vector2(-781, -93)
+
+[node name="Copies" type="Node2D" parent="."]
+
+[node name="PlayerHud" parent="." instance=ExtResource("7_2elnx")]
