@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b4d4wnxexbtw6"]
 
-[ext_resource type="Script" uid="uid://ct56hni63rtx" path="res://scripts/shot_clock.gd" id="1_rnuuk"]
+[ext_resource type="Script" uid="uid://ct56hni63rtx" path="res://scripts/Background.gd" id="1_rnuuk"]
 [ext_resource type="FontFile" uid="uid://beni43735fod8" path="res://Assets/fonts/VT323-Regular.ttf" id="2_hh5vo"]
 [ext_resource type="Texture2D" uid="uid://b6ld0cl0lftuu" path="res://Assets/sprites/props/bumbotron.png" id="2_uxymq"]
 
@@ -8,10 +8,10 @@
 layer = -80
 script = ExtResource("1_rnuuk")
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+[node name="ShotClock" type="ParallaxLayer" parent="."]
 motion_scale = Vector2(0.2, 0.2)
 
-[node name="ColorRect" type="ColorRect" parent="ParallaxLayer"]
+[node name="ColorRect" type="ColorRect" parent="ShotClock"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -25,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.219608, 0.239216, 0.235294, 1)
 
-[node name="Background" type="TextureRect" parent="ParallaxLayer"]
+[node name="Background" type="TextureRect" parent="ShotClock"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -39,7 +39,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_uxymq")
 
-[node name="Timer" type="Label" parent="ParallaxLayer"]
+[node name="Timer" type="Label" parent="ShotClock"]
 offset_left = -189.0
 offset_top = -28.0
 offset_right = 195.0
@@ -51,7 +51,7 @@ text = "2:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Score" type="Label" parent="ParallaxLayer"]
+[node name="Score" type="Label" parent="ShotClock"]
 offset_left = -289.0
 offset_top = -206.0
 offset_right = 287.0

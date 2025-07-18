@@ -74,13 +74,6 @@ texture = ExtResource("6_tx1dd")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_3smsa")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(0, -200)
-zoom = Vector2(0.7, 0.7)
-process_callback = 0
-position_smoothing_enabled = true
-position_smoothing_speed = 2.0
-
 [node name="ThrowMeter" type="Control" parent="."]
 visible = false
 layout_mode = 3

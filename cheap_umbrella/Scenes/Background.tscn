@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://fiue5usek1vc"]
+[gd_scene load_steps=7 format=3 uid="uid://fiue5usek1vc"]
 
 [ext_resource type="Texture2D" uid="uid://cr53lac1ivtdr" path="res://Assets/sprites/env/tile animated repeat.png" id="1_c8m3x"]
+[ext_resource type="Script" uid="uid://ct56hni63rtx" path="res://scripts/Background.gd" id="1_laxsj"]
+[ext_resource type="Texture2D" uid="uid://b6ld0cl0lftuu" path="res://Assets/sprites/props/bumbotron.png" id="2_lf6h2"]
+[ext_resource type="FontFile" uid="uid://beni43735fod8" path="res://Assets/fonts/VT323-Regular.ttf" id="3_laxsj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c8m3x"]
 texture = ExtResource("1_c8m3x")
@@ -14,25 +17,31 @@ texture_region_size = Vector2i(733, 733)
 [sub_resource type="TileSet" id="TileSet_kc7sw"]
 sources/2 = SubResource("TileSetAtlasSource_c8m3x")
 
-[node name="Background" type="ParallaxBackground"]
+[node name="Background" type="Node2D"]
+script = ExtResource("1_laxsj")
 
-[node name="ParallaxLayer4" type="ParallaxLayer" parent="."]
-position = Vector2(0, 1464)
-motion_scale = Vector2(0, 0)
+[node name="Stands" type="Node2D" parent="."]
+position = Vector2(624, 152)
 
-[node name="ColorRect" type="ColorRect" parent="ParallaxLayer4"]
-offset_left = -1161.0
-offset_top = -216.0
-offset_right = 3439.0
-offset_bottom = 104.0
+[node name="ColorRect" type="ColorRect" parent="Stands"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1795.0
+offset_top = -161.0
+offset_right = 505.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.484492, 0.410279, 0.418229, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="CrowdTop" type="ParallaxLayer" parent="."]
+[node name="CrowdTop" type="Node2D" parent="."]
 modulate = Color(0.585062, 0.585062, 0.585062, 1)
-position = Vector2(-1036, 1080)
+position = Vector2(-1042, -312)
 scale = Vector2(0.4, 0.4)
-motion_scale = Vector2(0.004, 0.004)
 
 [node name="Crowd" type="TileMapLayer" parent="CrowdTop"]
 use_parent_material = true
@@ -45,24 +54,10 @@ position = Vector2(2875, 0)
 tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_kc7sw")
 
-[node name="Crowd3" type="TileMapLayer" parent="CrowdTop"]
-use_parent_material = true
-position = Vector2(5747.5, 0)
-tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
-tile_set = SubResource("TileSet_kc7sw")
-
-[node name="Crowd4" type="TileMapLayer" parent="CrowdTop"]
-use_parent_material = true
-position = Vector2(8622.5, 0)
-tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
-tile_set = SubResource("TileSet_kc7sw")
-
-[node name="CrowdMid" type="ParallaxLayer" parent="."]
+[node name="CrowdMid" type="Node2D" parent="."]
 modulate = Color(0.76662, 0.76662, 0.76662, 1)
-z_index = 1
-position = Vector2(-1036, 1268)
+position = Vector2(-1042, -176)
 scale = Vector2(0.4, 0.4)
-motion_scale = Vector2(0.003, 0.003)
 
 [node name="Crowd" type="TileMapLayer" parent="CrowdMid"]
 use_parent_material = true
@@ -75,23 +70,9 @@ position = Vector2(2875, 0)
 tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_kc7sw")
 
-[node name="Crowd3" type="TileMapLayer" parent="CrowdMid"]
-use_parent_material = true
-position = Vector2(5747.5, 0)
-tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
-tile_set = SubResource("TileSet_kc7sw")
-
-[node name="Crowd4" type="TileMapLayer" parent="CrowdMid"]
-use_parent_material = true
-position = Vector2(8622.5, 0)
-tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
-tile_set = SubResource("TileSet_kc7sw")
-
-[node name="CrowdBottom" type="ParallaxLayer" parent="."]
-z_index = 1
-position = Vector2(-1036, 1436)
+[node name="CrowdBottom" type="Node2D" parent="."]
+position = Vector2(-1042, -7.99997)
 scale = Vector2(0.4, 0.4)
-motion_scale = Vector2(0.002, 0.002)
 
 [node name="Crowd" type="TileMapLayer" parent="CrowdBottom"]
 use_parent_material = true
@@ -104,14 +85,58 @@ position = Vector2(2875, 0)
 tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_kc7sw")
 
-[node name="Crowd3" type="TileMapLayer" parent="CrowdBottom"]
-use_parent_material = true
-position = Vector2(5747.5, 0)
-tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
-tile_set = SubResource("TileSet_kc7sw")
+[node name="ShotClock" type="Node2D" parent="."]
+visible = false
+position = Vector2(0, -1056)
 
-[node name="Crowd4" type="TileMapLayer" parent="CrowdBottom"]
-use_parent_material = true
-position = Vector2(8622.5, 0)
-tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
-tile_set = SubResource("TileSet_kc7sw")
+[node name="ColorRect" type="ColorRect" parent="ShotClock"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -766.0
+offset_right = 48.0
+offset_bottom = -197.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.219608, 0.239216, 0.235294, 1)
+
+[node name="Background" type="TextureRect" parent="ShotClock"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -342.5
+offset_top = -270.0
+offset_right = 342.5
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_lf6h2")
+
+[node name="Timer" type="Label" parent="ShotClock"]
+offset_left = -189.0
+offset_top = -28.0
+offset_right = 195.0
+offset_bottom = 230.0
+theme_override_colors/font_color = Color(1, 0.438262, 0.21448, 1)
+theme_override_fonts/font = ExtResource("3_laxsj")
+theme_override_font_sizes/font_size = 240
+text = "2:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Score" type="Label" parent="ShotClock"]
+offset_left = -289.0
+offset_top = -206.0
+offset_right = 287.0
+offset_bottom = 52.0
+theme_override_colors/font_color = Color(1, 0.438262, 0.21448, 1)
+theme_override_fonts/font = ExtResource("3_laxsj")
+theme_override_font_sizes/font_size = 140
+text = "Score:000"
+horizontal_alignment = 1
+vertical_alignment = 1
