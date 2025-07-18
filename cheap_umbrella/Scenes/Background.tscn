@@ -17,20 +17,20 @@ sources/2 = SubResource("TileSetAtlasSource_c8m3x")
 [node name="Background" type="ParallaxBackground"]
 
 [node name="ParallaxLayer4" type="ParallaxLayer" parent="."]
-position = Vector2(0, 1464)
+position = Vector2(0, 1342)
 motion_scale = Vector2(0, 0)
 
 [node name="ColorRect" type="ColorRect" parent="ParallaxLayer4"]
 offset_left = -1161.0
-offset_top = -216.0
+offset_top = -395.0
 offset_right = 3439.0
-offset_bottom = 104.0
+offset_bottom = -75.0
 color = Color(0.484492, 0.410279, 0.418229, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="CrowdTop" type="ParallaxLayer" parent="."]
 modulate = Color(0.585062, 0.585062, 0.585062, 1)
-position = Vector2(-1036, 1080)
+position = Vector2(-1036, 593)
 scale = Vector2(0.4, 0.4)
 motion_scale = Vector2(0.004, 0.004)
 
@@ -60,7 +60,7 @@ tile_set = SubResource("TileSet_kc7sw")
 [node name="CrowdMid" type="ParallaxLayer" parent="."]
 modulate = Color(0.76662, 0.76662, 0.76662, 1)
 z_index = 1
-position = Vector2(-1036, 1268)
+position = Vector2(-1036, 787.47)
 scale = Vector2(0.4, 0.4)
 motion_scale = Vector2(0.003, 0.003)
 
@@ -89,7 +89,7 @@ tile_set = SubResource("TileSet_kc7sw")
 
 [node name="CrowdBottom" type="ParallaxLayer" parent="."]
 z_index = 1
-position = Vector2(-1036, 1436)
+position = Vector2(-1036, 955.47)
 scale = Vector2(0.4, 0.4)
 motion_scale = Vector2(0.002, 0.002)
 
