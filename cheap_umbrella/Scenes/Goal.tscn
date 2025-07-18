@@ -122,6 +122,7 @@ visibility_rect = Rect2(-270, 130, 320, 32)
 process_material = SubResource("ParticleProcessMaterial_s5qqq")
 
 [node name="Goal" type="Node2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(-240, 136)
 
 [node name="RimCheck" type="Area2D" parent="Goal"]

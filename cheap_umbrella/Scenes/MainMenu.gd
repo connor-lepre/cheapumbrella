@@ -48,7 +48,7 @@ func _ready():
 	hooplicate_sfx.play()
 
 func _on_start_pressed():
-	get_tree().change_scene_to_file("res://Scenes/Sandbox.tscn")
+	get_tree().change_scene_to_file("res://Levels/LevelManager.tscn")
 
 
 func _on_tutorial_pressed():
