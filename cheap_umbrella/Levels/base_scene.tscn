@@ -42,3 +42,8 @@ position = Vector2(361, -687)
 [node name="Copies" type="Node2D" parent="."]
 
 [node name="PlayerHud" parent="." instance=ExtResource("7_k8th7")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(489, 628)
+offset = Vector2(450, 25)
+zoom = Vector2(0.54, 0.54)
