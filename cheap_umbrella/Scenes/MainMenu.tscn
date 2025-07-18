@@ -205,7 +205,6 @@ shape = SubResource("RectangleShape2D_xim88")
 
 [node name="Hooplicate" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_xim88")
-volume_db = -12.702
 
 [connection signal="pressed" from="MenuLayer/VBoxContainer/Buttons/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MenuLayer/VBoxContainer/Buttons/Tutorial" to="." method="_on_tutorial_pressed"]

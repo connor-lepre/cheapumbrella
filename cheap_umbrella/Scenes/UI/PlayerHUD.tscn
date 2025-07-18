@@ -21,6 +21,8 @@ shadow_offset = Vector2(0, 2)
 [node name="PlayerHud" type="CanvasLayer"]
 
 [node name="AvailableCopies" type="HBoxContainer" parent="."]
+z_index = 99
+z_as_relative = false
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 56.0
