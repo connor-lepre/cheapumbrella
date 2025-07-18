@@ -82,6 +82,7 @@ position_smoothing_enabled = true
 position_smoothing_speed = 2.0
 
 [node name="ThrowMeter" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 76.0
