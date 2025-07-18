@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://da0jgf2luuify" path="res://Assets/sprites/player/player_move0.png" id="4_8erm5"]
 [ext_resource type="Texture2D" uid="uid://cqs6tpx3eb16f" path="res://Assets/sprites/player/player_move1.png" id="5_f1ek2"]
 [ext_resource type="Texture2D" uid="uid://dltr4457o4sk5" path="res://Assets/sprites/props/umbrella.png" id="6_tx1dd"]
+[ext_resource type="Script" uid="uid://dgog75syr8ac4" path="res://Scenes/ThrowMeter.gd" id="8_8erm5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gymyn"]
 animations = [{
@@ -56,9 +57,6 @@ animations = [{
 radius = 64.0
 height = 128.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x3wgy"]
-size = Vector2(72, 8)
-
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_mask = 11
 floor_block_on_wall = false
@@ -83,12 +81,24 @@ process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 2.0
 
-[node name="helmet" type="Area2D" parent="."]
-visible = false
-position = Vector2(0, -61)
-collision_layer = 0
-collision_mask = 0
+[node name="ThrowMeter" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 76.0
+offset_top = -64.0
+offset_right = 116.0
+offset_bottom = -24.0
+rotation = 3.14159
+script = ExtResource("8_8erm5")
 
-[node name="Polygon2D" type="CollisionShape2D" parent="helmet"]
-visible = false
-shape = SubResource("RectangleShape2D_x3wgy")
+[node name="MeterBG" type="ColorRect" parent="ThrowMeter"]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 64.0
+color = Color(0.899345, 0.875952, 0.827229, 1)
+
+[node name="MeterFill" type="ColorRect" parent="ThrowMeter"]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 64.0
+color = Color(1, 0.364706, 0.262745, 1)

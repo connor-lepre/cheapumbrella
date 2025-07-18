@@ -20,7 +20,7 @@ var player_hud = null
 @onready var facing = Vector2.LEFT
 @onready var player_sprite: AnimatedSprite2D = $PlayerSprite
 @onready var umbrella = $PlayerSprite/Umbrella
-@onready var helmet = $helmet
+@onready var throw_meter = $ThrowMeter
 
 var is_moving := false
 var is_gliding := false
@@ -32,7 +32,6 @@ var coyote_time_max := 0.3
 # Ball holding state
 var held_ball: RigidBody2D = null    # Reference to the held ball, or null if not holding
 var ball_hold_timer := 0.0
-const BALL_HOLD_TIME := 0.8   # Max seconds to hold before penalty
 const PICKUP_DISTANCE := 120.0 # Tweak as needed
 
 var reload_hold_timer := 0.0
@@ -46,6 +45,12 @@ var was_recording_pressed := false
 var is_recording := false
 var current_recording := []
 var time_left := MAX_TOTAL_RECORD_TIME
+
+# Throw charge variables
+var throw_charge := 0.0
+const THROW_MIN_FORCE := 0.1   # 10% of full force
+const THROW_MAX_TIME := 0.6    # How many seconds to reach full charge (adjust to taste)
+var is_charging_throw := false
 
 var physics_fps := 60.0
 
@@ -132,34 +137,57 @@ func collision_with_RigidBody2d():
 		#body.apply_central_impulse(Vector2(0, -800))
 
 func handle_ball_interaction(delta):
-	if held_ball:
-		# Already holding, manage timer and actions
-		ball_hold_timer += delta
-		if ball_hold_timer > BALL_HOLD_TIME:
-			drop_ball(true)
-			return
-
-		# Drop (simple), e.g. on button press
-		if Input.is_action_just_pressed("drop"):
-			drop_ball()
-			return
-
-		# Shoot if pressing grab while already holding
-		if Input.is_action_just_pressed("shoot"):
-			shoot_ball()
-			return
-
-		# Keep ball stuck to center as you move
+	if held_ball and is_instance_valid(held_ball):
 		held_ball.global_position = global_position
 		held_ball.freeze_ball(true)
+
+		# Drop
+		if Input.is_action_just_pressed("drop"):
+			drop_ball()
+			if throw_meter:
+				throw_meter.visible = false
+			return
+
+		# Start charging throw
+		if Input.is_action_just_pressed("shoot"):
+			is_charging_throw = true
+			throw_charge = 0.0
+			if throw_meter:
+				throw_meter.visible = true
+
+		# While charging
+		if is_charging_throw and Input.is_action_pressed("shoot"):
+			throw_charge += delta
+			throw_charge = min(throw_charge, THROW_MAX_TIME)
+			if throw_meter:
+				throw_meter.set_power(throw_charge / THROW_MAX_TIME)
+				throw_meter.visible = true  # Ensures it stays visible during charge
+
+		# On throw release
+		if is_charging_throw and Input.is_action_just_released("shoot"):
+			shoot_ball_with_charge()
+			is_charging_throw = false
+			throw_charge = 0.0
+			if throw_meter:
+				throw_meter.visible = false
+
 	else:
 		var ball = get_nearby_ball()
 		if Input.is_action_just_pressed("grab") and ball:
 			pickup_ball(ball)
 			print("Grabbed ball")
+			if throw_meter:
+				throw_meter.visible = false  # Hide meter on pickup, just in case
+			return
+
 		elif Input.is_action_just_pressed("drop") and ball:
 			dribble_ball(ball)
 			print("Dribbled ball")
+			if throw_meter:
+				throw_meter.visible = false  # Hide meter on dribble
+
+
+
 
 
 func get_nearby_ball():
@@ -185,8 +213,6 @@ func drop_ball(penalized: bool = false):
 		var move_x = clamp(velocity.x, -900, 900)  # Adjust clamp as needed
 		var drop_force = Vector2(move_x, 200)
 		held_ball.apply_throw(drop_force)
-		if penalized:
-			emit_signal("player_traveled", held_ball)
 		held_ball = null
 		ball_hold_timer = 0.0
 
@@ -195,21 +221,19 @@ func dribble_ball(ball):
 	var move_x = clamp(velocity.x, -1200, 1200)  # Adjust for "push" left/right
 	var dribble_force = Vector2(move_x, 420)   # Y value = bounce height
 	ball.apply_throw(dribble_force)
-
-
-func shoot_ball():
+		
+func shoot_ball_with_charge():
 	if held_ball:
 		# Place ball above player and unfreeze
 		held_ball.global_position = global_position + Vector2(0, -32)
 		held_ball.freeze_ball(false)
-		var direction_x = facing.x
-		if direction_x == 0:
-			direction_x = 1 # default to right if somehow 0
-		var throw_force = Vector2(direction_x * 800, -800)
-		held_ball.apply_throw(throw_force, 50.0)
+		var direction_x = facing.x if facing.x != 0 else 1
+		var t = throw_charge / THROW_MAX_TIME
+		t = clamp(t, THROW_MIN_FORCE, 1.0)  # Ensure min/max limits
+		var throw_force = Vector2(direction_x * 800, -800) * t
+		held_ball.apply_throw(throw_force, 50.0 * t)
 		held_ball.is_held = false
 		held_ball = null
-		ball_hold_timer = 0.0
 
 func handle_recording():
 	if available_copies <= 0:

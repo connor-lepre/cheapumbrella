@@ -30,6 +30,18 @@ position = Vector2(-7512, 5760)
 goal_type = 1
 is_required = true
 
+[node name="Basket2" parent="Baskets" instance=ExtResource("6_foql8")]
+z_index = 2
+position = Vector2(-4256, 5608)
+goal_type = 1
+is_required = true
+
+[node name="Basket3" parent="Baskets" instance=ExtResource("6_foql8")]
+z_index = 2
+position = Vector2(-5960, 5289)
+goal_type = 1
+is_required = true
+
 [node name="Ball" parent="." instance=ExtResource("5_n2jbg")]
 position = Vector2(-8384, 6168)
 
@@ -48,6 +60,7 @@ visible = false
 position = Vector2(-6504, 6016)
 
 [node name="Checkpoint" parent="Checkpoints" instance=ExtResource("8_rdhe0")]
+position = Vector2(-264, 152)
 
 [node name="TutorialBlocks" type="Node2D" parent="."]
 
@@ -64,7 +77,7 @@ position = Vector2(-7272, 6144)
 position = Vector2(-7144, 6144)
 
 [node name="1x10" parent="TutorialBlocks" instance=ExtResource("8_foql8")]
-position = Vector2(-6504, 6144)
+position = Vector2(-7016, 6144)
 
 [node name="1x11" parent="TutorialBlocks" instance=ExtResource("10_lb2ct")]
 position = Vector2(-5824, 4672)
