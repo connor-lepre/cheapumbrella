@@ -366,6 +366,8 @@ func handle_retry_hold(delta):
 			available_copies = max_copies
 			update_copy_ui()
 			respawn()
+			for child in copies_container.get_children():
+				child.queue_free()
 			move_ball_in_front()
 	else:
 		retry_hold_timer = 0.0

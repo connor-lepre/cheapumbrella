@@ -28,6 +28,7 @@ gravity_scale = 2.0
 linear_damp = 0.5
 angular_damp = 0.1
 script = ExtResource("1_5ju8n")
+spawn_delay = null
 
 [node name="Trail" type="GPUParticles2D" parent="."]
 modulate = Color(0.973406, 0.865138, 0.769374, 1)
@@ -40,10 +41,8 @@ lifetime = 0.8
 use_fixed_seed = true
 seed = 1234
 fixed_fps = 60
-collision_base_size = 0.0
 visibility_rect = Rect2(-100, -100, 20, 20)
-trail_enabled = true
-trail_lifetime = 1.0
+trail_lifetime = 2.0
 trail_sections = 4
 process_material = SubResource("ParticleProcessMaterial_ij5cq")
 
@@ -58,4 +57,3 @@ shape = SubResource("CircleShape2D_ujhkp")
 [node name="BounceSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_yk4cr")
 volume_db = -8.0
-pitch_scale = 0.01
