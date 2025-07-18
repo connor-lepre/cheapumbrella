@@ -6,7 +6,9 @@ const GRAVITY := 5000.0
 const GLIDE_GRAVITY := 200.0
 const RECORD_THRESHOLD := 0.5
 const MAX_TOTAL_RECORD_TIME := 2.0
-const RESET_HOLD_TIME := 1.0
+const RESET_HOLD_TIME := 0.5
+
+
 
 @export var max_copies := 4
 var available_copies := 4
@@ -33,9 +35,10 @@ var ball_hold_timer := 0.0
 const BALL_HOLD_TIME := 0.8   # Max seconds to hold before penalty
 const PICKUP_DISTANCE := 120.0 # Tweak as needed
 
-var reset_hold_timer := 0.0
+var reload_hold_timer := 0.0
+var retry_hold_timer := 0.0
 var spawn_point: Vector2
-var latest_checkpoint: Vector2
+var prev_checkpoint: Vector2
 
 signal player_traveled(ball)
 
@@ -53,6 +56,11 @@ func _ready():
 	print("Player ready")
 	physics_fps = Engine.get_physics_ticks_per_second()
 	add_to_group("Player")
+
+	var ball = null
+	for node in get_tree().get_nodes_in_group("ball"):
+		ball = node
+		break
 
 	#if helmet:
 		#helmet.body_entered.connect(helmet_push)
@@ -73,7 +81,8 @@ func _physics_process(delta):
 	sprite_anim_switch(is_gliding, is_moving, is_jumping)
 	hide_show_umbrella(is_gliding)
 	handle_recording()
-	handle_reset_hold(delta)
+	handle_retry_hold(delta)
+	handle_reload_hold(delta)
 
 func handle_input(delta):
 	var direction = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -312,25 +321,50 @@ func update_copy_ui():
 		token.visible = (i < available_copies)
 		print("Token", i, "visible:", token.visible)
 
-func handle_reset_hold(delta):
+func handle_reload_hold(delta):
 	if Input.is_action_pressed("reset_level"):
-		reset_hold_timer += delta
-		if reset_hold_timer >= RESET_HOLD_TIME:
-			print("🔁 Reset triggered")
-			reset_hold_timer = 0.0
+		reload_hold_timer += delta
+		if reload_hold_timer >= RESET_HOLD_TIME:
+			print("🔁 Reload triggered")
+			reload_hold_timer = 0.0
 			available_copies = max_copies
 			update_copy_ui()
 			reload_scene()
 	else:
-		reset_hold_timer = 0.0
+		reload_hold_timer = 0.0
+
+func handle_retry_hold(delta):
+	if Input.is_action_pressed("retry"):
+		retry_hold_timer += delta
+		if retry_hold_timer >= RESET_HOLD_TIME:
+			print("🔁 Retry triggered")
+			retry_hold_timer = 0.0
+			available_copies = max_copies
+			update_copy_ui()
+			respawn()
+			move_ball_in_front()
+	else:
+		retry_hold_timer = 0.0
+
+func move_ball_in_front():
+	var ball = null
+	for node in get_tree().get_nodes_in_group("ball"):
+		ball = node
+		break
+	if ball:
+		var offset = facing.x if facing.x != 0 else 1
+		ball.global_position = global_position + Vector2(offset * 64, 0)
+		ball.linear_velocity = Vector2.ZERO
+		ball.angular_velocity = 0.0
+		# Optionally, call a method like ball.respawn() if you want to reset anything else.
 
 func set_checkpoint(pos: Vector2):
-	latest_checkpoint = pos
+	prev_checkpoint = pos
 	print("Checkpoint set at: ", pos)
 
 func respawn():
-	if latest_checkpoint:
-		global_position = latest_checkpoint
+	if prev_checkpoint:
+		global_position = prev_checkpoint
 	else:
 		global_position = spawn_point
 	velocity = Vector2.ZERO

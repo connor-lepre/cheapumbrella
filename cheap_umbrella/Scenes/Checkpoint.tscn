@@ -65,7 +65,7 @@ script = ExtResource("1_3njwc")
 position = Vector2(16, -62)
 shape = SubResource("RectangleShape2D_k75nq")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+[node name="CheckpointSprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -62)
 sprite_frames = SubResource("SpriteFrames_a6mvm")
 animation = &"set"

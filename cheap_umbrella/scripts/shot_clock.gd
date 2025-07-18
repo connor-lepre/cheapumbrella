@@ -10,9 +10,11 @@ var player_score := 0
 func _ready():
 	time_left = start_time_sec
 	update_shotclock()
-	
-	var goal_node = get_parent().get_node("Basket")
-	goal_node.ball_scored.connect(_on_ball_scored)
+
+	var baskets_node = get_parent().get_node("Baskets")
+	for basket in baskets_node.get_children():
+		if basket.has_signal("ball_scored"):
+			basket.ball_scored.connect(_on_ball_scored)
 
 func _process(delta):
 	if time_left > 0:
