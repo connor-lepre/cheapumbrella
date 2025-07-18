@@ -1,6 +1,22 @@
-[gd_scene load_steps=2 format=3 uid="uid://chmisb7852ntv"]
+[gd_scene load_steps=10 format=3 uid="uid://chmisb7852ntv"]
 
 [ext_resource type="Texture2D" uid="uid://cyu4q6cimm1ca" path="res://Assets/sprites/ui/copy-token.png" id="1_dl1c2"]
+[ext_resource type="FontFile" uid="uid://b3s0cbjdr6870" path="res://Assets/fonts/Jersey10-Regular.ttf" id="2_jvqdk"]
+[ext_resource type="Texture2D" uid="uid://dbsfe3etkkf53" path="res://Assets/ui/input_glyphs/controller/SteamDeck_Left_Stick.png" id="3_80dm8"]
+[ext_resource type="Texture2D" uid="uid://ddsx33y0kbroj" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Down.png" id="4_hvbbi"]
+[ext_resource type="Texture2D" uid="uid://dp4ldtppsbxnx" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Left.png" id="5_mt38f"]
+[ext_resource type="Texture2D" uid="uid://chv6naaplt5py" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Right.png" id="6_dcdcx"]
+[ext_resource type="Texture2D" uid="uid://d1d2fqakl731n" path="res://Assets/ui/input_glyphs/controller/SteamDeck_R2.png" id="7_2fqmn"]
+[ext_resource type="Texture2D" uid="uid://cu5407sl0fcpx" path="res://Assets/ui/input_glyphs/controller/SteamDeck_Inventory.png" id="8_ylnek"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_13epk"]
+font = ExtResource("2_jvqdk")
+font_size = 32
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 2)
 
 [node name="PlayerHud" type="CanvasLayer"]
 
@@ -14,3 +30,132 @@ offset_bottom = 56.0
 visible = false
 layout_mode = 2
 texture = ExtResource("1_dl1c2")
+
+[node name="Controls" type="VBoxContainer" parent="."]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -395.0
+offset_top = -220.0
+offset_bottom = 220.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 32
+
+[node name="Control0" type="HBoxContainer" parent="Controls"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Tip0" type="Label" parent="Controls/Control0"]
+layout_mode = 2
+text = "Move"
+label_settings = SubResource("LabelSettings_13epk")
+
+[node name="Tip1" type="TextureRect" parent="Controls/Control0"]
+layout_mode = 2
+texture = ExtResource("3_80dm8")
+expand_mode = 2
+
+[node name="Control1" type="HBoxContainer" parent="Controls"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Tip1" type="Label" parent="Controls/Control1"]
+layout_mode = 2
+text = "Jump"
+label_settings = SubResource("LabelSettings_13epk")
+
+[node name="Tip2" type="TextureRect" parent="Controls/Control1"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("4_hvbbi")
+expand_mode = 2
+
+[node name="Control2" type="HBoxContainer" parent="Controls"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Tip2" type="Label" parent="Controls/Control2"]
+layout_mode = 2
+text = "Grab Ball"
+label_settings = SubResource("LabelSettings_13epk")
+
+[node name="Tip3" type="TextureRect" parent="Controls/Control2"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("5_mt38f")
+expand_mode = 2
+
+[node name="Control3" type="HBoxContainer" parent="Controls"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Tip3" type="Label" parent="Controls/Control3"]
+layout_mode = 2
+text = "Shoot Ball (While holding it)"
+label_settings = SubResource("LabelSettings_13epk")
+
+[node name="Tip4" type="TextureRect" parent="Controls/Control3"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("5_mt38f")
+expand_mode = 2
+
+[node name="Control4" type="HBoxContainer" parent="Controls"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Tip4" type="Label" parent="Controls/Control4"]
+layout_mode = 2
+text = "Dribble"
+label_settings = SubResource("LabelSettings_13epk")
+
+[node name="Tip5" type="TextureRect" parent="Controls/Control4"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+texture = ExtResource("6_dcdcx")
+expand_mode = 2
+
+[node name="Control5" type="HBoxContainer" parent="Controls"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Tip5" type="Label" parent="Controls/Control5"]
+layout_mode = 2
+text = "Record Copy Path (Hold)"
+label_settings = SubResource("LabelSettings_13epk")
+
+[node name="Tip6" type="TextureRect" parent="Controls/Control5"]
+layout_mode = 2
+texture = ExtResource("7_2fqmn")
+expand_mode = 2
+
+[node name="Control6" type="HBoxContainer" parent="Controls"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Tip6" type="Label" parent="Controls/Control6"]
+layout_mode = 2
+text = "Spawn Copy (Release)"
+label_settings = SubResource("LabelSettings_13epk")
+
+[node name="Tip7" type="TextureRect" parent="Controls/Control6"]
+layout_mode = 2
+texture = ExtResource("7_2fqmn")
+expand_mode = 2
+
+[node name="Control7" type="HBoxContainer" parent="Controls"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Tip7" type="Label" parent="Controls/Control7"]
+layout_mode = 2
+text = "Retry Level (Hold)"
+label_settings = SubResource("LabelSettings_13epk")
+
+[node name="Tip8" type="TextureRect" parent="Controls/Control7"]
+layout_mode = 2
+texture = ExtResource("8_ylnek")
+expand_mode = 2

@@ -51,7 +51,6 @@ offset = Vector2(500, 100)
 transform = Transform2D(1, 0, 0, 1, 500, 100)
 
 [node name="PlayerHud" parent="." instance=ExtResource("8_dnd5l")]
-visible = false
 
 [node name="Background" parent="." instance=ExtResource("9_7yicx")]
 visible = false

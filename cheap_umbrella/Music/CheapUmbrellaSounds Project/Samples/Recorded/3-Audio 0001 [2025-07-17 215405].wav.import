@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bslfq47q8sgki"
+path="res://.godot/imported/3-Audio 0001 [2025-07-17 215405].wav-2cf1253af1751dd130e2ee28167a9fff.sample"
+
+[deps]
+
+source_file="res://Music/CheapUmbrellaSounds Project/Samples/Recorded/3-Audio 0001 [2025-07-17 215405].wav"
+dest_files=["res://.godot/imported/3-Audio 0001 [2025-07-17 215405].wav-2cf1253af1751dd130e2ee28167a9fff.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

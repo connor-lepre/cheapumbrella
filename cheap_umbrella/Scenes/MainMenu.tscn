@@ -1,8 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://i0gqela3swqn"]
+[gd_scene load_steps=12 format=3 uid="uid://i0gqela3swqn"]
 
 [ext_resource type="Script" uid="uid://b7ovmjtm45je8" path="res://Scenes/MainMenu.gd" id="1_8saeu"]
 [ext_resource type="Texture2D" uid="uid://0xwowgdbjbfu" path="res://Assets/title.png" id="1_853f1"]
 [ext_resource type="FontFile" uid="uid://b3s0cbjdr6870" path="res://Assets/fonts/Jersey10-Regular.ttf" id="2_8saeu"]
+[ext_resource type="Texture2D" uid="uid://bh57xo80xeiyn" path="res://Assets/ui/logo_sprite0.png" id="3_df05h"]
+[ext_resource type="Texture2D" uid="uid://bh8mbp7428tj0" path="res://Assets/ui/logo_sprite1.png" id="4_8um5k"]
+[ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="6_8um5k"]
+[ext_resource type="AudioStream" uid="uid://e8e6ccp23a5w" path="res://Assets/sound/fx/hooplicate.mp3" id="7_xim88"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8saeu"]
 content_margin_left = 32.0
@@ -44,6 +48,9 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 12
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xim88"]
+size = Vector2(905.75, 152)
+
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
@@ -51,20 +58,59 @@ script = ExtResource("1_8saeu")
 
 [node name="MenuLayer" type="CanvasLayer" parent="."]
 
+[node name="Ball" parent="MenuLayer" instance=ExtResource("6_8um5k")]
+z_index = 99
+z_as_relative = false
+position = Vector2(203, -1248)
+collision_layer = 2
+collision_mask = 1
+gravity_scale = 1.4
+can_sleep = false
+angular_velocity = 0.558505
+constant_force = Vector2(100, 0)
+constant_torque = 1200.0
+
 [node name="VBoxContainer" type="VBoxContainer" parent="MenuLayer"]
-offset_left = 80.0
-offset_top = 80.0
-offset_right = 940.0
-offset_bottom = 479.0
+offset_left = 160.0
+offset_top = 160.0
+offset_right = 1020.0
+offset_bottom = 732.0
 theme_override_constants/separation = 64
+metadata/_edit_use_anchors_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MenuLayer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Logo" type="TextureRect" parent="MenuLayer/VBoxContainer/VBoxContainer"]
+[node name="Logo" type="Control" parent="MenuLayer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(860, 156)
 layout_mode = 2
+
+[node name="Wordmark" type="TextureRect" parent="MenuLayer/VBoxContainer/VBoxContainer/Logo"]
+z_as_relative = false
+layout_mode = 2
+offset_right = 860.0
+offset_bottom = 156.0
 texture = ExtResource("1_853f1")
+
+[node name="SpriteTop" type="TextureRect" parent="MenuLayer/VBoxContainer/VBoxContainer/Logo"]
+z_index = 9
+z_as_relative = false
+layout_mode = 0
+offset_left = 880.0
+offset_right = 1036.0
+offset_bottom = 156.0
+texture = ExtResource("3_df05h")
+
+[node name="SpriteBottom" type="TextureRect" parent="MenuLayer/VBoxContainer/VBoxContainer/Logo"]
+z_index = 5
+z_as_relative = false
+layout_mode = 0
+offset_left = 944.0
+offset_right = 1100.0
+offset_bottom = 156.0
+texture = ExtResource("4_8um5k")
+flip_h = true
 
 [node name="line1" type="Label" parent="MenuLayer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -134,11 +180,32 @@ alignment = 0
 layer = 0
 
 [node name="Background" type="ColorRect" parent="Background"]
+light_mask = 2
+visibility_layer = 2
+z_as_relative = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(589.25, 238)
+shape = SubResource("RectangleShape2D_xim88")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(1461.13, 396)
+shape = SubResource("RectangleShape2D_xim88")
+
+[node name="Hooplicate" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_xim88")
+volume_db = -12.702
 
 [connection signal="pressed" from="MenuLayer/VBoxContainer/Buttons/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MenuLayer/VBoxContainer/Buttons/Tutorial" to="." method="_on_tutorial_pressed"]
