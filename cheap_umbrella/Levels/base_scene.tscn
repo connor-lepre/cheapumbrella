@@ -12,7 +12,7 @@
 script = ExtResource("1_cg6vo")
 
 [node name="SpawnPoint" parent="." instance=ExtResource("5_k8th7")]
-position = Vector2(478, 1146)
+position = Vector2(482, 1176)
 
 [node name="Background" parent="." instance=ExtResource("1_5yig4")]
 

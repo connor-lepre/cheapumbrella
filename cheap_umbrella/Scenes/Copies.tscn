@@ -1,14 +1,28 @@
-[gd_scene load_steps=7 format=3 uid="uid://cdq3kbildgmlr"]
+[gd_scene load_steps=11 format=3 uid="uid://cdq3kbildgmlr"]
 
 [ext_resource type="Script" uid="uid://dduq7cm0ewm30" path="res://scripts/Copies.gd" id="1_6p5lp"]
-[ext_resource type="Texture2D" uid="uid://c4tif2ksjr8xh" path="res://Assets/sprites/player/copy_def.png" id="2_gjisp"]
 [ext_resource type="Texture2D" uid="uid://dltr4457o4sk5" path="res://Assets/sprites/props/umbrella.png" id="7_py6yc"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6p5lp"]
+load_path = "res://.godot/imported/glide.png-69bb2d74bc3a4f763d4235362667d58f.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gjisp"]
+load_path = "res://.godot/imported/Idle.png-76f8fbc083725bc96dda804be8ecee80.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6kuuo"]
+load_path = "res://.godot/imported/jump.png-79b8e115804bf5b9ff81552c7b03ec7b.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_15xp2"]
+load_path = "res://.godot/imported/step 3.png-51050be8f9f00b02be9e9b29566e8350.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_55778"]
+load_path = "res://.godot/imported/step 4.png-bab1dd2e52c64fe64dac7f2fbe05b4ff.ctex"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gymyn"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_gjisp")
+"texture": SubResource("CompressedTexture2D_6p5lp")
 }],
 "loop": true,
 "name": &"glide",
@@ -16,7 +30,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_gjisp")
+"texture": SubResource("CompressedTexture2D_gjisp")
 }],
 "loop": true,
 "name": &"idle",
@@ -24,7 +38,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_gjisp")
+"texture": SubResource("CompressedTexture2D_6kuuo")
 }],
 "loop": true,
 "name": &"jump",
@@ -32,7 +46,13 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_gjisp")
+"texture": SubResource("CompressedTexture2D_15xp2")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_gjisp")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_55778")
 }],
 "loop": true,
 "name": &"move",
@@ -54,7 +74,7 @@ script = ExtResource("1_6p5lp")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gymyn")
-animation = &"glide"
+animation = &"move"
 
 [node name="Umbrella" type="Sprite2D" parent="PlayerSprite"]
 visible = false

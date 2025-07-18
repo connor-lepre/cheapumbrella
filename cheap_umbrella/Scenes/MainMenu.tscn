@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://i0gqela3swqn"]
 
 [ext_resource type="Script" uid="uid://b7ovmjtm45je8" path="res://Scenes/MainMenu.gd" id="1_8saeu"]
-[ext_resource type="Texture2D" uid="uid://0xwowgdbjbfu" path="res://Assets/title.png" id="1_853f1"]
+[ext_resource type="Texture2D" uid="uid://0xwowgdbjbfu" path="res://Assets/sprites/player/title.png" id="1_853f1"]
 [ext_resource type="FontFile" uid="uid://b3s0cbjdr6870" path="res://Assets/fonts/Jersey10-Regular.ttf" id="2_8saeu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8saeu"]
