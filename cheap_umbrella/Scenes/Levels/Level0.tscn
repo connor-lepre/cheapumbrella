@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="6_8ni83"]
 [ext_resource type="PackedScene" uid="uid://xgh6jhlcxufx" path="res://Scenes/Platforms/1x3Platform.tscn" id="8_w28ii"]
 
-[node name="Level" type="Node2D"]
+[node name="Level2" type="Node2D"]
 script = ExtResource("1_es8ky")
 
 [node name="Background" parent="." instance=ExtResource("2_cpnto")]

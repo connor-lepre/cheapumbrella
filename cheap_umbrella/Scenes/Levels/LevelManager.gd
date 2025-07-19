@@ -84,4 +84,7 @@ func next_level() -> void:
 		_activate_level(next_index)
 	else:
 		print("🎉 All levels complete!")
-		add_child(win_scene)
+		if current_level:
+			current_level.queue_free()
+			current_level = null
+		add_child(win_scene.instantiate())

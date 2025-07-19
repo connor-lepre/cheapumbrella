@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://de5vpfq5okqm1"]
+[gd_scene load_steps=9 format=3 uid="uid://de5vpfq5okqm1"]
 
 [ext_resource type="Script" uid="uid://bvi8inx5ttd6a" path="res://Scenes/Levels/BaseLevel.gd" id="1_4rk67"]
 [ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="2_f8qf7"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="4_d1swa"]
 [ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_ipaot"]
 [ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="6_ao4h1"]
+[ext_resource type="PackedScene" uid="uid://cpaowal2l2rd1" path="res://Scenes/Platforms/1x5Platform.tscn" id="7_f8qf7"]
+[ext_resource type="PackedScene" uid="uid://iuqy4j1tlfgs" path="res://Scenes/Platforms/1x1Platform.tscn" id="8_lmdar"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_4rk67")
@@ -37,11 +39,17 @@ position = Vector2(0, -440)
 position = Vector2(853, -117)
 
 [node name="Ball" parent="." instance=ExtResource("5_ipaot")]
-position = Vector2(0, 120)
+position = Vector2(-705, 758)
 
 [node name="SpawnPoint" parent="." instance=ExtResource("6_ao4h1")]
-position = Vector2(-760, 512)
+position = Vector2(-529, 767)
 
 [node name="Camera" type="Camera2D" parent="."]
 offset = Vector2(0, 25)
 zoom = Vector2(0.5, 0.5)
+
+[node name="1x6" parent="." instance=ExtResource("7_f8qf7")]
+position = Vector2(-318, 370)
+
+[node name="1x1" parent="." instance=ExtResource("8_lmdar")]
+position = Vector2(-1036, 497)
