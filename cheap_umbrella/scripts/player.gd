@@ -26,6 +26,9 @@ var available_copies := 3
 var walk_step_timer := 0.0
 var walk_interval := 0.4 # Time between steps, adjust as needed
 
+var _last_max_copies := -1
+var _last_available_copies := -1
+
 
 var is_moving := false
 var is_gliding := false
@@ -344,20 +347,32 @@ func update_copy_ui():
 	if hbox.get_child_count() == 0:
 		push_error("AvailableCopies HBox must have at least one child as a template token.")
 		return
-	print("updating tokens: available_copies =", available_copies)
-	# Remove extras
+
+	# Only update UI if something changed
+	if _last_max_copies == max_copies and _last_available_copies == available_copies:
+		return
+	_last_max_copies = max_copies
+	_last_available_copies = available_copies
+
+	# Remove excess tokens
 	while hbox.get_child_count() > max_copies:
 		hbox.get_child(hbox.get_child_count() - 1).queue_free()
-	# Add missing
+
+	# Add missing tokens
 	while hbox.get_child_count() < max_copies:
 		var token = hbox.get_child(0).duplicate()
 		hbox.add_child(token)
-		print("Added token:", token)
-	# Show/hide tokens (left to right)
+
+	# Show/hide tokens efficiently
 	for i in range(max_copies):
 		var token = hbox.get_child(i)
-		token.visible = (i < available_copies)
-		print("Token", i, "visible:", token.visible)
+		var should_be_visible = (i < available_copies)
+		if token.visible != should_be_visible:
+			token.visible = should_be_visible
+
+	# Uncomment this for rare debug logging only:
+	# print("UI updated: available_copies =", available_copies, "max_copies =", max_copies)
+
 
 func handle_retry_hold(delta):
 	if Input.is_action_pressed("retry"):

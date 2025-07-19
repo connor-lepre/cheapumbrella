@@ -18,13 +18,13 @@
 [ext_resource type="Texture2D" uid="uid://cu5407sl0fcpx" path="res://Assets/ui/input_glyphs/controller/SteamDeck_Inventory.png" id="16_ekbih"]
 [ext_resource type="Texture2D" uid="uid://b6ld0cl0lftuu" path="res://Assets/sprites/props/bumbotron.png" id="17_be2ps"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mnb3t"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fbl6m"]
 bg_color = Color(0.125911, 0.125911, 0.125911, 0.737255)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w8j58"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_krk7j"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fomig"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvvg6"]
 content_margin_left = 16.0
 content_margin_top = 16.0
 content_margin_right = 16.0
@@ -36,7 +36,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_18u7e"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_syhef"]
 content_margin_left = 16.0
 content_margin_top = 16.0
 content_margin_right = 16.0
@@ -48,7 +48,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sid3j"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rxfbo"]
 content_margin_left = 16.0
 content_margin_top = 16.0
 content_margin_right = 16.0
@@ -169,6 +169,7 @@ text = "Time's up..."
 layer = -1
 
 [node name="TextureRect" type="TextureRect" parent="UI"]
+modulate = Color(1, 0.819608, 0.913725, 1)
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("8_fbl6m")
@@ -177,7 +178,7 @@ texture = ExtResource("8_fbl6m")
 custom_minimum_size = Vector2(368, 1080)
 offset_right = 400.0
 offset_bottom = 1080.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_mnb3t")
+theme_override_styles/panel = SubResource("StyleBoxFlat_fbl6m")
 
 [node name="LeftPanel" type="MarginContainer" parent="UI/Left"]
 layout_mode = 0
@@ -202,7 +203,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.952941, 0.741176, 0.160784, 1)
 theme_override_fonts/font = ExtResource("9_krk7j")
 theme_override_font_sizes/font_size = 64
-text = "You lost"
+text = "You lose"
 
 [node name="Label2" type="Label" parent="UI/Left/LeftPanel/LeftPanel/LevelInfo"]
 layout_mode = 2
@@ -381,7 +382,7 @@ anchor_right = 1.0
 offset_left = -400.0
 offset_bottom = 1080.0
 grow_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_mnb3t")
+theme_override_styles/panel = SubResource("StyleBoxFlat_fbl6m")
 
 [node name="RightPanel" type="MarginContainer" parent="UI/Right"]
 layout_mode = 1
@@ -389,29 +390,32 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -400.0
+offset_left = -416.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
+theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 32
 
 [node name="RightPanel" type="VBoxContainer" parent="UI/Right/RightPanel"]
 custom_minimum_size = Vector2(368, 0)
 layout_mode = 2
+size_flags_horizontal = 8
 size_flags_vertical = 8
-theme_override_constants/separation = 120
+theme_override_constants/separation = 660
 alignment = 2
 
 [node name="Timer" type="VBoxContainer" parent="UI/Right/RightPanel/RightPanel"]
+custom_minimum_size = Vector2(368, 0)
 layout_mode = 2
+size_flags_horizontal = 8
 
 [node name="Shotclock" type="PanelContainer" parent="UI/Right/RightPanel/RightPanel/Timer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_w8j58")
+theme_override_styles/panel = SubResource("StyleBoxFlat_krk7j")
 
 [node name="Background" type="TextureRect" parent="UI/Right/RightPanel/RightPanel/Timer/Shotclock"]
 custom_minimum_size = Vector2(320, 260)
@@ -440,7 +444,9 @@ text = "Finish each level before time's up!"
 horizontal_alignment = 1
 
 [node name="NavButtons" type="HBoxContainer" parent="UI/Right/RightPanel/RightPanel"]
+custom_minimum_size = Vector2(368, 0)
 layout_mode = 2
+size_flags_horizontal = 8
 theme_override_constants/separation = 16
 alignment = 1
 
@@ -452,10 +458,10 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.830335, 0.830335, 0.830335, 1)
 theme_override_fonts/font = ExtResource("7_vaapl")
 theme_override_font_sizes/font_size = 24
-theme_override_styles/focus = SubResource("StyleBoxFlat_fomig")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_18u7e")
-theme_override_styles/hover = SubResource("StyleBoxFlat_sid3j")
-theme_override_styles/normal = SubResource("StyleBoxFlat_18u7e")
+theme_override_styles/focus = SubResource("StyleBoxFlat_kvvg6")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_syhef")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rxfbo")
+theme_override_styles/normal = SubResource("StyleBoxFlat_syhef")
 text = "Return to Menu"
 
 [node name="Bottom" type="Panel" parent="UI"]
@@ -469,14 +475,14 @@ offset_top = -160.0
 offset_right = 560.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_mnb3t")
+theme_override_styles/panel = SubResource("StyleBoxFlat_fbl6m")
 
 [node name="ShotPower" type="Label" parent="UI/Bottom"]
 layout_mode = 0
-offset_left = 110.0
-offset_top = 27.0
-offset_right = 208.0
-offset_bottom = 54.0
+offset_left = 87.0
+offset_top = 32.0
+offset_right = 185.0
+offset_bottom = 59.0
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
@@ -486,10 +492,10 @@ text = "Shot Power"
 
 [node name="RemainingHooplicates" type="Label" parent="UI/Bottom"]
 layout_mode = 0
-offset_left = 893.0
-offset_top = 27.0
-offset_right = 1079.0
-offset_bottom = 54.0
+offset_left = 866.0
+offset_top = 32.0
+offset_right = 1052.0
+offset_bottom = 59.0
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4

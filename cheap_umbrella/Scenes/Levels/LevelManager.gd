@@ -98,7 +98,6 @@ func _on_goal_scored(_data = null) -> void:
 		emit_signal("win_triggered")
 		get_tree().quit()
 	elif current_index == lose_index:
-		emit_signal("lose_triggered")
 		GlobalTimer.reset()
 		call_deferred("_activate_level", -1)
 		return

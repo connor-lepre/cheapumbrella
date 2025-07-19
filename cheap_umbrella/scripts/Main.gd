@@ -30,13 +30,6 @@ func _on_level_completed(level_index):
 	var win_index = level_manager.win_index
 	var lose_index = level_manager.lose_index
 
-	if level_index == win_index:
-		win_sfx.play()
-		print("WIN SFX PLAYED")
-	elif level_index == lose_index:
-		lose_sfx.play()
-		print("LOSE SFX PLAYED")
-
 	# Next level transition
 	level_manager.next_level()
 	print("Next level should be active.")
