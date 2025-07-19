@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://bhds6e7q71utc"]
+
+[ext_resource type="Script" uid="uid://bvi8inx5ttd6a" path="res://Scenes/Levels/BaseLevel.gd" id="1_4d3fe"]
+[ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="2_3ipdw"]
+[ext_resource type="PackedScene" uid="uid://bcjwm23ltlhqc" path="res://Scenes/Platforms/3x16Boundary.tscn" id="3_8h4de"]
+[ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="4_jcebb"]
+[ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_f3nwb"]
+[ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="6_57lp3"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_4d3fe")
+
+[node name="Background" parent="." instance=ExtResource("2_3ipdw")]
+position = Vector2(0, 256)
+
+[node name="Plaforms" type="Node2D" parent="."]
+position = Vector2(0, -440)
+
+[node name="3x16" parent="Plaforms" instance=ExtResource("3_8h4de")]
+position = Vector2(0, 1260)
+
+[node name="3x17" parent="Plaforms" instance=ExtResource("3_8h4de")]
+position = Vector2(0, -651)
+
+[node name="3x18" parent="Plaforms" instance=ExtResource("3_8h4de")]
+position = Vector2(-1116, 465)
+rotation = 1.5708
+
+[node name="3x19" parent="Plaforms" instance=ExtResource("3_8h4de")]
+position = Vector2(1116, 465)
+rotation = 1.5708
+
+[node name="Copies" type="Node2D" parent="."]
+position = Vector2(0, -440)
+
+[node name="Basket" parent="." groups=["goal"] instance=ExtResource("4_jcebb")]
+position = Vector2(845, 242)
+
+[node name="Ball" parent="." instance=ExtResource("5_f3nwb")]
+position = Vector2(0, 120)
+
+[node name="SpawnPoint" parent="." instance=ExtResource("6_57lp3")]
+position = Vector2(-760, 512)
+
+[node name="Camera" type="Camera2D" parent="."]
+offset = Vector2(0, 25)
+zoom = Vector2(0.5, 0.5)

@@ -56,6 +56,7 @@ func _on_backboard_check_entered(body):
 func _on_net_check_entered(body):
 	var id = body.get_instance_id()
 	if id in balls_in_rim and body.linear_velocity.y > 0:
+		print("Ball scored: ", body)
 		emit_signal("ball_scored", body)
 		score_sfx.play()
 		net_sfx.play()

@@ -1,55 +1,55 @@
 extends Node
 
-var levels = []
-var current_index = 0
+signal level_completed
+
+# List your level scenes here (expand as needed)
+var level_scenes := [
+	preload("res://Scenes/Levels/Level0.tscn"),
+	preload("res://Scenes/Levels/Level1.tscn"),
+	preload("res://Scenes/Levels/Level2.tscn"),
+	preload("res://Scenes/Levels/Level3.tscn"),
+	preload("res://Scenes/Levels/Level4.tscn"),
+	preload("res://Scenes/Levels/Level5.tscn")
+]
+
+var current_level: Node = null
+var current_index: int = -1
 
 func _ready():
-	# Collect all Level children
-	for child in get_children():
-		if child.name.begins_with("Level"):  # Only add Level nodes
-			levels.append(child)
-	print("Levels collected:", levels.size())
+	next_level()  # Start at Level 0
 
-	# Deactivate all levels at startup
-	for level in levels:
-		if "is_current" in level:
-			level.is_current = false
-		else:
-			level.set_process(false)
-			level.set_physics_process(false)
-			level.visible = false
+func _activate_level(index: int) -> void:
+	# Remove previous level if it exists
+	if current_level:
+		print("Freeing previous level:", current_level.name)
+		current_level.queue_free()
+		current_level = null
 
-	# Activate first level
-	_activate_level(0)
+	print("Instancing level index:", index)
+	var new_level = level_scenes[index].instantiate()
+	add_child(new_level)
+	new_level.set_is_current(true)
+	current_level = new_level
+	current_index = index
 
-func _activate_level(index):
-	for i in range(levels.size()):
-		if "set_is_current" in levels[i]:
-			levels[i].set_is_current(i == index)
-		else:
-			levels[i].set_process(i == index)
-			levels[i].set_physics_process(i == index)
-			levels[i].visible = (i == index)
-
-	# Connect to goal signal in current level
-	var basket = levels[index].get_node_or_null("Basket")
+	# Connect signals from Basket (or any other node as needed)
+	var basket = current_level.get_node_or_null("Basket")
 	if basket:
-		var goal = basket.get_node_or_null("Goal")
-		if goal:
-			if goal.has_signal("ball_scored"):
-				goal.connect("ball_scored", _on_goal_scored, [], CONNECT_ONE_SHOT)
-			if goal.has_signal("required_goal_scored"):
-				goal.connect("required_goal_scored", _on_goal_scored, [], CONNECT_ONE_SHOT)
+		if basket.has_signal("ball_scored"):
+			print("Connecting ball_scored from", basket.name, "to LevelManager._on_goal_scored")
+			basket.connect("ball_scored", Callable(self, "_on_goal_scored"), CONNECT_ONE_SHOT)
 		else:
-			print("⚠️ No Goal node found in Basket!")
+			print("Basket found, but no ball_scored signal!")
 	else:
 		print("⚠️ No Basket found in current level!")
 
-	current_index = index
+func _on_goal_scored(_data = null) -> void:
+	print("LevelManager: Received ball_scored signal, current_index:", current_index)
+	emit_signal("level_completed", current_index)
 
-func _on_goal_scored(_data = null):
+func next_level() -> void:
 	var next_index = current_index + 1
-	if next_index < levels.size():
+	if next_index < level_scenes.size():
 		_activate_level(next_index)
 	else:
 		print("🎉 All levels complete!")

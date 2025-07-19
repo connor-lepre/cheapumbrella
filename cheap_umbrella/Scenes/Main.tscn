@@ -1,8 +1,54 @@
-[gd_scene load_steps=2 format=3 uid="uid://dpo0fej7ym0w5"]
+[gd_scene load_steps=5 format=3 uid="uid://dpo0fej7ym0w5"]
 
+[ext_resource type="Script" uid="uid://ceinp6bs2u8vy" path="res://scripts/Main.gd" id="1_rgh2o"]
 [ext_resource type="Script" uid="uid://bmjogpmdbv7yk" path="res://Scenes/Levels/LevelManager.gd" id="1_v1gob"]
+[ext_resource type="Script" uid="uid://b5gdwyxys20c1" path="res://scripts/Transition.gd" id="3_kln2b"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idj7w"]
+bg_color = Color(0.982343, 0.982342, 0.982342, 1)
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_rgh2o")
 
 [node name="LevelManager" type="Node2D" parent="."]
 script = ExtResource("1_v1gob")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="UI/PanelContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_idj7w")
+
+[node name="PanelContainer2" type="PanelContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="UI/PanelContainer2"]
+layout_mode = 2
+
+[node name="Transition" type="ColorRect" parent="."]
+z_index = 999
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_kln2b")

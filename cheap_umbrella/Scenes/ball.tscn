@@ -57,5 +57,4 @@ shape = SubResource("CircleShape2D_ujhkp")
 
 [node name="BounceSFX" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_yk4cr")
-volume_db = 12.0
 pitch_scale = 0.01

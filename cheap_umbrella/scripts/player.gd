@@ -5,13 +5,13 @@ const JUMP_VELOCITY := -1300.0
 const GRAVITY := 5000.0
 const GLIDE_GRAVITY := 200.0
 const RECORD_THRESHOLD := 0.5
-const MAX_TOTAL_RECORD_TIME := 2.0
+const MAX_TOTAL_RECORD_TIME := 0.9
 const RESET_HOLD_TIME := 0.5
 
 
 
-@export var max_copies := 4
-var available_copies := 4
+@export var max_copies := 3
+var available_copies := 3
 
 @onready var COPIES_SCENE = preload("res://Scenes/Copies.tscn")
 @onready var hud_scene = preload("res://Scenes/UI/PlayerHUD.tscn")
@@ -304,9 +304,9 @@ func spawn_copy(recording: Array) -> bool:
 		return false
 
 	if copies_container == null:
-		copies_container = get_tree().get_current_scene().get_node_or_null("copyPlatforms")
+		copies_container = get_tree().get_current_scene().get_node_or_null("Copies")
 		if copies_container == null:
-			push_error("❌ copyPlatforms node not found in scene root.")
+			push_error("❌ Copies node not found in scene root.")
 			return false
 
 	if copies_container.get_child_count() >= max_copies:
@@ -317,7 +317,7 @@ func spawn_copy(recording: Array) -> bool:
 	copy.set_path(recording)
 	copy.global_position = recording[0][0] - Vector2(0, 64)
 	copies_container.add_child(copy)
-	print("✅ Copy added to copyPlatforms at position:", copy.global_position)
+	print("✅ Copy added to Copies at position:", copy.global_position)
 	return true
 
 func reset_player_position_after_recording():

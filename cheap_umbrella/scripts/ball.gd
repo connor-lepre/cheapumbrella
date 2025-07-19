@@ -29,7 +29,7 @@ func _on_body_entered(body):
 	var velocity = linear_velocity.length()
 	if velocity > min_bounce_velocity:
 		var t = min(velocity / 1200.0, 1.0)
-		bounce_sfx.volume_db = lerp(-36, 0, t)
+		bounce_sfx.volume_db = lerp(-24, 6, t)
 		bounce_sfx.pitch_scale = lerp(0.8, 1.2, t)
 		bounce_sfx.play()
 
@@ -47,6 +47,8 @@ func respawn():
 
 func freeze_ball(state: bool):
 	freeze = state  # Godot 4 property for RigidBody2D
+	if state and bounce_sfx.playing:
+		bounce_sfx.stop()
 
 func apply_throw(force: Vector2, torque: float = 0.0):
 	linear_velocity = Vector2.ZERO

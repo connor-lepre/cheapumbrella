@@ -148,6 +148,7 @@ fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_hlgd5")
 
 [node name="FirstScoreFX" type="GPUParticles2D" parent="."]
+visible = false
 position = Vector2(-114, 144)
 amount = 32
 texture = SubResource("GradientTexture2D_klp67")

@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://cusnovv6psy00"]
+
+[ext_resource type="Script" uid="uid://bvi8inx5ttd6a" path="res://Scenes/Levels/BaseLevel.gd" id="1_es8ky"]
+[ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="2_cpnto"]
+[ext_resource type="PackedScene" uid="uid://iuqy4j1tlfgs" path="res://Scenes/Platforms/1x1Platform.tscn" id="3_cpnto"]
+[ext_resource type="PackedScene" uid="uid://bcjwm23ltlhqc" path="res://Scenes/Platforms/3x16Boundary.tscn" id="3_w28ii"]
+[ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="4_rbc30"]
+[ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_jj04g"]
+[ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="6_8ni83"]
+[ext_resource type="PackedScene" uid="uid://xgh6jhlcxufx" path="res://Scenes/Platforms/1x3Platform.tscn" id="8_w28ii"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_es8ky")
+
+[node name="Background" parent="." instance=ExtResource("2_cpnto")]
+position = Vector2(0, 258)
+
+[node name="Plaforms" type="Node2D" parent="."]
+position = Vector2(0, -440)
+
+[node name="3x16" parent="Plaforms" instance=ExtResource("3_w28ii")]
+position = Vector2(0, 1260)
+
+[node name="3x17" parent="Plaforms" instance=ExtResource("3_w28ii")]
+position = Vector2(0, -651)
+
+[node name="3x18" parent="Plaforms" instance=ExtResource("3_w28ii")]
+position = Vector2(-1116, 465)
+rotation = 1.5708
+
+[node name="3x19" parent="Plaforms" instance=ExtResource("3_w28ii")]
+position = Vector2(1116, 465)
+rotation = 1.5708
+
+[node name="Copies" type="Node2D" parent="."]
+position = Vector2(0, -440)
+
+[node name="Basket" parent="." groups=["goal"] instance=ExtResource("4_rbc30")]
+position = Vector2(1021, 543)
+
+[node name="Ball" parent="." instance=ExtResource("5_jj04g")]
+position = Vector2(0, 120)
+
+[node name="SpawnPoint" parent="." instance=ExtResource("6_8ni83")]
+position = Vector2(-760, 512)
+
+[node name="Camera" type="Camera2D" parent="."]
+offset = Vector2(0, 25)
+zoom = Vector2(0.5, 0.5)
+
+[node name="1x3" parent="." instance=ExtResource("8_w28ii")]
+position = Vector2(128, 736)
+
+[node name="1x1" parent="." instance=ExtResource("3_cpnto")]
+position = Vector2(133, 608)
