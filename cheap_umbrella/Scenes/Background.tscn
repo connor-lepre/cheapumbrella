@@ -17,12 +17,12 @@ texture_region_size = Vector2i(733, 733)
 [sub_resource type="TileSet" id="TileSet_kc7sw"]
 sources/2 = SubResource("TileSetAtlasSource_c8m3x")
 
-
 [node name="Background" type="Node2D"]
+scale = Vector2(1.1, 1.1)
 script = ExtResource("1_laxsj")
 
 [node name="Stands" type="Node2D" parent="."]
-position = Vector2(624, 152)
+position = Vector2(639.455, 122.909)
 
 [node name="ColorRect" type="ColorRect" parent="Stands"]
 anchors_preset = 8
@@ -30,20 +30,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1795.0
+offset_left = -1664.09
 offset_top = -161.0
-offset_right = 505.0
+offset_right = 385.909
 offset_bottom = 39.0
 grow_horizontal = 2
 grow_vertical = 2
-
 color = Color(0.484492, 0.410279, 0.418229, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="CrowdTop" type="Node2D" parent="."]
 modulate = Color(0.585062, 0.585062, 0.585062, 1)
-position = Vector2(-1042, -312)
-scale = Vector2(0.4, 0.4)
+position = Vector2(-886.545, -312)
+scale = Vector2(0.35, 0.35)
 
 [node name="Crowd" type="TileMapLayer" parent="CrowdTop"]
 use_parent_material = true
@@ -58,8 +57,8 @@ tile_set = SubResource("TileSet_kc7sw")
 
 [node name="CrowdMid" type="Node2D" parent="."]
 modulate = Color(0.76662, 0.76662, 0.76662, 1)
-position = Vector2(-1042, -176)
-scale = Vector2(0.4, 0.4)
+position = Vector2(-886.545, -176)
+scale = Vector2(0.35, 0.35)
 
 [node name="Crowd" type="TileMapLayer" parent="CrowdMid"]
 use_parent_material = true
@@ -72,10 +71,9 @@ position = Vector2(2875, 0)
 tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_kc7sw")
 
-
 [node name="CrowdBottom" type="Node2D" parent="."]
-position = Vector2(-1042, -7.99997)
-scale = Vector2(0.4, 0.4)
+position = Vector2(-886.545, -7.99997)
+scale = Vector2(0.35, 0.35)
 
 [node name="Crowd" type="TileMapLayer" parent="CrowdBottom"]
 use_parent_material = true
