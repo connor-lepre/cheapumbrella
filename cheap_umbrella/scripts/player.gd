@@ -39,8 +39,6 @@ var retry_hold_timer := 0.0
 var spawn_point: Vector2
 var prev_checkpoint: Vector2
 
-signal player_traveled(ball)
-
 var was_recording_pressed := false
 var is_recording := false
 var current_recording := []
@@ -74,8 +72,10 @@ func _ready():
 	update_copy_ui()
 
 	# Spawn point setup
-	var start_node = root.get_node_or_null("SpawnPoint")
+	var start_node = get_parent().get_node_or_null("SpawnPoint")
 	spawn_point = start_node.global_position if start_node else global_position
+	print("Player using spawn point at:", spawn_point)
+
 
 func _physics_process(delta):
 	handle_input(delta)
@@ -205,7 +205,7 @@ func pickup_ball(ball):
 	held_ball.freeze_mode = RigidBody2D.FREEZE_MODE_STATIC
 	held_ball.global_position = global_position
 
-func drop_ball(penalized: bool = false):
+func drop_ball():
 	if held_ball:
 		held_ball.is_held = false
 		held_ball.freeze_ball(false)
