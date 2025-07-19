@@ -1,0 +1,113 @@
+[gd_scene load_steps=8 format=3 uid="uid://r66hsunlef64"]
+
+[ext_resource type="Script" uid="uid://bvi8inx5ttd6a" path="res://Scenes/Levels/BaseLevel.gd" id="1_kc3ln"]
+[ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="2_7luy0"]
+[ext_resource type="PackedScene" uid="uid://bcjwm23ltlhqc" path="res://Scenes/Platforms/3x16Boundary.tscn" id="3_74rqn"]
+[ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="4_23pb6"]
+[ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_t73pb"]
+[ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="6_so35q"]
+[ext_resource type="FontFile" uid="uid://b3s0cbjdr6870" path="res://Assets/fonts/Jersey10-Regular.ttf" id="7_7luy0"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_kc3ln")
+
+[node name="Background" parent="." instance=ExtResource("2_7luy0")]
+position = Vector2(0, 256)
+
+[node name="Plaforms" type="Node2D" parent="."]
+position = Vector2(0, -440)
+
+[node name="3x16" parent="Plaforms" instance=ExtResource("3_74rqn")]
+position = Vector2(0, 1260)
+
+[node name="3x17" parent="Plaforms" instance=ExtResource("3_74rqn")]
+position = Vector2(0, -651)
+
+[node name="3x18" parent="Plaforms" instance=ExtResource("3_74rqn")]
+position = Vector2(-1116, 465)
+rotation = 1.5708
+
+[node name="3x19" parent="Plaforms" instance=ExtResource("3_74rqn")]
+position = Vector2(1116, 465)
+rotation = 1.5708
+
+[node name="Copies" type="Node2D" parent="."]
+position = Vector2(0, -440)
+
+[node name="Basket" parent="." groups=["goal"] instance=ExtResource("4_23pb6")]
+position = Vector2(965, 416)
+
+[node name="Ball" parent="." instance=ExtResource("5_t73pb")]
+position = Vector2(0, 368)
+
+[node name="SpawnPoint" parent="." instance=ExtResource("6_so35q")]
+position = Vector2(-760, 512)
+
+[node name="Camera" type="Camera2D" parent="."]
+offset = Vector2(0, 25)
+zoom = Vector2(0.5, 0.5)
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -193.0
+offset_top = 62.0
+offset_right = 193.0
+offset_bottom = 106.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("7_7luy0")
+theme_override_font_sizes/font_size = 40
+text = "You're a Hooplicate Prodigy"
+
+[node name="Label2" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 672.0
+offset_top = 311.0
+offset_right = 942.0
+offset_bottom = 402.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("7_7luy0")
+theme_override_font_sizes/font_size = 40
+text = "Drain one last hoop
+to quit the game"
+horizontal_alignment = 2
+
+[node name="Text" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -131.0
+offset_top = -39.0
+offset_right = 131.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("7_7luy0")
+theme_override_font_sizes/font_size = 120
+text = "Nice Work!"

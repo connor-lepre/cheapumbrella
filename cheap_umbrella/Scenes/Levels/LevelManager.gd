@@ -17,7 +17,13 @@ var level_scenes := [
 	preload("res://Scenes/Levels/Level2.tscn"),
 	preload("res://Scenes/Levels/Level3.tscn"),
 	preload("res://Scenes/Levels/Level4.tscn"),
-	preload("res://Scenes/Levels/Level5.tscn")
+	preload("res://Scenes/Levels/Level5.tscn"),
+	# Any new levels here
+	
+	# Win state
+	preload("res://Scenes/Levels/Level99.tscn")
+	
+	# Lose state
 ]
 
 var current_level: Node = null
@@ -77,6 +83,8 @@ func _activate_level(index: int) -> void:
 func _on_goal_scored(_data = null) -> void:
 	print("LevelManager: Received ball_scored signal, current_index:", current_index)
 	emit_signal("level_completed", current_index)
+	if current_index >= 0 and level_scenes[current_index].resource_path.ends_with("Level99.tscn"):
+		get_tree().quit()
 
 func next_level() -> void:
 	var next_index = current_index + 1
@@ -84,7 +92,3 @@ func next_level() -> void:
 		_activate_level(next_index)
 	else:
 		print("🎉 All levels complete!")
-		if current_level:
-			current_level.queue_free()
-			current_level = null
-		add_child(win_scene.instantiate())
