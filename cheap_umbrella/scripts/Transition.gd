@@ -1,5 +1,9 @@
 extends ColorRect
 
+func _ready():
+	visible = true
+	modulate.a = 0.0
+
 func fade_in(duration := 0.5):
 	self.visible = true
 	var tween = create_tween()

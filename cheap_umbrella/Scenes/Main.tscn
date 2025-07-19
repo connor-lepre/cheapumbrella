@@ -13,6 +13,23 @@ script = ExtResource("1_rgh2o")
 [node name="LevelManager" type="Node2D" parent="."]
 script = ExtResource("1_v1gob")
 
+[node name="Transition" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+z_index = 999
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1100.0
+offset_top = -1080.0
+offset_right = 1100.0
+offset_bottom = 800.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.713726, 0.666667, 0.568627, 1)
+script = ExtResource("3_kln2b")
+
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 15
@@ -21,18 +38,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="UI"]
+[node name="LeftBar" type="PanelContainer" parent="UI"]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="UI/PanelContainer"]
+[node name="Panel" type="Panel" parent="UI/LeftBar"]
 custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_idj7w")
 
-[node name="PanelContainer2" type="PanelContainer" parent="UI"]
+[node name="RightBar" type="PanelContainer" parent="UI"]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -41,14 +58,5 @@ anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="UI/PanelContainer2"]
+[node name="Panel" type="Panel" parent="UI/RightBar"]
 layout_mode = 2
-
-[node name="Transition" type="ColorRect" parent="."]
-z_index = 999
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("3_kln2b")

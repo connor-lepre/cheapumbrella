@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1r1168cfa4m2"]
+
+[ext_resource type="Texture2D" uid="uid://cyu4q6cimm1ca" path="res://Assets/sprites/ui/copy-token.png" id="1_6x8q2"]
+
+[node name="AvailableCopies" type="HBoxContainer"]
+z_index = 99
+z_as_relative = false
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 56.0
+
+[node name="CopyToken" type="TextureRect" parent="."]
+visible = false
+layout_mode = 2
+texture = ExtResource("1_6x8q2")

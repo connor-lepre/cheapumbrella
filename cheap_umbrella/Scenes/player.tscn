@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://oqd1g8e36mas"]
+[gd_scene load_steps=13 format=3 uid="uid://oqd1g8e36mas"]
 
 [ext_resource type="Script" uid="uid://cokrbnovaoyhu" path="res://scripts/player.gd" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://de8cekthvsbx0" path="res://Assets/sprites/player/player_glide.png" id="2_x3wgy"]
@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://da0jgf2luuify" path="res://Assets/sprites/player/player_move0.png" id="4_8erm5"]
 [ext_resource type="Texture2D" uid="uid://cqs6tpx3eb16f" path="res://Assets/sprites/player/player_move1.png" id="5_f1ek2"]
 [ext_resource type="Texture2D" uid="uid://dltr4457o4sk5" path="res://Assets/sprites/props/umbrella.png" id="6_tx1dd"]
-[ext_resource type="Script" uid="uid://dgog75syr8ac4" path="res://Scenes/ThrowMeter.gd" id="8_8erm5"]
+[ext_resource type="AudioStream" uid="uid://cawwbt0a735o8" path="res://Assets/sound/fx/step.wav" id="8_f1ek2"]
+[ext_resource type="AudioStream" uid="uid://q32sq3pwbuln" path="res://Assets/sound/fx/chute.wav" id="9_tx1dd"]
+[ext_resource type="AudioStream" uid="uid://3ogrnqwvuy7s" path="res://Assets/sound/fx/jump_pico.wav" id="10_tx1dd"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gymyn"]
 animations = [{
@@ -74,25 +76,13 @@ texture = ExtResource("6_tx1dd")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_3smsa")
 
-[node name="ThrowMeter" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 76.0
-offset_top = -64.0
-offset_right = 116.0
-offset_bottom = -24.0
-rotation = 3.14159
-script = ExtResource("8_8erm5")
+[node name="SFX" type="Node2D" parent="."]
 
-[node name="MeterBG" type="ColorRect" parent="ThrowMeter"]
-layout_mode = 0
-offset_right = 16.0
-offset_bottom = 64.0
-color = Color(0.899345, 0.875952, 0.827229, 1)
+[node name="Walk" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource("8_f1ek2")
 
-[node name="MeterFill" type="ColorRect" parent="ThrowMeter"]
-layout_mode = 0
-offset_right = 16.0
-offset_bottom = 64.0
-color = Color(1, 0.364706, 0.262745, 1)
+[node name="Glide" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource("9_tx1dd")
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="SFX"]
+stream = ExtResource("10_tx1dd")

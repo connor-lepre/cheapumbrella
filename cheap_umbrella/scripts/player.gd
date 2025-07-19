@@ -8,22 +8,28 @@ const RECORD_THRESHOLD := 0.5
 const MAX_TOTAL_RECORD_TIME := 0.9
 const RESET_HOLD_TIME := 0.5
 
-
-
 @export var max_copies := 3
 var available_copies := 3
 
 @onready var COPIES_SCENE = preload("res://Scenes/Copies.tscn")
-@onready var hud_scene = preload("res://Scenes/UI/PlayerHUD.tscn")
-var player_hud = null
 
 @onready var facing = Vector2.LEFT
 @onready var player_sprite: AnimatedSprite2D = $PlayerSprite
 @onready var umbrella = $PlayerSprite/Umbrella
-@onready var throw_meter = $ThrowMeter
+@onready var throw_meter = get_parent().get_node_or_null("ThrowMeter")
+@onready var available_copies_ui = get_tree().get_current_scene().get_node_or_null("AvailableCopies")
+@onready var copies_ui = null
+
+@onready var sfx_walk: AudioStreamPlayer2D = get_node_or_null("SFX/Walk")
+@onready var sfx_glide: AudioStreamPlayer2D = get_node_or_null("SFX/Glide")
+@onready var sfx_jump: AudioStreamPlayer2D = get_node_or_null("SFX/Jump")
+var walk_step_timer := 0.0
+var walk_interval := 0.4 # Time between steps, adjust as needed
+
 
 var is_moving := false
 var is_gliding := false
+var was_gliding := false
 var is_jumping := false
 var was_on_floor := false
 var coyote_time := 0.0
@@ -57,6 +63,7 @@ var copies_container: Node = null
 
 func _ready():
 	print("Player ready")
+	print("Player throw_meter is: ", throw_meter)
 	physics_fps = Engine.get_physics_ticks_per_second()
 	add_to_group("Player")
 
@@ -65,10 +72,7 @@ func _ready():
 		ball = node
 		break
 
-	#if helmet:
-		#helmet.body_entered.connect(helmet_push)
-
-	player_hud = get_tree().get_current_scene().get_node_or_null("PlayerHud")
+	copies_ui = get_tree().get_current_scene().get_node_or_null("PlayerHud")
 	update_copy_ui()
 
 	# Spawn point setup
@@ -88,6 +92,20 @@ func _physics_process(delta):
 	handle_recording()
 	handle_retry_hold(delta)
 	handle_reload_hold(delta)
+	
+	# Walk SFX
+	if is_moving and is_on_floor():
+		walk_step_timer -= delta
+		if walk_step_timer <= 0.0:
+			play_walk_step()
+			walk_step_timer = walk_interval
+	else:
+		walk_step_timer = 0.0
+		
+	# Glide SFX
+	if is_gliding and not was_gliding:
+		sfx_glide.play()
+	was_gliding = is_gliding
 
 func handle_input(delta):
 	var direction = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -113,6 +131,7 @@ func handle_input(delta):
 		velocity.y = JUMP_VELOCITY
 		is_jumping = true
 		coyote_time = 0.0
+		sfx_jump.play()
 
 	is_gliding = Input.is_action_pressed("jump") and not is_on_floor() and velocity.y > 5
 	velocity.y += (GLIDE_GRAVITY if is_gliding else GRAVITY) * delta
@@ -144,16 +163,11 @@ func handle_ball_interaction(delta):
 		# Drop
 		if Input.is_action_just_pressed("drop"):
 			drop_ball()
-			if throw_meter:
-				throw_meter.visible = false
-			return
 
 		# Start charging throw
 		if Input.is_action_just_pressed("shoot"):
 			is_charging_throw = true
 			throw_charge = 0.0
-			if throw_meter:
-				throw_meter.visible = true
 
 		# While charging
 		if is_charging_throw and Input.is_action_pressed("shoot"):
@@ -169,26 +183,17 @@ func handle_ball_interaction(delta):
 			is_charging_throw = false
 			throw_charge = 0.0
 			if throw_meter:
-				throw_meter.visible = false
+				throw_meter.set_power(0.0)
 
 	else:
 		var ball = get_nearby_ball()
 		if Input.is_action_just_pressed("grab") and ball:
 			pickup_ball(ball)
 			print("Grabbed ball")
-			if throw_meter:
-				throw_meter.visible = false  # Hide meter on pickup, just in case
-			return
 
 		elif Input.is_action_just_pressed("drop") and ball:
 			dribble_ball(ball)
 			print("Dribbled ball")
-			if throw_meter:
-				throw_meter.visible = false  # Hide meter on dribble
-
-
-
-
 
 func get_nearby_ball():
 	# Naive: loop all balls, find nearest within distance
@@ -294,6 +299,11 @@ func sprite_anim_switch(is_gliding, is_moving, is_jumping):
 		else:
 			player_sprite.play("idle")
 
+func play_walk_step():
+	sfx_walk.pitch_scale = randf_range(0.95, 1.05)
+	if sfx_walk:
+		sfx_walk.play()
+
 func hide_show_umbrella(is_gliding):
 	if umbrella:
 		umbrella.visible = is_gliding
@@ -324,9 +334,9 @@ func reset_player_position_after_recording():
 	global_position = spawn_point
 
 func update_copy_ui():
-	if player_hud == null:
+	if copies_ui == null:
 		return
-	var hbox = player_hud.get_node("AvailableCopies")
+	var hbox = copies_ui
 	if hbox.get_child_count() == 0:
 		push_error("AvailableCopies HBox must have at least one child as a template token.")
 		return
