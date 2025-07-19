@@ -14,6 +14,10 @@ var level_scenes := [
 	preload("res://Scenes/Levels/Level3.tscn"),
 	preload("res://Scenes/Levels/Level4.tscn"),
 	preload("res://Scenes/Levels/Level5.tscn"),
+	# New levels here
+	
+	
+	# Don't put levels below these two
 	preload("res://Scenes/Levels/LevelWin.tscn"),
 	preload("res://Scenes/Levels/LevelLose.tscn")
 ]
@@ -101,6 +105,10 @@ func _on_goal_scored(_data = null) -> void:
 		GlobalTimer.reset()
 		call_deferred("_activate_level", -1)
 		return
+
+func goto_level(index: int) -> void:
+	if index >= 0 and index < level_scenes.size():
+		call_deferred("_activate_level", index)
 
 func next_level() -> void:
 	GlobalTimer.paused = true
