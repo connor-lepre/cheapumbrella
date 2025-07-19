@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="2_pml6m"]
 [ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="3_vltsr"]
 [ext_resource type="PackedScene" uid="uid://cmqwutafdnbx1" path="res://Scenes/Platforms/3x3Boundary.tscn" id="4_cpnto"]
-[ext_resource type="PackedScene" uid="uid://dqoxrvbfqwaf4" path="res://Scenes/Platforms/3x16Boundary.tscn" id="4_rp5ft"]
+[ext_resource type="PackedScene" uid="uid://bcjwm23ltlhqc" path="res://Scenes/Platforms/3x16Boundary.tscn" id="4_rp5ft"]
 [ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_qeqk5"]
 [ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="6_1soli"]
 

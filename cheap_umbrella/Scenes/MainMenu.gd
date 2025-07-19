@@ -48,16 +48,10 @@ func _ready():
 	hooplicate_sfx.play()
 
 func _on_start_pressed():
-<<<<<<< Updated upstream
-	get_tree().change_scene_to_file("res://Scenes/Sandbox.tscn")
-=======
 	get_tree().change_scene_to_file("res://Scenes/Main.tscn")
->>>>>>> Stashed changes
-
 
 func _on_tutorial_pressed():
 	pass # Nothing for now
-
 
 func _on_quit_pressed():
 	get_tree().quit()
