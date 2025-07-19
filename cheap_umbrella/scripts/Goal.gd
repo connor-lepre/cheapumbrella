@@ -23,6 +23,8 @@ signal required_goal_scored
 var first_score := false
 signal ball_scored
 
+var can_score = false
+
 var balls_in_rim := {}
 
 func _ready():
@@ -32,6 +34,17 @@ func _ready():
 	net_check.body_entered.connect(_on_net_check_entered)
 	rim_bounce_check.body_entered.connect(_on_rim_bounce_check_entered)
 	backboard_check.body_entered.connect(_on_backboard_check_entered)
+	can_score = false
+	await get_tree().create_timer(1.0).timeout
+	# Move any balls out of the net area
+	for body in net_check.get_overlapping_bodies():
+		if body.is_in_group("ball"):
+			var new_pos = body.global_position + Vector2(0, -128) # move up out of rim/net
+			print("Moving ball out of net on level load:", body, new_pos)
+			body.global_position = new_pos
+	can_score = true
+	print("Scoring now enabled on", self)
+
 
 func _on_rim_check_entered(body):
 	if body.is_in_group("ball") and body.linear_velocity.y > 0:
@@ -54,6 +67,9 @@ func _on_backboard_check_entered(body):
 		backboard_sfx.play()
 
 func _on_net_check_entered(body):
+	if not can_score:
+		print("Blocked score: grace period active")
+		return
 	var id = body.get_instance_id()
 	if id in balls_in_rim and body.linear_velocity.y > 0:
 		print("Ball scored: ", body)

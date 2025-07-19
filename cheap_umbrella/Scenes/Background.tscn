@@ -21,6 +21,13 @@ sources/2 = SubResource("TileSetAtlasSource_c8m3x")
 scale = Vector2(1.1, 1.1)
 script = ExtResource("1_laxsj")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -1004.0
+offset_top = -1405.0
+offset_right = 1003.0
+offset_bottom = 515.0
+color = Color(0.713726, 0.666667, 0.568627, 1)
+
 [node name="Stands" type="Node2D" parent="."]
 position = Vector2(639.455, 122.909)
 

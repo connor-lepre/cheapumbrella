@@ -91,7 +91,6 @@ func _physics_process(delta):
 	hide_show_umbrella(is_gliding)
 	handle_recording()
 	handle_retry_hold(delta)
-	handle_reload_hold(delta)
 	
 	# Walk SFX
 	if is_moving and is_on_floor():
@@ -136,6 +135,11 @@ func handle_input(delta):
 	is_gliding = Input.is_action_pressed("jump") and not is_on_floor() and velocity.y > 5
 	velocity.y += (GLIDE_GRAVITY if is_gliding else GRAVITY) * delta
 	was_on_floor = is_on_floor()
+	
+	# Menu UI Focus
+	if Input.is_action_just_pressed("menu"):
+		if root.has_method("toggle_menu_ui_focus"):
+			root.toggle_menu_ui_focus()
 
 func collision_with_RigidBody2d():
 	for i in get_slide_collision_count():
@@ -354,18 +358,6 @@ func update_copy_ui():
 		var token = hbox.get_child(i)
 		token.visible = (i < available_copies)
 		print("Token", i, "visible:", token.visible)
-
-func handle_reload_hold(delta):
-	if Input.is_action_pressed("reset_level"):
-		reload_hold_timer += delta
-		if reload_hold_timer >= RESET_HOLD_TIME:
-			print("🔁 Reload triggered")
-			reload_hold_timer = 0.0
-			available_copies = max_copies
-			update_copy_ui()
-			reload_scene()
-	else:
-		reload_hold_timer = 0.0
 
 func handle_retry_hold(delta):
 	if Input.is_action_pressed("retry"):

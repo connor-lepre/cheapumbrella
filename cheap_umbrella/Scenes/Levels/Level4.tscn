@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bujybxs2rdoyc"]
+[gd_scene load_steps=26 format=3 uid="uid://bujybxs2rdoyc"]
 
 [ext_resource type="Script" uid="uid://bvi8inx5ttd6a" path="res://Scenes/Levels/BaseLevel.gd" id="1_xp8yv"]
 [ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="2_inj8u"]
@@ -9,6 +9,59 @@
 [ext_resource type="PackedScene" uid="uid://cpaowal2l2rd1" path="res://Scenes/Platforms/1x5Platform.tscn" id="8_bfawm"]
 [ext_resource type="PackedScene" uid="uid://xgh6jhlcxufx" path="res://Scenes/Platforms/1x3Platform.tscn" id="8_xp8yv"]
 [ext_resource type="PackedScene" uid="uid://iuqy4j1tlfgs" path="res://Scenes/Platforms/1x1Platform.tscn" id="9_bfawm"]
+[ext_resource type="Texture2D" uid="uid://dj2tbwpp767ly" path="res://Assets/ui/ui_background.png" id="10_bose6"]
+[ext_resource type="FontFile" uid="uid://cgp61ynnh1ryv" path="res://Assets/fonts/Doto-Black.ttf" id="11_53tmp"]
+[ext_resource type="FontFile" uid="uid://beni43735fod8" path="res://Assets/fonts/VT323-Regular.ttf" id="12_n2eit"]
+[ext_resource type="FontFile" uid="uid://b3s0cbjdr6870" path="res://Assets/fonts/Jersey10-Regular.ttf" id="13_cbr4v"]
+[ext_resource type="Texture2D" uid="uid://ctw47ac1gvnja" path="res://Assets/ui/input_glyphs/controller/Switch_Left_Stick.png" id="14_atq0n"]
+[ext_resource type="Texture2D" uid="uid://ddsx33y0kbroj" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Down.png" id="15_wj3oa"]
+[ext_resource type="Texture2D" uid="uid://dp4ldtppsbxnx" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Left.png" id="16_xawp5"]
+[ext_resource type="Texture2D" uid="uid://d1d2fqakl731n" path="res://Assets/ui/input_glyphs/controller/SteamDeck_R2.png" id="17_3p16x"]
+[ext_resource type="Texture2D" uid="uid://chv6naaplt5py" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Right.png" id="18_vuhml"]
+[ext_resource type="Texture2D" uid="uid://cu5407sl0fcpx" path="res://Assets/ui/input_glyphs/controller/SteamDeck_Inventory.png" id="19_gje0y"]
+[ext_resource type="Texture2D" uid="uid://b6ld0cl0lftuu" path="res://Assets/sprites/props/bumbotron.png" id="20_cvir8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bose6"]
+bg_color = Color(0.125911, 0.125911, 0.125911, 0.737255)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_53tmp"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n2eit"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.316964, 0.285348, 0.219216, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cbr4v"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.420797, 0.381613, 0.299707, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_atq0n"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.340715, 0.307271, 0.237328, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 1
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_xp8yv")
@@ -57,3 +110,341 @@ position = Vector2(-787, 483)
 
 [node name="1x1" parent="." instance=ExtResource("9_bfawm")]
 position = Vector2(-16, 99)
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="TextureRect" type="TextureRect" parent="UI"]
+modulate = Color(1, 0.819608, 0.913725, 1)
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("10_bose6")
+
+[node name="Left" type="Panel" parent="UI"]
+custom_minimum_size = Vector2(368, 1080)
+offset_right = 400.0
+offset_bottom = 1080.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bose6")
+
+[node name="LeftPanel" type="MarginContainer" parent="UI/Left"]
+layout_mode = 0
+offset_right = 400.04
+offset_bottom = 941.0
+size_flags_vertical = 3
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="LeftPanel" type="VBoxContainer" parent="UI/Left/LeftPanel"]
+custom_minimum_size = Vector2(368, 0)
+layout_mode = 2
+theme_override_constants/separation = 120
+
+[node name="LevelInfo" type="VBoxContainer" parent="UI/Left/LeftPanel/LeftPanel"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/Left/LeftPanel/LeftPanel/LevelInfo"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.952941, 0.741176, 0.160784, 1)
+theme_override_fonts/font = ExtResource("11_53tmp")
+theme_override_font_sizes/font_size = 72
+text = "Level 5"
+
+[node name="Label2" type="Label" parent="UI/Left/LeftPanel/LeftPanel/LevelInfo"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_n2eit")
+theme_override_font_sizes/font_size = 32
+text = "Top Of The Rock"
+
+[node name="Controls" type="VBoxContainer" parent="UI/Left/LeftPanel/LeftPanel"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="HowToPlay" type="Label" parent="UI/Left/LeftPanel/LeftPanel/Controls"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.713726, 0.666667, 0.568627, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_cbr4v")
+theme_override_font_sizes/font_size = 32
+text = "How To Play"
+
+[node name="MoveTip" type="HBoxContainer" parent="UI/Left/LeftPanel/LeftPanel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Control" type="TextureRect" parent="UI/Left/LeftPanel/LeftPanel/Controls/MoveTip"]
+modulate = Color(0.996078, 0.854902, 0.721569, 1)
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("14_atq0n")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Instruction" type="Label" parent="UI/Left/LeftPanel/LeftPanel/Controls/MoveTip"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_cbr4v")
+theme_override_font_sizes/font_size = 24
+text = "Move"
+
+[node name="JumpTip" type="HBoxContainer" parent="UI/Left/LeftPanel/LeftPanel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Control2" type="TextureRect" parent="UI/Left/LeftPanel/LeftPanel/Controls/JumpTip"]
+modulate = Color(0.996078, 0.854902, 0.721569, 1)
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("15_wj3oa")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Instruction" type="Label" parent="UI/Left/LeftPanel/LeftPanel/Controls/JumpTip"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_cbr4v")
+theme_override_font_sizes/font_size = 24
+text = "Jump 
+(Hold to glide)"
+
+[node name="GrabTip" type="HBoxContainer" parent="UI/Left/LeftPanel/LeftPanel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Control2" type="TextureRect" parent="UI/Left/LeftPanel/LeftPanel/Controls/GrabTip"]
+modulate = Color(0.996078, 0.854902, 0.721569, 1)
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("16_xawp5")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Instruction" type="Label" parent="UI/Left/LeftPanel/LeftPanel/Controls/GrabTip"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_cbr4v")
+theme_override_font_sizes/font_size = 24
+text = "Grab the ball"
+
+[node name="ShootTip" type="HBoxContainer" parent="UI/Left/LeftPanel/LeftPanel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Control2" type="TextureRect" parent="UI/Left/LeftPanel/LeftPanel/Controls/ShootTip"]
+modulate = Color(0.996078, 0.854902, 0.721569, 1)
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("16_xawp5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Instruction" type="Label" parent="UI/Left/LeftPanel/LeftPanel/Controls/ShootTip"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_cbr4v")
+theme_override_font_sizes/font_size = 24
+text = "Shoot the ball 
+(Hold to charge)"
+
+[node name="CopyTip" type="HBoxContainer" parent="UI/Left/LeftPanel/LeftPanel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Control2" type="TextureRect" parent="UI/Left/LeftPanel/LeftPanel/Controls/CopyTip"]
+modulate = Color(0.996078, 0.854902, 0.721569, 1)
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("17_3p16x")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Instruction" type="Label" parent="UI/Left/LeftPanel/LeftPanel/Controls/CopyTip"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_cbr4v")
+theme_override_font_sizes/font_size = 24
+text = "Hooplicate
+(Hold to record)"
+
+[node name="DribbleTip" type="HBoxContainer" parent="UI/Left/LeftPanel/LeftPanel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Control2" type="TextureRect" parent="UI/Left/LeftPanel/LeftPanel/Controls/DribbleTip"]
+modulate = Color(0.996078, 0.854902, 0.721569, 1)
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("18_vuhml")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Instruction" type="Label" parent="UI/Left/LeftPanel/LeftPanel/Controls/DribbleTip"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_cbr4v")
+theme_override_font_sizes/font_size = 24
+text = "Dribble or drop the ball"
+
+[node name="RetryTip" type="HBoxContainer" parent="UI/Left/LeftPanel/LeftPanel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Control2" type="TextureRect" parent="UI/Left/LeftPanel/LeftPanel/Controls/RetryTip"]
+modulate = Color(0.996078, 0.854902, 0.721569, 1)
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture = ExtResource("19_gje0y")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Instruction" type="Label" parent="UI/Left/LeftPanel/LeftPanel/Controls/RetryTip"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_cbr4v")
+theme_override_font_sizes/font_size = 24
+text = "Retry (Hold)"
+
+[node name="Right" type="Panel" parent="UI"]
+custom_minimum_size = Vector2(0, 1080)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -400.0
+offset_bottom = 1080.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bose6")
+
+[node name="RightPanel" type="MarginContainer" parent="UI/Right"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -416.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 32
+
+[node name="RightPanel" type="VBoxContainer" parent="UI/Right/RightPanel"]
+custom_minimum_size = Vector2(368, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_constants/separation = 660
+alignment = 2
+
+[node name="Timer" type="VBoxContainer" parent="UI/Right/RightPanel/RightPanel"]
+custom_minimum_size = Vector2(368, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Shotclock" type="PanelContainer" parent="UI/Right/RightPanel/RightPanel/Timer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_53tmp")
+
+[node name="Background" type="TextureRect" parent="UI/Right/RightPanel/RightPanel/Timer/Shotclock"]
+custom_minimum_size = Vector2(320, 260)
+layout_mode = 2
+texture = ExtResource("20_cvir8")
+expand_mode = 5
+stretch_mode = 4
+
+[node name="Timer" type="Label" parent="UI/Right/RightPanel/RightPanel/Timer/Shotclock"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.438262, 0.21448, 1)
+theme_override_fonts/font = ExtResource("12_n2eit")
+theme_override_font_sizes/font_size = 160
+text = "2:00"
+horizontal_alignment = 1
+
+[node name="TimerHint" type="Label" parent="UI/Right/RightPanel/RightPanel/Timer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.935269, 0.919974, 0.888092, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_cbr4v")
+theme_override_font_sizes/font_size = 24
+text = "Finish each level before time's up!"
+horizontal_alignment = 1
+
+[node name="NavButtons" type="HBoxContainer" parent="UI/Right/RightPanel/RightPanel"]
+custom_minimum_size = Vector2(368, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ReturnToMenu" type="Button" parent="UI/Right/RightPanel/RightPanel/NavButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_hover_color = Color(0.830335, 0.830335, 0.830335, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(0.830335, 0.830335, 0.830335, 1)
+theme_override_fonts/font = ExtResource("13_cbr4v")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/focus = SubResource("StyleBoxFlat_n2eit")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_cbr4v")
+theme_override_styles/hover = SubResource("StyleBoxFlat_atq0n")
+theme_override_styles/normal = SubResource("StyleBoxFlat_cbr4v")
+text = "Return to Menu"
+
+[node name="Bottom" type="Panel" parent="UI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -560.0
+offset_top = -160.0
+offset_right = 560.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bose6")
+
+[node name="ShotPower" type="Label" parent="UI/Bottom"]
+layout_mode = 0
+offset_left = 87.0
+offset_top = 32.0
+offset_right = 185.0
+offset_bottom = 59.0
+theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_cbr4v")
+theme_override_font_sizes/font_size = 24
+text = "Shot Power"
+
+[node name="RemainingHooplicates" type="Label" parent="UI/Bottom"]
+layout_mode = 0
+offset_left = 866.0
+offset_top = 32.0
+offset_right = 1052.0
+offset_bottom = 59.0
+theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("13_cbr4v")
+theme_override_font_sizes/font_size = 24
+text = "Remaining Hooplicates"

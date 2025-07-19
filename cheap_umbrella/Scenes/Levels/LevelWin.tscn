@@ -1,32 +1,30 @@
-[gd_scene load_steps=25 format=3 uid="uid://de5vpfq5okqm1"]
+[gd_scene load_steps=23 format=3 uid="uid://r66hsunlef64"]
 
-[ext_resource type="Script" uid="uid://bvi8inx5ttd6a" path="res://Scenes/Levels/BaseLevel.gd" id="1_4rk67"]
-[ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="2_f8qf7"]
-[ext_resource type="PackedScene" uid="uid://bcjwm23ltlhqc" path="res://Scenes/Platforms/3x16Boundary.tscn" id="3_lmdar"]
-[ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="4_d1swa"]
-[ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_ipaot"]
-[ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="6_ao4h1"]
-[ext_resource type="PackedScene" uid="uid://cpaowal2l2rd1" path="res://Scenes/Platforms/1x5Platform.tscn" id="7_f8qf7"]
-[ext_resource type="PackedScene" uid="uid://iuqy4j1tlfgs" path="res://Scenes/Platforms/1x1Platform.tscn" id="8_lmdar"]
-[ext_resource type="Texture2D" uid="uid://dj2tbwpp767ly" path="res://Assets/ui/ui_background.png" id="9_ok1eh"]
-[ext_resource type="FontFile" uid="uid://cgp61ynnh1ryv" path="res://Assets/fonts/Doto-Black.ttf" id="10_rl2o4"]
-[ext_resource type="FontFile" uid="uid://beni43735fod8" path="res://Assets/fonts/VT323-Regular.ttf" id="11_rsd5h"]
-[ext_resource type="FontFile" uid="uid://b3s0cbjdr6870" path="res://Assets/fonts/Jersey10-Regular.ttf" id="12_tbesk"]
-[ext_resource type="Texture2D" uid="uid://ctw47ac1gvnja" path="res://Assets/ui/input_glyphs/controller/Switch_Left_Stick.png" id="13_gyiht"]
-[ext_resource type="Texture2D" uid="uid://ddsx33y0kbroj" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Down.png" id="14_4ljym"]
-[ext_resource type="Texture2D" uid="uid://dp4ldtppsbxnx" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Left.png" id="15_nwpaj"]
-[ext_resource type="Texture2D" uid="uid://d1d2fqakl731n" path="res://Assets/ui/input_glyphs/controller/SteamDeck_R2.png" id="16_yanqf"]
-[ext_resource type="Texture2D" uid="uid://chv6naaplt5py" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Right.png" id="17_m2631"]
-[ext_resource type="Texture2D" uid="uid://cu5407sl0fcpx" path="res://Assets/ui/input_glyphs/controller/SteamDeck_Inventory.png" id="18_uk4s3"]
-[ext_resource type="Texture2D" uid="uid://b6ld0cl0lftuu" path="res://Assets/sprites/props/bumbotron.png" id="19_ihite"]
+[ext_resource type="Script" uid="uid://bvi8inx5ttd6a" path="res://Scenes/Levels/BaseLevel.gd" id="1_x7erm"]
+[ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="2_256l5"]
+[ext_resource type="PackedScene" uid="uid://bcjwm23ltlhqc" path="res://Scenes/Platforms/3x16Boundary.tscn" id="3_u10gj"]
+[ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="4_vl576"]
+[ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_tnyay"]
+[ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="6_r40e0"]
+[ext_resource type="FontFile" uid="uid://b3s0cbjdr6870" path="res://Assets/fonts/Jersey10-Regular.ttf" id="7_xocux"]
+[ext_resource type="Texture2D" uid="uid://dj2tbwpp767ly" path="res://Assets/ui/ui_background.png" id="8_dmef5"]
+[ext_resource type="FontFile" uid="uid://cgp61ynnh1ryv" path="res://Assets/fonts/Doto-Black.ttf" id="9_yhd3c"]
+[ext_resource type="FontFile" uid="uid://beni43735fod8" path="res://Assets/fonts/VT323-Regular.ttf" id="10_4n4xo"]
+[ext_resource type="Texture2D" uid="uid://ctw47ac1gvnja" path="res://Assets/ui/input_glyphs/controller/Switch_Left_Stick.png" id="11_621u1"]
+[ext_resource type="Texture2D" uid="uid://ddsx33y0kbroj" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Down.png" id="12_ugyoe"]
+[ext_resource type="Texture2D" uid="uid://dp4ldtppsbxnx" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Left.png" id="13_kxlaq"]
+[ext_resource type="Texture2D" uid="uid://d1d2fqakl731n" path="res://Assets/ui/input_glyphs/controller/SteamDeck_R2.png" id="14_4yxe7"]
+[ext_resource type="Texture2D" uid="uid://chv6naaplt5py" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Right.png" id="15_r5fvk"]
+[ext_resource type="Texture2D" uid="uid://cu5407sl0fcpx" path="res://Assets/ui/input_glyphs/controller/SteamDeck_Inventory.png" id="16_q84ui"]
+[ext_resource type="Texture2D" uid="uid://b6ld0cl0lftuu" path="res://Assets/sprites/props/bumbotron.png" id="17_55471"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ok1eh"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1m5lu"]
 bg_color = Color(0.125911, 0.125911, 0.125911, 0.737255)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rl2o4"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1epq1"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rsd5h"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iwbqa"]
 content_margin_left = 16.0
 content_margin_top = 16.0
 content_margin_right = 16.0
@@ -38,7 +36,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbesk"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xmwpk"]
 content_margin_left = 16.0
 content_margin_top = 16.0
 content_margin_right = 16.0
@@ -50,7 +48,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gyiht"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s6c86"]
 content_margin_left = 16.0
 content_margin_top = 16.0
 content_margin_right = 16.0
@@ -63,64 +61,123 @@ corner_radius_bottom_left = 8
 corner_detail = 1
 
 [node name="Level" type="Node2D"]
-script = ExtResource("1_4rk67")
+script = ExtResource("1_x7erm")
+enable_timer = false
 
-[node name="Background" parent="." instance=ExtResource("2_f8qf7")]
+[node name="Background" parent="." instance=ExtResource("2_256l5")]
 position = Vector2(0, 256)
 
 [node name="Plaforms" type="Node2D" parent="."]
 position = Vector2(0, -440)
 
-[node name="3x16" parent="Plaforms" instance=ExtResource("3_lmdar")]
+[node name="3x16" parent="Plaforms" instance=ExtResource("3_u10gj")]
 position = Vector2(0, 1260)
 
-[node name="3x17" parent="Plaforms" instance=ExtResource("3_lmdar")]
+[node name="3x17" parent="Plaforms" instance=ExtResource("3_u10gj")]
 position = Vector2(0, -651)
 
-[node name="3x18" parent="Plaforms" instance=ExtResource("3_lmdar")]
+[node name="3x18" parent="Plaforms" instance=ExtResource("3_u10gj")]
 position = Vector2(-1116, 465)
 rotation = 1.5708
 
-[node name="3x19" parent="Plaforms" instance=ExtResource("3_lmdar")]
+[node name="3x19" parent="Plaforms" instance=ExtResource("3_u10gj")]
 position = Vector2(1116, 465)
 rotation = 1.5708
 
 [node name="Copies" type="Node2D" parent="."]
 position = Vector2(0, -440)
 
-[node name="Basket" parent="." groups=["goal"] instance=ExtResource("4_d1swa")]
-position = Vector2(853, -117)
+[node name="Basket" parent="." groups=["goal"] instance=ExtResource("4_vl576")]
+position = Vector2(965, 416)
 
-[node name="Ball" parent="." instance=ExtResource("5_ipaot")]
-position = Vector2(-705, 758)
+[node name="Ball" parent="." instance=ExtResource("5_tnyay")]
+position = Vector2(0, 368)
 
-[node name="SpawnPoint" parent="." instance=ExtResource("6_ao4h1")]
-position = Vector2(-529, 767)
+[node name="SpawnPoint" parent="." instance=ExtResource("6_r40e0")]
+position = Vector2(-760, 512)
 
 [node name="Camera" type="Camera2D" parent="."]
 offset = Vector2(0, 25)
 zoom = Vector2(0.5, 0.5)
 
-[node name="1x6" parent="." instance=ExtResource("7_f8qf7")]
-position = Vector2(-318, 370)
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -193.0
+offset_top = 62.0
+offset_right = 193.0
+offset_bottom = 106.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("7_xocux")
+theme_override_font_sizes/font_size = 40
+text = "You're a Hooplicate Prodigy"
 
-[node name="1x1" parent="." instance=ExtResource("8_lmdar")]
-position = Vector2(-1036, 497)
+[node name="Label2" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 672.0
+offset_top = 311.0
+offset_right = 942.0
+offset_bottom = 402.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 10
+theme_override_fonts/font = ExtResource("7_xocux")
+theme_override_font_sizes/font_size = 40
+text = "Drain one last hoop
+to quit the game"
+horizontal_alignment = 2
+
+[node name="Text" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -131.0
+offset_top = -39.0
+offset_right = 131.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 16
+theme_override_fonts/font = ExtResource("7_xocux")
+theme_override_font_sizes/font_size = 120
+text = "Nice Work!"
 
 [node name="UI" type="CanvasLayer" parent="."]
 layer = -1
 
 [node name="TextureRect" type="TextureRect" parent="UI"]
-modulate = Color(1, 0.819608, 0.913725, 1)
 offset_right = 1920.0
 offset_bottom = 1080.0
-texture = ExtResource("9_ok1eh")
+texture = ExtResource("8_dmef5")
 
 [node name="Left" type="Panel" parent="UI"]
 custom_minimum_size = Vector2(368, 1080)
 offset_right = 400.0
 offset_bottom = 1080.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_ok1eh")
+theme_override_styles/panel = SubResource("StyleBoxFlat_1m5lu")
 
 [node name="LeftPanel" type="MarginContainer" parent="UI/Left"]
 layout_mode = 0
@@ -143,15 +200,15 @@ layout_mode = 2
 [node name="Label" type="Label" parent="UI/Left/LeftPanel/LeftPanel/LevelInfo"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.952941, 0.741176, 0.160784, 1)
-theme_override_fonts/font = ExtResource("10_rl2o4")
+theme_override_fonts/font = ExtResource("9_yhd3c")
 theme_override_font_sizes/font_size = 72
-text = "Level 3"
+text = "You won!"
 
 [node name="Label2" type="Label" parent="UI/Left/LeftPanel/LeftPanel/LevelInfo"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("11_rsd5h")
+theme_override_fonts/font = ExtResource("10_4n4xo")
 theme_override_font_sizes/font_size = 32
-text = "Hooping On Up"
+text = "Thanks for playing :-)"
 
 [node name="Controls" type="VBoxContainer" parent="UI/Left/LeftPanel/LeftPanel"]
 layout_mode = 2
@@ -162,7 +219,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.713726, 0.666667, 0.568627, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("12_tbesk")
+theme_override_fonts/font = ExtResource("7_xocux")
 theme_override_font_sizes/font_size = 32
 text = "How To Play"
 
@@ -174,7 +231,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("13_gyiht")
+texture = ExtResource("11_621u1")
 expand_mode = 1
 stretch_mode = 4
 
@@ -183,7 +240,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("12_tbesk")
+theme_override_fonts/font = ExtResource("7_xocux")
 theme_override_font_sizes/font_size = 24
 text = "Move"
 
@@ -195,7 +252,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("14_4ljym")
+texture = ExtResource("12_ugyoe")
 expand_mode = 1
 stretch_mode = 5
 
@@ -204,7 +261,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("12_tbesk")
+theme_override_fonts/font = ExtResource("7_xocux")
 theme_override_font_sizes/font_size = 24
 text = "Jump 
 (Hold to glide)"
@@ -217,7 +274,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("15_nwpaj")
+texture = ExtResource("13_kxlaq")
 expand_mode = 1
 stretch_mode = 4
 
@@ -226,7 +283,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("12_tbesk")
+theme_override_fonts/font = ExtResource("7_xocux")
 theme_override_font_sizes/font_size = 24
 text = "Grab the ball"
 
@@ -238,7 +295,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("15_nwpaj")
+texture = ExtResource("13_kxlaq")
 expand_mode = 1
 stretch_mode = 5
 
@@ -247,7 +304,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("12_tbesk")
+theme_override_fonts/font = ExtResource("7_xocux")
 theme_override_font_sizes/font_size = 24
 text = "Shoot the ball 
 (Hold to charge)"
@@ -260,7 +317,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("16_yanqf")
+texture = ExtResource("14_4yxe7")
 expand_mode = 1
 stretch_mode = 5
 
@@ -269,7 +326,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("12_tbesk")
+theme_override_fonts/font = ExtResource("7_xocux")
 theme_override_font_sizes/font_size = 24
 text = "Hooplicate
 (Hold to record)"
@@ -282,7 +339,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("17_m2631")
+texture = ExtResource("15_r5fvk")
 expand_mode = 1
 stretch_mode = 4
 
@@ -291,7 +348,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("12_tbesk")
+theme_override_fonts/font = ExtResource("7_xocux")
 theme_override_font_sizes/font_size = 24
 text = "Dribble or drop the ball"
 
@@ -303,7 +360,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("18_uk4s3")
+texture = ExtResource("16_q84ui")
 expand_mode = 1
 stretch_mode = 4
 
@@ -312,7 +369,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("12_tbesk")
+theme_override_fonts/font = ExtResource("7_xocux")
 theme_override_font_sizes/font_size = 24
 text = "Retry (Hold)"
 
@@ -324,7 +381,7 @@ anchor_right = 1.0
 offset_left = -400.0
 offset_bottom = 1080.0
 grow_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_ok1eh")
+theme_override_styles/panel = SubResource("StyleBoxFlat_1m5lu")
 
 [node name="RightPanel" type="MarginContainer" parent="UI/Right"]
 layout_mode = 1
@@ -332,37 +389,34 @@ anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -416.0
+offset_left = -400.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 16
+theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
 [node name="RightPanel" type="VBoxContainer" parent="UI/Right/RightPanel"]
 custom_minimum_size = Vector2(368, 0)
 layout_mode = 2
-size_flags_horizontal = 8
 size_flags_vertical = 8
-theme_override_constants/separation = 660
+theme_override_constants/separation = 120
 alignment = 2
 
 [node name="Timer" type="VBoxContainer" parent="UI/Right/RightPanel/RightPanel"]
-custom_minimum_size = Vector2(368, 0)
 layout_mode = 2
-size_flags_horizontal = 8
 
 [node name="Shotclock" type="PanelContainer" parent="UI/Right/RightPanel/RightPanel/Timer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_rl2o4")
+theme_override_styles/panel = SubResource("StyleBoxFlat_1epq1")
 
 [node name="Background" type="TextureRect" parent="UI/Right/RightPanel/RightPanel/Timer/Shotclock"]
 custom_minimum_size = Vector2(320, 260)
 layout_mode = 2
-texture = ExtResource("19_ihite")
+texture = ExtResource("17_55471")
 expand_mode = 5
 stretch_mode = 4
 
@@ -370,7 +424,7 @@ stretch_mode = 4
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(1, 0.438262, 0.21448, 1)
-theme_override_fonts/font = ExtResource("11_rsd5h")
+theme_override_fonts/font = ExtResource("10_4n4xo")
 theme_override_font_sizes/font_size = 160
 text = "2:00"
 horizontal_alignment = 1
@@ -380,15 +434,13 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.935269, 0.919974, 0.888092, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("12_tbesk")
+theme_override_fonts/font = ExtResource("7_xocux")
 theme_override_font_sizes/font_size = 24
 text = "Finish each level before time's up!"
 horizontal_alignment = 1
 
 [node name="NavButtons" type="HBoxContainer" parent="UI/Right/RightPanel/RightPanel"]
-custom_minimum_size = Vector2(368, 0)
 layout_mode = 2
-size_flags_horizontal = 8
 theme_override_constants/separation = 16
 alignment = 1
 
@@ -398,12 +450,12 @@ size_flags_horizontal = 3
 theme_override_colors/font_hover_color = Color(0.830335, 0.830335, 0.830335, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.830335, 0.830335, 0.830335, 1)
-theme_override_fonts/font = ExtResource("12_tbesk")
+theme_override_fonts/font = ExtResource("7_xocux")
 theme_override_font_sizes/font_size = 24
-theme_override_styles/focus = SubResource("StyleBoxFlat_rsd5h")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_tbesk")
-theme_override_styles/hover = SubResource("StyleBoxFlat_gyiht")
-theme_override_styles/normal = SubResource("StyleBoxFlat_tbesk")
+theme_override_styles/focus = SubResource("StyleBoxFlat_iwbqa")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_xmwpk")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s6c86")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xmwpk")
 text = "Return to Menu"
 
 [node name="Bottom" type="Panel" parent="UI"]
@@ -417,30 +469,30 @@ offset_top = -160.0
 offset_right = 560.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_ok1eh")
+theme_override_styles/panel = SubResource("StyleBoxFlat_1m5lu")
 
 [node name="ShotPower" type="Label" parent="UI/Bottom"]
 layout_mode = 0
-offset_left = 87.0
-offset_top = 32.0
-offset_right = 185.0
-offset_bottom = 59.0
+offset_left = 110.0
+offset_top = 27.0
+offset_right = 208.0
+offset_bottom = 54.0
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("12_tbesk")
+theme_override_fonts/font = ExtResource("7_xocux")
 theme_override_font_sizes/font_size = 24
 text = "Shot Power"
 
 [node name="RemainingHooplicates" type="Label" parent="UI/Bottom"]
 layout_mode = 0
-offset_left = 866.0
-offset_top = 32.0
-offset_right = 1052.0
-offset_bottom = 59.0
+offset_left = 893.0
+offset_top = 27.0
+offset_right = 1079.0
+offset_bottom = 54.0
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("12_tbesk")
+theme_override_fonts/font = ExtResource("7_xocux")
 theme_override_font_sizes/font_size = 24
 text = "Remaining Hooplicates"

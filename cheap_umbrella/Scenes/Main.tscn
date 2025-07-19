@@ -1,11 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dpo0fej7ym0w5"]
+[gd_scene load_steps=6 format=3 uid="uid://dpo0fej7ym0w5"]
 
 [ext_resource type="Script" uid="uid://ceinp6bs2u8vy" path="res://scripts/Main.gd" id="1_rgh2o"]
 [ext_resource type="Script" uid="uid://bmjogpmdbv7yk" path="res://Scenes/Levels/LevelManager.gd" id="1_v1gob"]
 [ext_resource type="Script" uid="uid://b5gdwyxys20c1" path="res://scripts/Transition.gd" id="3_kln2b"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_idj7w"]
-bg_color = Color(0.982343, 0.982342, 0.982342, 1)
+[ext_resource type="AudioStream" uid="uid://bq0aqyv5go4i3" path="res://Assets/sound/fx/nice_work.wav" id="4_pbw6q"]
+[ext_resource type="AudioStream" uid="uid://dhhw3ugvuj3ae" path="res://Assets/sound/fx/time_up.wav" id="5_v1gob"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_rgh2o")
@@ -30,33 +29,14 @@ grow_vertical = 2
 color = Color(0.713726, 0.666667, 0.568627, 1)
 script = ExtResource("3_kln2b")
 
-[node name="UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="GlobalAudio" type="Node2D" parent="."]
 
-[node name="LeftBar" type="PanelContainer" parent="UI"]
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-grow_vertical = 2
+[node name="SFX" type="Node2D" parent="GlobalAudio"]
 
-[node name="Panel" type="Panel" parent="UI/LeftBar"]
-custom_minimum_size = Vector2(320, 0)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_idj7w")
+[node name="Win" type="AudioStreamPlayer2D" parent="GlobalAudio/SFX"]
+stream = ExtResource("4_pbw6q")
 
-[node name="RightBar" type="PanelContainer" parent="UI"]
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 2
+[node name="Lose" type="AudioStreamPlayer2D" parent="GlobalAudio/SFX"]
+stream = ExtResource("5_v1gob")
 
-[node name="Panel" type="Panel" parent="UI/RightBar"]
-layout_mode = 2
+[node name="Music" type="AudioStreamPlayer2D" parent="GlobalAudio"]
