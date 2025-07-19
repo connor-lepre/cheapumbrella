@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://b54hqgfcruw87"]
+
+[ext_resource type="Script" uid="uid://bvi8inx5ttd6a" path="res://Scenes/base_scene.gd" id="1_s275v"]
+[ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="2_pml6m"]
+[ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="3_vltsr"]
+[ext_resource type="PackedScene" uid="uid://dqoxrvbfqwaf4" path="res://Scenes/Platforms/3x16Boundary.tscn" id="4_rp5ft"]
+[ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_qeqk5"]
+[ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="6_1soli"]
+[ext_resource type="PackedScene" uid="uid://chmisb7852ntv" path="res://Scenes/UI/PlayerHUD.tscn" id="7_4pbjs"]
+
+[node name="TutorialTwo" type="Node2D"]
+script = ExtResource("1_s275v")
+
+[node name="SpawnPoint" parent="." instance=ExtResource("2_pml6m")]
+position = Vector2(478, 1146)
+
+[node name="Background" parent="." instance=ExtResource("3_vltsr")]
+
+[node name="Plaforms" type="Node2D" parent="."]
+position = Vector2(1122, 1688)
+
+[node name="3x16" parent="Plaforms" instance=ExtResource("4_rp5ft")]
+position = Vector2(-179, -202)
+
+[node name="3x17" parent="Plaforms" instance=ExtResource("4_rp5ft")]
+position = Vector2(-1008, -1031)
+rotation = 1.5708
+
+[node name="3x18" parent="Plaforms" instance=ExtResource("4_rp5ft")]
+position = Vector2(-179, -1866)
+
+[node name="3x19" parent="Plaforms" instance=ExtResource("4_rp5ft")]
+position = Vector2(657, -1035)
+rotation = 1.5708
+
+[node name="Ball" parent="Plaforms" instance=ExtResource("5_qeqk5")]
+position = Vector2(-157, -436)
+
+[node name="Basket" parent="Plaforms" instance=ExtResource("6_1soli")]
+position = Vector2(359, -1077)
+
+[node name="Copies" type="Node2D" parent="."]
+
+[node name="PlayerHud" parent="." instance=ExtResource("7_4pbjs")]

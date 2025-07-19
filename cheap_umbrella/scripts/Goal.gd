@@ -26,6 +26,7 @@ signal ball_scored
 var balls_in_rim := {}
 
 func _ready():
+	add_to_group("goals")  # for level manager
 	rim_check.body_entered.connect(_on_rim_check_entered)
 	rim_check.body_exited.connect(_on_rim_check_exited)
 	net_check.body_entered.connect(_on_net_check_entered)

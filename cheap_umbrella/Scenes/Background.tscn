@@ -17,6 +17,7 @@ texture_region_size = Vector2i(733, 733)
 [sub_resource type="TileSet" id="TileSet_kc7sw"]
 sources/2 = SubResource("TileSetAtlasSource_c8m3x")
 
+
 [node name="Background" type="Node2D"]
 script = ExtResource("1_laxsj")
 
@@ -35,6 +36,7 @@ offset_right = 505.0
 offset_bottom = 39.0
 grow_horizontal = 2
 grow_vertical = 2
+
 color = Color(0.484492, 0.410279, 0.418229, 1)
 metadata/_edit_use_anchors_ = true
 
@@ -69,6 +71,7 @@ use_parent_material = true
 position = Vector2(2875, 0)
 tile_map_data = PackedByteArray(0, 0, 2, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 47, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 92, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0, 136, 0, 233, 255, 2, 0, 0, 0, 0, 0, 0, 0)
 tile_set = SubResource("TileSet_kc7sw")
+
 
 [node name="CrowdBottom" type="Node2D" parent="."]
 position = Vector2(-1042, -7.99997)
