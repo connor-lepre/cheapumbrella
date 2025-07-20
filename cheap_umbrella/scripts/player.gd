@@ -318,7 +318,7 @@ func hide_show_umbrella(is_gliding):
 	if umbrella:
 		umbrella.visible = is_gliding
 		
-func update_copy_hint(delta):
+func update_copy_hint(_delta):
 	# Maintain a buffer of positions for lag
 	copy_hint_pos_buffer.append(global_position)
 	

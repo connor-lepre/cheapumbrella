@@ -20,23 +20,6 @@ func _on_lose_triggered():
 	lose_sfx.play()
 	print("LOSE SFX PLAYED")
 
-func _input(event):
-	if event.is_action_pressed("debug_next_level"):
-		debug_level_index += 1
-		if debug_level_index >= level_manager.level_scenes.size():
-			debug_level_index = 0
-		print("Debug: Jumping to level", debug_level_index)
-		level_manager.goto_level(debug_level_index)
-	elif event.is_action_pressed("debug_prev_level"):
-		debug_level_index -= 1
-		if debug_level_index < 0:
-			debug_level_index = level_manager.level_scenes.size() - 1
-		print("Debug: Jumping to level", debug_level_index)
-		level_manager.goto_level(debug_level_index)
-	if event.is_action_pressed("debug_pause_timer"):
-		GlobalTimer.paused = !GlobalTimer.paused
-		print("DEBUG: Timer pause toggled. Now paused =", GlobalTimer.paused)
-
 func _on_level_completed(_level_index):
 	await transition.fade_in(1.2)
 	print("Transitioning to next level...")
