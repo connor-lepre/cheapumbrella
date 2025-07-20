@@ -20,7 +20,7 @@ func set_path(p: Array):
 func _physics_process(delta):
 	_update_from_path(delta)
 	
-func _update_from_path(delta):
+func _update_from_path(_delta):
 	if path.size() < 2:
 		return
 	tick += 1

@@ -9,6 +9,7 @@ var menu_focus_set := false
 @onready var bottom_sprite = $MenuLayer/VBoxContainer/VBoxContainer/Logo/SpriteBottom
 
 @onready var hooplicate_sfx = $Hooplicate
+@onready var sting_sfx = $Music
 
 @onready var screen_width = get_viewport_rect().size.x
 
@@ -46,6 +47,7 @@ func _ready():
 	tween.chain().tween_property(top_sprite, "position:x", 900, 0.4).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween.chain().tween_property(bottom_sprite, "position:x", 980, 0.4).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	hooplicate_sfx.play()
+	sting_sfx.play()
 
 func _on_start_pressed():
 	get_tree().change_scene_to_file("res://Scenes/Main.tscn")

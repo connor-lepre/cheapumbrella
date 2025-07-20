@@ -6,22 +6,15 @@
 [ext_resource type="AudioStream" uid="uid://djwxolhlob3m2" path="res://Assets/sound/fx/backboard_hit.wav" id="3_s5qqq"]
 [ext_resource type="AudioStream" uid="uid://b2kc6oa51kchg" path="res://Assets/sound/fx/rim_hit.wav" id="4_l2h7g"]
 [ext_resource type="Texture2D" uid="uid://cmkfirert5ku1" path="res://Assets/sprites/props/net.png" id="4_s5qqq"]
+[ext_resource type="AudioStream" uid="uid://17ya0trhqrvt" path="res://Assets/sound/fx/score_sfx.wav" id="5_1vpyn"]
 [ext_resource type="AudioStream" uid="uid://cxjk37deplts7" path="res://Assets/sound/fx/net_swish.wav" id="5_fn8i1"]
+[ext_resource type="Texture2D" uid="uid://dny25pc1pq8lc" path="res://Assets/sprites/props/ball.png" id="6_l2h7g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l2h7g"]
 size = Vector2(178, 420)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fn8i1"]
 size = Vector2(178, 422)
-
-[sub_resource type="Gradient" id="Gradient_hlgd5"]
-colors = PackedColorArray(0.965802, 0.600765, 7.70092e-07, 1, 0.862745, 0.823529, 0.164706, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_fn8i1"]
-gradient = SubResource("Gradient_hlgd5")
-width = 12
-height = 24
-fill_to = Vector2(1, 1)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hlgd5"]
 particle_flag_disable_z = true
@@ -34,11 +27,11 @@ angular_velocity_min = 16.55
 angular_velocity_max = 720.0
 radial_velocity_min = 632.18
 radial_velocity_max = 1000.0
-gravity = Vector3(0, 320, 0)
+gravity = Vector3(0, 420, 0)
+scale_min = 1.5
 scale_max = 2.0
-scale_over_velocity_max = 1000.0
-hue_variation_min = -0.01
-hue_variation_max = 0.53
+hue_variation_min = 0.05
+hue_variation_max = 0.05
 
 [sub_resource type="Gradient" id="Gradient_fn8i1"]
 interpolation_mode = 1
@@ -108,6 +101,9 @@ stream = ExtResource("4_l2h7g")
 
 [node name="ScoreSFX" type="AudioStreamPlayer2D" parent="SFX"]
 position = Vector2(-112, 145)
+stream = ExtResource("5_1vpyn")
+volume_db = -16.0
+pitch_scale = 1.3
 
 [node name="ScorePartSFX" type="AudioStreamPlayer2D" parent="SFX"]
 position = Vector2(-112, 145)
@@ -135,13 +131,14 @@ shape = SubResource("RectangleShape2D_fn8i1")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="ScoreFX" type="GPUParticles2D" parent="."]
+z_index = 99
 position = Vector2(-112, 136)
 emitting = false
-amount = 64
-texture = SubResource("GradientTexture2D_fn8i1")
-lifetime = 3.04
+amount = 48
+texture = ExtResource("6_l2h7g")
+lifetime = 4.0
 one_shot = true
-speed_scale = 2.0
+speed_scale = 6.0
 explosiveness = 1.0
 randomness = 1.0
 fixed_fps = 60

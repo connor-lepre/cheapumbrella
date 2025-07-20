@@ -1,31 +1,32 @@
-[gd_scene load_steps=24 format=3 uid="uid://bhds6e7q71utc"]
+[gd_scene load_steps=25 format=3 uid="uid://c7ls1frd1uvij"]
 
-[ext_resource type="Script" uid="uid://bvi8inx5ttd6a" path="res://Scenes/Levels/BaseLevel.gd" id="1_4d3fe"]
-[ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="2_3ipdw"]
-[ext_resource type="PackedScene" uid="uid://bcjwm23ltlhqc" path="res://Scenes/Platforms/3x16Boundary.tscn" id="3_8h4de"]
-[ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="4_jcebb"]
-[ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_f3nwb"]
-[ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="6_57lp3"]
-[ext_resource type="PackedScene" uid="uid://iuqy4j1tlfgs" path="res://Scenes/Platforms/1x1Platform.tscn" id="7_3ipdw"]
-[ext_resource type="Texture2D" uid="uid://dj2tbwpp767ly" path="res://Assets/ui/ui_background.png" id="8_spq4p"]
-[ext_resource type="FontFile" uid="uid://cgp61ynnh1ryv" path="res://Assets/fonts/Doto-Black.ttf" id="9_8fhce"]
-[ext_resource type="FontFile" uid="uid://beni43735fod8" path="res://Assets/fonts/VT323-Regular.ttf" id="10_uqlrs"]
-[ext_resource type="FontFile" uid="uid://b3s0cbjdr6870" path="res://Assets/fonts/Jersey10-Regular.ttf" id="11_htexa"]
-[ext_resource type="Texture2D" uid="uid://ctw47ac1gvnja" path="res://Assets/ui/input_glyphs/controller/Switch_Left_Stick.png" id="12_2oprd"]
-[ext_resource type="Texture2D" uid="uid://ddsx33y0kbroj" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Down.png" id="13_p6c81"]
-[ext_resource type="Texture2D" uid="uid://dp4ldtppsbxnx" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Left.png" id="14_xawdx"]
-[ext_resource type="Texture2D" uid="uid://d1d2fqakl731n" path="res://Assets/ui/input_glyphs/controller/SteamDeck_R2.png" id="15_lty4u"]
-[ext_resource type="Texture2D" uid="uid://chv6naaplt5py" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Right.png" id="16_efsfe"]
-[ext_resource type="Texture2D" uid="uid://cu5407sl0fcpx" path="res://Assets/ui/input_glyphs/controller/SteamDeck_Inventory.png" id="17_et44u"]
-[ext_resource type="Texture2D" uid="uid://b6ld0cl0lftuu" path="res://Assets/sprites/props/bumbotron.png" id="18_rd2vd"]
+[ext_resource type="Script" uid="uid://bvi8inx5ttd6a" path="res://Scenes/Levels/BaseLevel.gd" id="1_bbmlk"]
+[ext_resource type="PackedScene" uid="uid://fiue5usek1vc" path="res://Scenes/Background.tscn" id="2_w0lfm"]
+[ext_resource type="PackedScene" uid="uid://bcjwm23ltlhqc" path="res://Scenes/Platforms/3x16Boundary.tscn" id="3_d1q07"]
+[ext_resource type="PackedScene" uid="uid://cuuam67r4dpao" path="res://Scenes/Goal.tscn" id="4_fy655"]
+[ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="5_jbovo"]
+[ext_resource type="PackedScene" uid="uid://c5ax6r60sd4lu" path="res://Scenes/SpawnPoint.tscn" id="6_3loxm"]
+[ext_resource type="Texture2D" uid="uid://dj2tbwpp767ly" path="res://Assets/ui/ui_background.png" id="7_mct74"]
+[ext_resource type="FontFile" uid="uid://cgp61ynnh1ryv" path="res://Assets/fonts/Doto-Black.ttf" id="8_b4dqa"]
+[ext_resource type="FontFile" uid="uid://beni43735fod8" path="res://Assets/fonts/VT323-Regular.ttf" id="9_xrlot"]
+[ext_resource type="FontFile" uid="uid://b3s0cbjdr6870" path="res://Assets/fonts/Jersey10-Regular.ttf" id="10_t5nnh"]
+[ext_resource type="Texture2D" uid="uid://ctw47ac1gvnja" path="res://Assets/ui/input_glyphs/controller/Switch_Left_Stick.png" id="11_itilm"]
+[ext_resource type="Texture2D" uid="uid://ddsx33y0kbroj" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Down.png" id="12_6fd3b"]
+[ext_resource type="Texture2D" uid="uid://dp4ldtppsbxnx" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Left.png" id="13_vrva5"]
+[ext_resource type="Texture2D" uid="uid://d1d2fqakl731n" path="res://Assets/ui/input_glyphs/controller/SteamDeck_R2.png" id="14_qnd6c"]
+[ext_resource type="Texture2D" uid="uid://chv6naaplt5py" path="res://Assets/ui/input_glyphs/controller/Positional_Prompts_Right.png" id="15_y6il8"]
+[ext_resource type="Texture2D" uid="uid://cu5407sl0fcpx" path="res://Assets/ui/input_glyphs/controller/SteamDeck_Inventory.png" id="16_bf76l"]
+[ext_resource type="Texture2D" uid="uid://b6ld0cl0lftuu" path="res://Assets/sprites/props/bumbotron.png" id="17_gd541"]
+[ext_resource type="PackedScene" uid="uid://10vjwhrwfy1q" path="res://Scenes/Platforms/1x10Platform.tscn" id="18_d1q07"]
+[ext_resource type="PackedScene" uid="uid://iuqy4j1tlfgs" path="res://Scenes/Platforms/1x1Platform.tscn" id="19_fy655"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spq4p"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_majtp"]
 bg_color = Color(0.125911, 0.125911, 0.125911, 0.737255)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8fhce"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_peoxj"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqlrs"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pg1qu"]
 content_margin_left = 16.0
 content_margin_top = 16.0
 content_margin_right = 16.0
@@ -37,7 +38,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_htexa"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e376l"]
 content_margin_left = 16.0
 content_margin_top = 16.0
 content_margin_right = 16.0
@@ -49,7 +50,7 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 corner_detail = 1
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2oprd"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qjl7l"]
 content_margin_left = 16.0
 content_margin_top = 16.0
 content_margin_right = 16.0
@@ -62,46 +63,43 @@ corner_radius_bottom_left = 8
 corner_detail = 1
 
 [node name="Level" type="Node2D"]
-script = ExtResource("1_4d3fe")
+script = ExtResource("1_bbmlk")
 
-[node name="Background" parent="." instance=ExtResource("2_3ipdw")]
+[node name="Background" parent="." instance=ExtResource("2_w0lfm")]
 position = Vector2(0, 256)
 
 [node name="Plaforms" type="Node2D" parent="."]
 position = Vector2(0, -440)
 
-[node name="3x16" parent="Plaforms" instance=ExtResource("3_8h4de")]
+[node name="3x16" parent="Plaforms" instance=ExtResource("3_d1q07")]
 position = Vector2(0, 1260)
 
-[node name="3x17" parent="Plaforms" instance=ExtResource("3_8h4de")]
+[node name="3x17" parent="Plaforms" instance=ExtResource("3_d1q07")]
 position = Vector2(0, -651)
 
-[node name="3x18" parent="Plaforms" instance=ExtResource("3_8h4de")]
+[node name="3x18" parent="Plaforms" instance=ExtResource("3_d1q07")]
 position = Vector2(-1116, 465)
 rotation = 1.5708
 
-[node name="3x19" parent="Plaforms" instance=ExtResource("3_8h4de")]
+[node name="3x19" parent="Plaforms" instance=ExtResource("3_d1q07")]
 position = Vector2(1116, 465)
 rotation = 1.5708
 
 [node name="Copies" type="Node2D" parent="."]
 position = Vector2(0, -440)
 
-[node name="Basket" parent="." groups=["goal"] instance=ExtResource("4_jcebb")]
-position = Vector2(845, 242)
+[node name="Basket" parent="." groups=["goal"] instance=ExtResource("4_fy655")]
+position = Vector2(54, 626)
 
-[node name="Ball" parent="." instance=ExtResource("5_f3nwb")]
-position = Vector2(0, 120)
+[node name="Ball" parent="." instance=ExtResource("5_jbovo")]
+position = Vector2(-810, 729)
 
-[node name="SpawnPoint" parent="." instance=ExtResource("6_57lp3")]
-position = Vector2(-760, 512)
+[node name="SpawnPoint" parent="." instance=ExtResource("6_3loxm")]
+position = Vector2(-1031, 715)
 
 [node name="Camera" type="Camera2D" parent="."]
 offset = Vector2(0, 25)
 zoom = Vector2(0.5, 0.5)
-
-[node name="1x1" parent="." instance=ExtResource("7_3ipdw")]
-position = Vector2(-172, 740)
 
 [node name="UI" type="CanvasLayer" parent="."]
 layer = -1
@@ -110,13 +108,13 @@ layer = -1
 modulate = Color(1, 0.819608, 0.913725, 1)
 offset_right = 1920.0
 offset_bottom = 1080.0
-texture = ExtResource("8_spq4p")
+texture = ExtResource("7_mct74")
 
 [node name="Left" type="Panel" parent="UI"]
 custom_minimum_size = Vector2(368, 1080)
 offset_right = 400.0
 offset_bottom = 1080.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_spq4p")
+theme_override_styles/panel = SubResource("StyleBoxFlat_majtp")
 
 [node name="LeftPanel" type="MarginContainer" parent="UI/Left"]
 layout_mode = 0
@@ -139,15 +137,15 @@ layout_mode = 2
 [node name="Label" type="Label" parent="UI/Left/LeftPanel/LeftPanel/LevelInfo"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.952941, 0.741176, 0.160784, 1)
-theme_override_fonts/font = ExtResource("9_8fhce")
+theme_override_fonts/font = ExtResource("8_b4dqa")
 theme_override_font_sizes/font_size = 72
-text = "Level 2"
+text = "Level 8"
 
 [node name="Label2" type="Label" parent="UI/Left/LeftPanel/LeftPanel/LevelInfo"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("10_uqlrs")
+theme_override_fonts/font = ExtResource("9_xrlot")
 theme_override_font_sizes/font_size = 32
-text = "One Hooplicate, One Dream"
+text = "Hole in One"
 
 [node name="Controls" type="VBoxContainer" parent="UI/Left/LeftPanel/LeftPanel"]
 layout_mode = 2
@@ -158,7 +156,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.713726, 0.666667, 0.568627, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("11_htexa")
+theme_override_fonts/font = ExtResource("10_t5nnh")
 theme_override_font_sizes/font_size = 32
 text = "How To Play"
 
@@ -170,7 +168,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("12_2oprd")
+texture = ExtResource("11_itilm")
 expand_mode = 1
 stretch_mode = 4
 
@@ -179,7 +177,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("11_htexa")
+theme_override_fonts/font = ExtResource("10_t5nnh")
 theme_override_font_sizes/font_size = 24
 text = "Move"
 
@@ -191,7 +189,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("13_p6c81")
+texture = ExtResource("12_6fd3b")
 expand_mode = 1
 stretch_mode = 5
 
@@ -200,7 +198,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("11_htexa")
+theme_override_fonts/font = ExtResource("10_t5nnh")
 theme_override_font_sizes/font_size = 24
 text = "Jump 
 (Hold to glide)"
@@ -213,7 +211,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("14_xawdx")
+texture = ExtResource("13_vrva5")
 expand_mode = 1
 stretch_mode = 4
 
@@ -222,7 +220,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("11_htexa")
+theme_override_fonts/font = ExtResource("10_t5nnh")
 theme_override_font_sizes/font_size = 24
 text = "Grab the ball"
 
@@ -234,7 +232,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("14_xawdx")
+texture = ExtResource("13_vrva5")
 expand_mode = 1
 stretch_mode = 5
 
@@ -243,7 +241,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("11_htexa")
+theme_override_fonts/font = ExtResource("10_t5nnh")
 theme_override_font_sizes/font_size = 24
 text = "Shoot the ball 
 (Hold to charge)"
@@ -256,7 +254,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("15_lty4u")
+texture = ExtResource("14_qnd6c")
 expand_mode = 1
 stretch_mode = 5
 
@@ -265,7 +263,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("11_htexa")
+theme_override_fonts/font = ExtResource("10_t5nnh")
 theme_override_font_sizes/font_size = 24
 text = "Hooplicate
 (Hold to record)"
@@ -278,7 +276,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("16_efsfe")
+texture = ExtResource("15_y6il8")
 expand_mode = 1
 stretch_mode = 4
 
@@ -287,7 +285,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("11_htexa")
+theme_override_fonts/font = ExtResource("10_t5nnh")
 theme_override_font_sizes/font_size = 24
 text = "Dribble or drop the ball"
 
@@ -299,7 +297,7 @@ theme_override_constants/separation = 32
 modulate = Color(0.996078, 0.854902, 0.721569, 1)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-texture = ExtResource("17_et44u")
+texture = ExtResource("16_bf76l")
 expand_mode = 1
 stretch_mode = 4
 
@@ -308,7 +306,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("11_htexa")
+theme_override_fonts/font = ExtResource("10_t5nnh")
 theme_override_font_sizes/font_size = 24
 text = "Retry (Hold)"
 
@@ -320,7 +318,7 @@ anchor_right = 1.0
 offset_left = -400.0
 offset_bottom = 1080.0
 grow_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_spq4p")
+theme_override_styles/panel = SubResource("StyleBoxFlat_majtp")
 
 [node name="RightPanel" type="MarginContainer" parent="UI/Right"]
 layout_mode = 1
@@ -353,12 +351,12 @@ size_flags_horizontal = 8
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_8fhce")
+theme_override_styles/panel = SubResource("StyleBoxFlat_peoxj")
 
 [node name="Background" type="TextureRect" parent="UI/Right/RightPanel/RightPanel/Timer/Shotclock"]
 custom_minimum_size = Vector2(320, 260)
 layout_mode = 2
-texture = ExtResource("18_rd2vd")
+texture = ExtResource("17_gd541")
 expand_mode = 5
 stretch_mode = 4
 
@@ -366,7 +364,7 @@ stretch_mode = 4
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(1, 0.438262, 0.21448, 1)
-theme_override_fonts/font = ExtResource("10_uqlrs")
+theme_override_fonts/font = ExtResource("9_xrlot")
 theme_override_font_sizes/font_size = 160
 text = "2:00"
 horizontal_alignment = 1
@@ -376,7 +374,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.935269, 0.919974, 0.888092, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("11_htexa")
+theme_override_fonts/font = ExtResource("10_t5nnh")
 theme_override_font_sizes/font_size = 24
 text = "Finish each level before time's up!"
 horizontal_alignment = 1
@@ -394,12 +392,12 @@ size_flags_horizontal = 3
 theme_override_colors/font_hover_color = Color(0.830335, 0.830335, 0.830335, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(0.830335, 0.830335, 0.830335, 1)
-theme_override_fonts/font = ExtResource("11_htexa")
+theme_override_fonts/font = ExtResource("10_t5nnh")
 theme_override_font_sizes/font_size = 24
-theme_override_styles/focus = SubResource("StyleBoxFlat_uqlrs")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_htexa")
-theme_override_styles/hover = SubResource("StyleBoxFlat_2oprd")
-theme_override_styles/normal = SubResource("StyleBoxFlat_htexa")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pg1qu")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_e376l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qjl7l")
+theme_override_styles/normal = SubResource("StyleBoxFlat_e376l")
 text = "Return to Menu"
 
 [node name="Bottom" type="Panel" parent="UI"]
@@ -413,7 +411,7 @@ offset_top = -160.0
 offset_right = 560.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_spq4p")
+theme_override_styles/panel = SubResource("StyleBoxFlat_majtp")
 
 [node name="ShotPower" type="Label" parent="UI/Bottom"]
 layout_mode = 0
@@ -424,7 +422,7 @@ offset_bottom = 59.0
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("11_htexa")
+theme_override_fonts/font = ExtResource("10_t5nnh")
 theme_override_font_sizes/font_size = 24
 text = "Shot Power"
 
@@ -437,6 +435,20 @@ offset_bottom = 59.0
 theme_override_colors/font_color = Color(0.890643, 0.867344, 0.818613, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_fonts/font = ExtResource("11_htexa")
+theme_override_fonts/font = ExtResource("10_t5nnh")
 theme_override_font_sizes/font_size = 24
 text = "Remaining Hooplicates"
+
+[node name="1x5" parent="." instance=ExtResource("18_d1q07")]
+position = Vector2(-155, 164)
+rotation = 1.5708
+
+[node name="1x6" parent="." instance=ExtResource("18_d1q07")]
+position = Vector2(117, -121)
+rotation = 1.5708
+
+[node name="1x3" parent="." instance=ExtResource("19_fy655")]
+position = Vector2(-1035, -702)
+
+[node name="1x4" parent="." instance=ExtResource("19_fy655")]
+position = Vector2(1031, -702)

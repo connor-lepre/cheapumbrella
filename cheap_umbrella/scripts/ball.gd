@@ -19,7 +19,7 @@ func _ready():
 	max_contacts_reported = 8
 	connect("body_entered", Callable(self, "_on_body_entered"))
 
-func _on_body_entered(body):
+func _on_body_entered(_body):
 	# Only play sound if cooldown has elapsed
 	var now = Time.get_ticks_msec() / 1000.0
 	if now - last_bounce_time < bounce_cooldown:

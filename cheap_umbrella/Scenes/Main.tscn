@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpo0fej7ym0w5"]
+[gd_scene load_steps=7 format=3 uid="uid://dpo0fej7ym0w5"]
 
 [ext_resource type="Script" uid="uid://ceinp6bs2u8vy" path="res://scripts/Main.gd" id="1_rgh2o"]
 [ext_resource type="Script" uid="uid://bmjogpmdbv7yk" path="res://Scenes/Levels/LevelManager.gd" id="1_v1gob"]
 [ext_resource type="Script" uid="uid://b5gdwyxys20c1" path="res://scripts/Transition.gd" id="3_kln2b"]
 [ext_resource type="AudioStream" uid="uid://bq0aqyv5go4i3" path="res://Assets/sound/fx/nice_work.wav" id="4_pbw6q"]
 [ext_resource type="AudioStream" uid="uid://dhhw3ugvuj3ae" path="res://Assets/sound/fx/time_up.wav" id="5_v1gob"]
+[ext_resource type="AudioStream" uid="uid://bpd8wucrpykv2" path="res://Assets/sound/music/hoopers.wav" id="6_v1gob"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_rgh2o")
@@ -40,3 +41,7 @@ stream = ExtResource("4_pbw6q")
 stream = ExtResource("5_v1gob")
 
 [node name="Music" type="AudioStreamPlayer2D" parent="GlobalAudio"]
+stream = ExtResource("6_v1gob")
+volume_db = -8.0
+autoplay = true
+playback_type = 1

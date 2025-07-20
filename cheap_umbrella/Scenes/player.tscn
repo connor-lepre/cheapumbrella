@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://oqd1g8e36mas"]
+[gd_scene load_steps=15 format=3 uid="uid://oqd1g8e36mas"]
 
 [ext_resource type="Script" uid="uid://cokrbnovaoyhu" path="res://scripts/player.gd" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://de8cekthvsbx0" path="res://Assets/sprites/player/player_glide.png" id="2_x3wgy"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://cqs6tpx3eb16f" path="res://Assets/sprites/player/player_move1.png" id="5_f1ek2"]
 [ext_resource type="Texture2D" uid="uid://dltr4457o4sk5" path="res://Assets/sprites/props/umbrella.png" id="6_tx1dd"]
 [ext_resource type="AudioStream" uid="uid://cawwbt0a735o8" path="res://Assets/sound/fx/step.wav" id="8_f1ek2"]
+[ext_resource type="Texture2D" uid="uid://icfwekkd0rgw" path="res://Assets/sprites/Ghost/Idle.png" id="8_gymyn"]
+[ext_resource type="FontFile" uid="uid://b3s0cbjdr6870" path="res://Assets/fonts/Jersey10-Regular.ttf" id="9_pu2lt"]
 [ext_resource type="AudioStream" uid="uid://q32sq3pwbuln" path="res://Assets/sound/fx/chute.wav" id="9_tx1dd"]
 [ext_resource type="AudioStream" uid="uid://3ogrnqwvuy7s" path="res://Assets/sound/fx/jump_pico.wav" id="10_tx1dd"]
 
@@ -65,6 +67,7 @@ floor_block_on_wall = false
 script = ExtResource("1_v0iea")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
+z_index = 5
 sprite_frames = SubResource("SpriteFrames_gymyn")
 animation = &"jump"
 
@@ -72,6 +75,32 @@ animation = &"jump"
 visible = false
 position = Vector2(0, -52.5)
 texture = ExtResource("6_tx1dd")
+
+[node name="CopyHint" type="Sprite2D" parent="PlayerSprite"]
+visible = false
+modulate = Color(1, 1, 1, 0.482353)
+show_behind_parent = true
+texture = ExtResource("8_gymyn")
+
+[node name="RetryTimer" type="Label" parent="PlayerSprite"]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -79.5
+offset_top = -128.0
+offset_right = -48.5
+offset_bottom = -58.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 8
+theme_override_fonts/font = ExtResource("9_pu2lt")
+theme_override_font_sizes/font_size = 32
+text = "⏴"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_3smsa")

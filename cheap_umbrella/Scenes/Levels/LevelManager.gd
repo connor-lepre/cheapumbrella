@@ -14,6 +14,9 @@ var level_scenes := [
 	preload("res://Scenes/Levels/Level3.tscn"),
 	preload("res://Scenes/Levels/Level4.tscn"),
 	preload("res://Scenes/Levels/Level5.tscn"),
+	preload("res://Scenes/Levels/Level6.tscn"),
+	preload("res://Scenes/Levels/Level7.tscn"),
+	preload("res://Scenes/Levels/Level8.tscn"),
 	# New levels here
 	
 	

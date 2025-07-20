@@ -12,10 +12,17 @@ const RESET_HOLD_TIME := 0.5
 var available_copies := 3
 
 @onready var COPIES_SCENE = preload("res://Scenes/Copies.tscn")
+@onready var TOKEN_ACTIVE_IMAGE = preload("res://Assets/Sprites/ui/copy-token.png")
+@onready var TOKEN_USED_IMAGE = preload("res://Assets/sprites/ui/copy-token-used.png")
 
 @onready var facing = Vector2.LEFT
 @onready var player_sprite: AnimatedSprite2D = $PlayerSprite
 @onready var umbrella = $PlayerSprite/Umbrella
+@onready var copy_hint = $PlayerSprite.get_node_or_null("CopyHint")
+@onready var retry_timer_label = $PlayerSprite.get_node_or_null("RetryTimer")
+@onready var retry_cooldown := 0.0
+@onready var copy_hint_lag_time := 0.08
+@onready var copy_hint_pos_buffer := []
 @onready var throw_meter = get_parent().get_node_or_null("ThrowMeter")
 @onready var available_copies_ui = get_tree().get_current_scene().get_node_or_null("AvailableCopies")
 @onready var copies_ui = null
@@ -25,10 +32,6 @@ var available_copies := 3
 @onready var sfx_jump: AudioStreamPlayer2D = get_node_or_null("SFX/Jump")
 var walk_step_timer := 0.0
 var walk_interval := 0.4 # Time between steps, adjust as needed
-
-var _last_max_copies := -1
-var _last_available_copies := -1
-
 
 var is_moving := false
 var is_gliding := false
@@ -83,7 +86,6 @@ func _ready():
 	spawn_point = start_node.global_position if start_node else global_position
 	print("Player using spawn point at:", spawn_point)
 
-
 func _physics_process(delta):
 	handle_input(delta)
 	handle_ball_interaction(delta)
@@ -94,6 +96,7 @@ func _physics_process(delta):
 	hide_show_umbrella(is_gliding)
 	handle_recording()
 	handle_retry_hold(delta)
+	update_copy_hint(delta)
 	
 	# Walk SFX
 	if is_moving and is_on_floor():
@@ -314,6 +317,26 @@ func play_walk_step():
 func hide_show_umbrella(is_gliding):
 	if umbrella:
 		umbrella.visible = is_gliding
+		
+func update_copy_hint(delta):
+	# Maintain a buffer of positions for lag
+	copy_hint_pos_buffer.append(global_position)
+	
+	var max_buffer = int(copy_hint_lag_time * physics_fps)
+	if copy_hint_pos_buffer.size() > max_buffer:
+		copy_hint_pos_buffer.pop_front()
+	
+	if is_recording:
+		copy_hint.visible = true
+		# Lagged position: use oldest position in buffer if available
+		if copy_hint_pos_buffer.size() >= max_buffer:
+			copy_hint.global_position = copy_hint_pos_buffer[0]
+		else:
+			copy_hint.global_position = global_position
+		# Flip based on facing direction (assuming horizontal flip is correct)
+		copy_hint.flip_h = (facing == Vector2.RIGHT)
+	else:
+		copy_hint.visible = false
 
 func spawn_copy(recording: Array) -> bool:
 	if recording.size() < 2:
@@ -348,46 +371,66 @@ func update_copy_ui():
 		push_error("AvailableCopies HBox must have at least one child as a template token.")
 		return
 
-	# Only update UI if something changed
-	if _last_max_copies == max_copies and _last_available_copies == available_copies:
-		return
-	_last_max_copies = max_copies
-	_last_available_copies = available_copies
-
-	# Remove excess tokens
+	# Ensure exactly max_copies tokens
 	while hbox.get_child_count() > max_copies:
 		hbox.get_child(hbox.get_child_count() - 1).queue_free()
-
-	# Add missing tokens
 	while hbox.get_child_count() < max_copies:
 		var token = hbox.get_child(0).duplicate()
 		hbox.add_child(token)
 
-	# Show/hide tokens efficiently
+	# Update each token image/state
 	for i in range(max_copies):
 		var token = hbox.get_child(i)
-		var should_be_visible = (i < available_copies)
-		if token.visible != should_be_visible:
-			token.visible = should_be_visible
+		if token is TextureRect:
+			if i < available_copies:
+				token.texture = TOKEN_ACTIVE_IMAGE
+				token.modulate = Color(1, 1, 1, 1)  # Full color
+			else:
+				token.texture = TOKEN_USED_IMAGE
+				token.modulate = Color(1, 1, 1, 1)  # Or lower alpha if desired (e.g. Color(1, 1, 1, 0.3))
+		token.visible = true  # Always show all tokens
 
-	# Uncomment this for rare debug logging only:
-	# print("UI updated: available_copies =", available_copies, "max_copies =", max_copies)
+	# Hide extra (shouldn’t be needed but for safety)
+	for i in range(hbox.get_child_count()):
+		if i >= max_copies:
+			hbox.get_child(i).visible = false
 
 
 func handle_retry_hold(delta):
+	# Cooldown active: decrement and block input/label
+	if retry_cooldown > 0.0:
+		retry_cooldown -= delta
+		retry_timer_label.visible = false
+		retry_hold_timer = 0.0
+		return
+
 	if Input.is_action_pressed("retry"):
 		retry_hold_timer += delta
+		retry_timer_label.visible = true
+
+		# One dot per 0.05s held, max 6
+		var dots_count = int(retry_hold_timer / 0.07)
+		dots_count = clamp(dots_count, 0, 5)
+		retry_timer_label.text = "🞀".repeat(dots_count)
+
 		if retry_hold_timer >= RESET_HOLD_TIME:
 			print("🔁 Retry triggered")
 			retry_hold_timer = 0.0
+			retry_timer_label.visible = false
 			available_copies = max_copies
 			update_copy_ui()
 			respawn()
 			for child in copies_container.get_children():
 				child.queue_free()
 			move_ball_in_front()
+			# Set buffer/cooldown for next retry
+			retry_cooldown = 0.5  # half a second buffer before new retry allowed
 	else:
 		retry_hold_timer = 0.0
+		retry_timer_label.visible = false
+
+
+
 
 func move_ball_in_front():
 	var ball = null

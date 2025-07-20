@@ -1,7 +1,7 @@
 extends Node
 
-var max_time_sec := 120  # Or whatever you want as the default timer
-var time_left := 120.0
+var max_time_sec := 600.0  # Or whatever you want as the default timer
+var time_left := 600.0
 var paused := false
 
 func reset(new_time = null):

@@ -1,12 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://i0gqela3swqn"]
+[gd_scene load_steps=13 format=3 uid="uid://i0gqela3swqn"]
 
 [ext_resource type="Script" uid="uid://b7ovmjtm45je8" path="res://Scenes/MainMenu.gd" id="1_8saeu"]
 [ext_resource type="Texture2D" uid="uid://0xwowgdbjbfu" path="res://Assets/sprites/player/title.png" id="1_853f1"]
 [ext_resource type="FontFile" uid="uid://b3s0cbjdr6870" path="res://Assets/fonts/Jersey10-Regular.ttf" id="2_8saeu"]
 [ext_resource type="Texture2D" uid="uid://bh57xo80xeiyn" path="res://Assets/ui/logo_sprite0.png" id="3_df05h"]
-[ext_resource type="Texture2D" uid="uid://bh8mbp7428tj0" path="res://Assets/ui/logo_sprite1.png" id="4_8um5k"]
+[ext_resource type="Texture2D" uid="uid://icfwekkd0rgw" path="res://Assets/sprites/Ghost/Idle.png" id="5_koqhg"]
 [ext_resource type="PackedScene" uid="uid://dd08uoybce4dc" path="res://Scenes/ball.tscn" id="6_8um5k"]
 [ext_resource type="AudioStream" uid="uid://e8e6ccp23a5w" path="res://Assets/sound/fx/hooplicate.mp3" id="7_xim88"]
+[ext_resource type="AudioStream" uid="uid://dwmrsjnwpu2qx" path="res://Assets/sound/music/hooplicate_sting.wav" id="8_koqhg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8saeu"]
 content_margin_left = 32.0
@@ -103,14 +104,14 @@ offset_bottom = 156.0
 texture = ExtResource("3_df05h")
 
 [node name="SpriteBottom" type="TextureRect" parent="MenuLayer/VBoxContainer/VBoxContainer/Logo"]
+modulate = Color(1, 1, 1, 0.517647)
 z_index = 5
 z_as_relative = false
 layout_mode = 0
 offset_left = 944.0
 offset_right = 1100.0
 offset_bottom = 156.0
-texture = ExtResource("4_8um5k")
-flip_h = true
+texture = ExtResource("5_koqhg")
 
 [node name="line1" type="Label" parent="MenuLayer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -206,6 +207,11 @@ shape = SubResource("RectangleShape2D_xim88")
 
 [node name="Hooplicate" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_xim88")
+volume_db = 5.0
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_koqhg")
+volume_db = 12.0
 
 [connection signal="pressed" from="MenuLayer/VBoxContainer/Buttons/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MenuLayer/VBoxContainer/Buttons/Tutorial" to="." method="_on_tutorial_pressed"]
